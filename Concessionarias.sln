@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionaria.Dominio", "Concessionaria.Domain\Concessionaria.Dominio.csproj", "{ADFF1DA9-0C93-4E5F-B9F1-D126CA4289E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionaria.Dados", "Concessionaria.Dados\Concessionaria.Dados.csproj", "{BA8ED33C-819D-435D-9726-AA59EB534D60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionaria.ID", "Concessionaria.ID\Concessionaria.ID.csproj", "{88B1C46F-ECC3-4CA5-9C47-10D719CE0F56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionaria.Negocio", "Concessionaria.Negocio\Concessionaria.Negocio.csproj", "{2511A35A-271F-4A13-BD20-572986BAC75F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionaria.IU", "Concessionaria.IU\Concessionaria.IU.csproj", "{96FDE10B-0D21-4ABF-901A-4AAEB3231197}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionaria.API", "Concessionaria.API\Concessionaria.API.csproj", "{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADFF1DA9-0C93-4E5F-B9F1-D126CA4289E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADFF1DA9-0C93-4E5F-B9F1-D126CA4289E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADFF1DA9-0C93-4E5F-B9F1-D126CA4289E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADFF1DA9-0C93-4E5F-B9F1-D126CA4289E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA8ED33C-819D-435D-9726-AA59EB534D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8ED33C-819D-435D-9726-AA59EB534D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8ED33C-819D-435D-9726-AA59EB534D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8ED33C-819D-435D-9726-AA59EB534D60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88B1C46F-ECC3-4CA5-9C47-10D719CE0F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B1C46F-ECC3-4CA5-9C47-10D719CE0F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B1C46F-ECC3-4CA5-9C47-10D719CE0F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B1C46F-ECC3-4CA5-9C47-10D719CE0F56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2511A35A-271F-4A13-BD20-572986BAC75F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2511A35A-271F-4A13-BD20-572986BAC75F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2511A35A-271F-4A13-BD20-572986BAC75F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2511A35A-271F-4A13-BD20-572986BAC75F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96FDE10B-0D21-4ABF-901A-4AAEB3231197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96FDE10B-0D21-4ABF-901A-4AAEB3231197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96FDE10B-0D21-4ABF-901A-4AAEB3231197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96FDE10B-0D21-4ABF-901A-4AAEB3231197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02EEF1AF-A68D-434C-BA0A-40E0E92B5F34}
+	EndGlobalSection
+EndGlobal
