@@ -1,13 +1,14 @@
-﻿using Concessionaria.Dominio.Entidades;
+﻿using Concessionarias.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Concessionaria.Dados.Configs
+namespace Concessionarias.Dados.Configs
 {
     internal sealed class VeiculoConfig : IEntityTypeConfiguration<Veiculo>
     {
         public void Configure(EntityTypeBuilder<Veiculo> builder)
         {
+            builder.Property(x => x.Id).HasColumnName(nameof(Veiculo) + "Id");
             builder.Property(x => x.Modelo).HasMaxLength(100);
             builder.Property(x => x.Descricao).HasMaxLength(500);
             builder.HasIndex(x => x.Modelo);
@@ -19,7 +20,7 @@ namespace Concessionaria.Dados.Configs
         {
             new Veiculo
             {
-                VeiculoId = 1,
+                Id = 1,
                 FabricanteId = 1,
                 TipoVeiculoId = (int)TipoVeiculoEnum.Carro,
                 Modelo = "Sedan",
@@ -31,7 +32,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Veiculo
             {
-                VeiculoId = 2,
+                Id = 2,
                 FabricanteId = 2,
                 TipoVeiculoId = (int)TipoVeiculoEnum.Moto,
                 Modelo = "Esportiva",
@@ -43,7 +44,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Veiculo
             {
-                VeiculoId = 3,
+                Id = 3,
                 FabricanteId = 3,
                 TipoVeiculoId = (int)TipoVeiculoEnum.Carro,
                 Modelo = "Sedan",
@@ -55,7 +56,7 @@ namespace Concessionaria.Dados.Configs
 
             new Veiculo
             {
-                VeiculoId = 4,
+                Id = 4,
                 FabricanteId = 3,
                 TipoVeiculoId = (int)TipoVeiculoEnum.Carro,
                 Modelo = "SUV",
@@ -67,7 +68,7 @@ namespace Concessionaria.Dados.Configs
 
             new Veiculo
             {
-                VeiculoId = 5,
+                Id = 5,
                 FabricanteId = 4,
                 TipoVeiculoId = (int)TipoVeiculoEnum.Carro,
                 Modelo = "Hatchback",
@@ -80,7 +81,7 @@ namespace Concessionaria.Dados.Configs
 
             new Veiculo
             {
-                VeiculoId = 6,
+                Id = 6,
                 FabricanteId = 5,
                 TipoVeiculoId = (int)TipoVeiculoEnum.Caminhão,
                 Modelo = "Caminhonete",
@@ -92,7 +93,7 @@ namespace Concessionaria.Dados.Configs
             },
                 new Veiculo
             {
-                VeiculoId = 7,
+                Id = 7,
                 FabricanteId = 5,
                 TipoVeiculoId = (int)TipoVeiculoEnum.Carro,
                 Modelo = "Hatchback",
@@ -104,7 +105,7 @@ namespace Concessionaria.Dados.Configs
 
             new Veiculo
             {
-                VeiculoId = 8,
+                Id = 8,
                 FabricanteId = 6,
                 TipoVeiculoId = (int)TipoVeiculoEnum.Caminhão,
                 Modelo = "Caminhonete",

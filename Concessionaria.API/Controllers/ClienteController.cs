@@ -1,10 +1,10 @@
 ﻿
 
-using Concessionaria.Dominio.Interfaces;
-using Concessionaria.Dominio.Modelos;
+using Concessionarias.Dominio.Interfaces;
+using Concessionarias.Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Concessionaria.API.Controllers
+namespace Concessionarias.API.Controllers
 {
     public class ClienteController : ControladorBase
     {
@@ -18,8 +18,33 @@ namespace Concessionaria.API.Controllers
         [HttpGet($"{nameof(Todos)}")]
         public ActionResult<ModeloVisualizaçãoCliente> Todos()
         {
-            var response = _serviçoCliente.FindAll();
-            return Ok(response.Content);
+            return RespostaCustomizada(_serviçoCliente.FindAll());
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<ModeloVisualizaçãoCliente>> Encontrar([FromRoute] int id)
+        {
+            return RespostaCustomizada(await _serviçoCliente.FindById(id));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Inserir([FromBody] ModeloInserçãoCliente modelo)
+        {
+            return RespostaCustomizada(await _serviçoCliente.Insert(modelo));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<int>> Atualizar([FromBody] ModeloAtualizaçãoCliente modelo)
+        {
+            return RespostaCustomizada(await _serviçoCliente.Update(modelo));
+        }
+
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<int>> Atualizar([FromRoute] int id)
+        {
+            return RespostaCustomizada(await _serviçoCliente.Remove(id));
+        }
+        
     }
 }

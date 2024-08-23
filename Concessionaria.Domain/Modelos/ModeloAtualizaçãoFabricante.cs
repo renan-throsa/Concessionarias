@@ -1,4 +1,4 @@
-﻿namespace Concessionaria.Dominio.Modelos
+﻿namespace Concessionarias.Dominio.Modelos
 {
     public class ModeloAtualizaçãoFabricante
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Concessionaria.Dados.Migrations
+namespace Concessionarias.Dados.Migrations
 {
     public partial class Inicial : Migration
     {
@@ -67,14 +67,14 @@ namespace Concessionaria.Dados.Migrations
                 name: "TipoVeiculo",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    TipoVeiculoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoVeiculo", x => x.Id);
+                    table.PrimaryKey("PK_TipoVeiculo", x => x.TipoVeiculoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,13 +99,13 @@ namespace Concessionaria.Dados.Migrations
                         column: x => x.FabricanteId,
                         principalTable: "Fabricantes",
                         principalColumn: "FabricanteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Veiculos_TipoVeiculo_TipoVeiculoId",
                         column: x => x.TipoVeiculoId,
                         principalTable: "TipoVeiculo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "TipoVeiculoId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,19 +130,19 @@ namespace Concessionaria.Dados.Migrations
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
                         principalColumn: "ClienteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Vendas_Concessionarias_ConcessionariaId",
                         column: x => x.ConcessionariaId,
                         principalTable: "Concessionarias",
                         principalColumn: "ConcessionariaId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Vendas_Veiculos_VeiculoId",
                         column: x => x.VeiculoId,
                         principalTable: "Veiculos",
                         principalColumn: "VeiculoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -173,14 +173,14 @@ namespace Concessionaria.Dados.Migrations
                 columns: new[] { "ConcessionariaId", "Ativo", "CEP", "CapacidadeMaximaVeiculos", "Cidade", "Email", "Endereco", "Estado", "Nome", "Telefone" },
                 values: new object[,]
                 {
-                    { 1, false, "01234567", 150, "São Paulo", "contato@concessionariadovale.com.br", "Rua das Flores, 123", "SP", "Concessionária do Vale", "(11) 9876-5432" },
-                    { 2, false, "09876543", 200, "Santo André", "vendas@autocenterabc.com", "Av. das Palmeiras, 456", "SP", "Auto Center ABC", "(11) 5555-1234" },
-                    { 3, false, "20000123", 180, "Rio de Janeiro", "vendas@autoshopzeta.com", "Rua dos Carros, 789", "RJ", "Auto Shop Zeta", "(21) 9876-5432" },
-                    { 4, false, "30000456", 220, "Belo Horizonte", "contato@megamotors.com.br", "Av. das Rodovias, 567", "MG", "Mega Motors", "(31) 5555-1234" },
-                    { 5, false, "80000789", 190, "Curitiba", "vendas@carrosexpress.com", "Av. das Velocidades, 789", "PR", "Carros Express", "(41) 5555-6789" },
-                    { 6, false, "90000123", 210, "Porto Alegre", "contato@autocenterxyz.com", "Rua dos Motores, 567", "RS", "Auto Center XYZ", "(51) 9876-2345" },
-                    { 7, false, "88000789", 200, "Florianópolis", "vendas@carrosrapidos.com", "Av. das Acelerações, 789", "SC", "Carros Rápidos", "(48) 9876-5678" },
-                    { 8, false, "50000123", 230, "Recife", "contato@autocenterabcd.com", "Rua dos Motores, 123", "PE", "Auto Center ABCD", "(81) 5555-6789" }
+                    { 1, true, "01234567", 150, "São Paulo", "contato@concessionariadovale.com.br", "Rua das Flores, 123", "SP", "Concessionária do Vale", "(11) 9876-5432" },
+                    { 2, true, "09876543", 200, "Santo André", "vendas@autocenterabc.com", "Av. das Palmeiras, 456", "SP", "Auto Center ABC", "(11) 5555-1234" },
+                    { 3, true, "20000123", 180, "Rio de Janeiro", "vendas@autoshopzeta.com", "Rua dos Carros, 789", "RJ", "Auto Shop Zeta", "(21) 9876-5432" },
+                    { 4, true, "30000456", 220, "Belo Horizonte", "contato@megamotors.com.br", "Av. das Rodovias, 567", "MG", "Mega Motors", "(31) 5555-1234" },
+                    { 5, true, "80000789", 190, "Curitiba", "vendas@carrosexpress.com", "Av. das Velocidades, 789", "PR", "Carros Express", "(41) 5555-6789" },
+                    { 6, true, "90000123", 210, "Porto Alegre", "contato@autocenterxyz.com", "Rua dos Motores, 567", "RS", "Auto Center XYZ", "(51) 9876-2345" },
+                    { 7, true, "88000789", 200, "Florianópolis", "vendas@carrosrapidos.com", "Av. das Acelerações, 789", "SC", "Carros Rápidos", "(48) 9876-5678" },
+                    { 8, true, "50000123", 230, "Recife", "contato@autocenterabcd.com", "Rua dos Motores, 123", "PE", "Auto Center ABCD", "(81) 5555-6789" }
                 });
 
             migrationBuilder.InsertData(
@@ -188,22 +188,22 @@ namespace Concessionaria.Dados.Migrations
                 columns: new[] { "FabricanteId", "AnoFundacao", "Ativo", "Nome", "PaisOrigem", "Website" },
                 values: new object[,]
                 {
-                    { 1, 1950, false, "HyperCars", "Brasil", "https://fabricantea.com" },
-                    { 2, 1925, false, "EcoMotors", "Estados Unidos", "https://fabricanteb.com" },
-                    { 3, 1960, false, "SuperCarros", "Itália", "https://www.supercarros.com" },
-                    { 4, 1985, false, "TechMotors", "Japão", "https://www.techmotors.co.jp" },
-                    { 5, 2003, false, "TurboDrive", "Coreia do Sul", "https://www.turbodrive" },
-                    { 6, 2006, false, "Electric Wheels", "Holanda", "https://www.wlectricwheels.co.ho" }
+                    { 1, 1950, true, "HyperCars", "Brasil", "https://fabricantea.com" },
+                    { 2, 1925, true, "EcoMotors", "Estados Unidos", "https://fabricanteb.com" },
+                    { 3, 1960, true, "SuperCarros", "Itália", "https://www.supercarros.com" },
+                    { 4, 1985, true, "TechMotors", "Japão", "https://www.techmotors.co.jp" },
+                    { 5, 2003, true, "TurboDrive", "Coreia do Sul", "https://www.turbodrive" },
+                    { 6, 2006, true, "Electric Wheels", "Holanda", "https://www.wlectricwheels.co.ho" }
                 });
 
             migrationBuilder.InsertData(
                 table: "TipoVeiculo",
-                columns: new[] { "Id", "Ativo", "Tipo" },
+                columns: new[] { "TipoVeiculoId", "Ativo", "Tipo" },
                 values: new object[,]
                 {
-                    { 1, false, "Carro" },
-                    { 2, false, "Moto" },
-                    { 3, false, "Caminhão" }
+                    { 1, true, "Carro" },
+                    { 2, true, "Moto" },
+                    { 3, true, "Caminhão" }
                 });
 
             migrationBuilder.InsertData(
@@ -226,14 +226,14 @@ namespace Concessionaria.Dados.Migrations
                 columns: new[] { "VendaId", "Ativo", "ClienteId", "ConcessionariaId", "DataVenda", "PrecoVenda", "ProtocoloVenda", "VeiculoId" },
                 values: new object[,]
                 {
-                    { 1, true, 1, 1, new DateTime(2024, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "9DA5C5D3-0F82-4FF4-8", 1 },
-                    { 2, true, 2, 2, new DateTime(2024, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "0AC88D16-3F6B-4B4E-8", 2 },
-                    { 3, true, 3, 3, new DateTime(2024, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "771B1D96-CCA7-4286-A", 3 },
-                    { 4, true, 4, 4, new DateTime(2024, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "93AEC545-A56C-47DF-B", 4 },
-                    { 5, true, 5, 5, new DateTime(2024, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "B6B6CCF3-DE88-4773-B", 5 },
-                    { 6, true, 6, 6, new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "A8828DC4-D65A-44BE-9", 6 },
-                    { 7, true, 7, 7, new DateTime(2024, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "A90F647A-9483-4D32-A", 7 },
-                    { 8, true, 8, 8, new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "84449071-A480-4CD3-B", 8 }
+                    { 1, true, 1, 1, new DateTime(2024, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "C6536692-A4CD-494C-8", 1 },
+                    { 2, true, 2, 2, new DateTime(2024, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "D56ED2D6-322E-4B7C-8", 2 },
+                    { 3, true, 3, 3, new DateTime(2024, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "2CE26119-AC62-47D9-8", 3 },
+                    { 4, true, 4, 4, new DateTime(2024, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "3B7634B2-1219-4559-8", 4 },
+                    { 5, true, 5, 5, new DateTime(2024, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "EB8B9697-BA3E-401A-A", 5 },
+                    { 6, true, 6, 6, new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "56B97D14-B4C8-43AA-9", 6 },
+                    { 7, true, 7, 7, new DateTime(2024, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "D8E06F73-2477-40BC-B", 7 },
+                    { 8, true, 8, 8, new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "E74C09E9-4FC5-4F2D-9", 8 }
                 });
 
             migrationBuilder.CreateIndex(

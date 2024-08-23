@@ -1,14 +1,15 @@
-﻿using Concessionaria.Dados.Utilitarios;
-using Concessionaria.Dominio.Entidades;
+﻿using Concessionarias.Dados.Utilitarios;
+using Concessionarias.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Concessionaria.Dados.Configs
+namespace Concessionarias.Dados.Configs
 {
     internal sealed class VendaConfig : IEntityTypeConfiguration<Venda>
     {
         public void Configure(EntityTypeBuilder<Venda> builder)
         {
+            builder.Property(x => x.Id).HasColumnName(nameof(Venda) + "Id");
             builder.Property(x => x.DataVenda).HasColumnType("datetime");
             builder.Property(x => x.ProtocoloVenda).HasMaxLength(20).HasValueGenerator((x, y) => new GeradorDeProtocolo());
 
@@ -20,7 +21,7 @@ namespace Concessionaria.Dados.Configs
         {
             new Venda
             {
-                VendaId = 1,
+                Id = 1,
                 VeiculoId = 1,
                 ConcessionariaId = 1,
                 ClienteId = 1,
@@ -31,7 +32,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Venda
             {
-                VendaId = 2,
+                Id = 2,
                 VeiculoId = 2,
                 ConcessionariaId = 2,
                 ClienteId = 2,
@@ -42,7 +43,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Venda
             {
-                VendaId = 3,
+                Id = 3,
                 VeiculoId = 3,
                 ConcessionariaId = 3,
                 ClienteId = 3,
@@ -53,7 +54,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Venda
             {
-                VendaId = 4,
+                Id = 4,
                 VeiculoId = 4,
                 ConcessionariaId = 4,
                 ClienteId = 4,
@@ -64,7 +65,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Venda
             {
-                VendaId = 5,
+                Id = 5,
                 VeiculoId = 5,
                 ConcessionariaId = 5,
                 ClienteId = 5,
@@ -75,7 +76,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Venda
             {
-                VendaId = 6,
+                Id = 6,
                 VeiculoId = 6,
                 ConcessionariaId = 6,
                 ClienteId = 6,
@@ -86,7 +87,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Venda
             {
-                VendaId = 7,
+                Id = 7,
                 VeiculoId = 7,
                 ConcessionariaId = 7,
                 ClienteId = 7,
@@ -97,7 +98,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Venda
             {
-                VendaId = 8,
+                Id = 8,
                 VeiculoId = 8,
                 ConcessionariaId = 8,
                 ClienteId = 8,

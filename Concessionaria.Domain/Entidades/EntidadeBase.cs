@@ -1,7 +1,8 @@
-﻿namespace Concessionaria.Dominio.Entidades
+﻿namespace Concessionarias.Dominio.Entidades
 {
     public abstract class EntidadeBase
     {
-        public bool Ativo { get; set; }
+        public int Id { get; set; }
+        public bool Ativo { get; set; } = true;
     }
 }

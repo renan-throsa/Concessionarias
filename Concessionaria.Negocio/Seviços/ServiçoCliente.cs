@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
-using Concessionaria.Dominio.Interfaces;
-using Concessionaria.Dominio.Modelos;
+using Concessionarias.Dominio.Entidades;
+using Concessionarias.Dominio.Interfaces;
+using Concessionarias.Dominio.Modelos;
+using Concessionarias.Negocio.Validações;
+using System.Net;
 
-namespace Concessionaria.Negocio.Seviços
+namespace Concessionarias.Negocio.Seviços
 {
     public class ServiçoCliente : Serviço, IServiçoCliente
     {
@@ -14,27 +17,68 @@ namespace Concessionaria.Negocio.Seviços
 
         public ModeloResultadoDaOperação FindAll()
         {
-            return Success(Mapper.ProjectTo<ModeloVisualizaçãoCliente>(_repositorioCliente.Query()));
+            return Successo(Mapper.ProjectTo<ModeloVisualizaçãoCliente>(_repositorioCliente.Query()));
         }
 
-        public Task<ModeloResultadoDaOperação> FindById(int id)
+        public async Task<ModeloResultadoDaOperação> FindById(int id)
         {
-            throw new NotImplementedException();
+            var entidade = await _repositorioCliente.GetByIdAsync(id);
+
+            if (entidade is null)
+            {
+                return Erro($"Não encontrado: {id}", HttpStatusCode.NotFound);
+            }
+
+            return Successo(Mapper.Map<ModeloVisualizaçãoCliente>(entidade));
         }
 
-        public Task<ModeloResultadoDaOperação> Insert(ModeloInserçãoCliente modelo)
+        public async Task<ModeloResultadoDaOperação> Insert(ModeloInserçãoCliente modelo)
         {
-            throw new NotImplementedException();
+            var entidade = Mapper.Map<Cliente>(modelo);
+
+            if (!EntityIsValid(new ValidadorDeCliente(), entidade))
+                return Erro();
+
+            await _repositorioCliente.InsertAsync(entidade);
+
+            return Successo(entidade.Id);
         }
 
-        public Task<ModeloResultadoDaOperação> Remove(int id)
+        public async Task<ModeloResultadoDaOperação> Remove(int id)
         {
-            throw new NotImplementedException();
+            var entidade = await _repositorioCliente.GetByIdAsync(id, true);
+
+            if (entidade is null)
+            {
+                return Erro($"Não encontrado: {id}", HttpStatusCode.NotFound);
+            }
+
+            entidade.Ativo = false;
+            await _repositorioCliente.SaveChangesAsync();
+            return Successo(id);
         }
 
-        public Task<ModeloResultadoDaOperação> Update(ModeloAtualizaçãoCliente modelo)
+        public async Task<ModeloResultadoDaOperação> Update(ModeloAtualizaçãoCliente modelo)
         {
-            throw new NotImplementedException();
+            if (!await _repositorioCliente.TuplaUnica(modelo.ClienteId, modelo.CPF))
+            {
+                return Erro($"Cpf {modelo.CPF} já cadastrado", HttpStatusCode.NotFound);
+            }
+
+            var entidade = await _repositorioCliente.GetByIdAsync(modelo.ClienteId, true);
+
+            if (!EntityIsValid(new ValidadorDeCliente(), entidade))
+                return Erro();
+
+
+            if (entidade is null) return Erro($"Não encontrado: {modelo.ClienteId}", HttpStatusCode.NotFound);
+
+            entidade.Nome = modelo.Nome;
+            entidade.CPF = modelo.CPF;
+            entidade.Telefone = modelo.CPF;
+
+            await _repositorioCliente.SaveChangesAsync();
+            return Successo();
         }
     }
 }

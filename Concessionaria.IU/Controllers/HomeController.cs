@@ -1,8 +1,8 @@
-﻿using Concessionaria.IU.Models;
+﻿using Concessionarias.IU.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Concessionaria.IU.Controllers
+namespace Concessionarias.IU.Controllers
 {
     public class HomeController : Controller
     {

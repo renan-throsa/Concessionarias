@@ -2,7 +2,7 @@
 using FluentValidation.Results;
 using System.Net;
 
-namespace Concessionaria.Dominio.Modelos
+namespace Concessionarias.Dominio.Modelos
 {
     public class ModeloResultadoDaOperação
     {

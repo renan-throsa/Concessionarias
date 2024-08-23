@@ -1,8 +1,7 @@
-﻿namespace Concessionaria.Dominio.Entidades
+﻿namespace Concessionarias.Dominio.Entidades
 {
     public class Veiculo : EntidadeBase
-    {
-        public int VeiculoId { get; set; }
+    {        
         public int FabricanteId { get; set; }
         public int TipoVeiculoId { get; set; }
 
@@ -11,7 +10,6 @@
         public decimal Preco { get; set; } 
                
         public string Descricao { get; set; }
-        public bool Ativo { get; set; }
 
         public TipoVeiculo TipoVeiculo { get; set; }
         public Fabricante Fabricante { get; set; }

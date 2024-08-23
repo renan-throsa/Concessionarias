@@ -1,29 +1,28 @@
-﻿using Concessionaria.Dados.Configs;
-using Concessionaria.Dominio.Entidades;
+﻿using Concessionarias.Dados.Configs;
+using Concessionarias.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 
-namespace Concessionaria.Dados.Contexto
+namespace Concessionarias.Dados.Contexto
 {
     public class SqlContext : DbContext
     {
         public DbSet<Cliente> Clientes { get; init; }
-        public DbSet<Dominio.Entidades.Concessionaria> Concessionarias { get; init; }
+        public DbSet<Concessionaria> Concessionarias { get; init; }
         public DbSet<Fabricante> Fabricantes { get; init; }
         public DbSet<Veiculo> Veiculos { get; init; }
         public DbSet<Venda> Vendas { get; init; }
 
 
-        public SqlContext(DbContextOptions<SqlContext> options) : base(options)
+        public SqlContext()
         {
 
         }
 
+        public SqlContext(DbContextOptions<SqlContext> options) : base(options) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
-                .EnableSensitiveDataLogging()
-                .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-
+            optionsBuilder.EnableSensitiveDataLogging();
             base.OnConfiguring(optionsBuilder);
         }
 

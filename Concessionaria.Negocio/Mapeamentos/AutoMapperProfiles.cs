@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Concessionaria.Negocio.Mapeamentos
+namespace Concessionarias.Negocio.Mapeamentos
 {
     public class AutoMapperProfiles : Profile
     {

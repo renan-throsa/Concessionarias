@@ -1,4 +1,4 @@
-namespace Concessionaria.API
+namespace Concessionarias.API
 {
     public class WeatherForecast
     {

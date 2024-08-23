@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Concessionaria.Dados\Concessionaria.Dados.csproj" />
-    <ProjectReference Include="..\Concessionaria.Negocio\Concessionaria.Negocio.csproj" />
+    <ProjectReference Include="..\Concessionaria.Dados\Concessionarias.Dados.csproj" />
+    <ProjectReference Include="..\Concessionaria.Negocio\Concessionarias.Negocio.csproj" />
   </ItemGroup>
 
 </Project>

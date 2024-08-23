@@ -1,13 +1,11 @@
-﻿using Concessionaria.Dominio.Entidades;
-using System.Linq.Expressions;
+﻿using Concessionarias.Dominio.Entidades;
 
-namespace Concessionaria.Dominio.Interfaces
+namespace Concessionarias.Dominio.Interfaces
 {
     public interface IRepositorio<TEntity> where TEntity : EntidadeBase
-    {
-        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, TEntity>> projecao);
+    {       
 
-        Task<TEntity> GetByIdAsync(int id);
+        Task<TEntity> GetByIdAsync(int id, bool comoRastreada = false);
 
         Task InsertAllAsync(IEnumerable<TEntity> entities);
 

@@ -1,8 +1,7 @@
-﻿namespace Concessionaria.Dominio.Entidades
+﻿namespace Concessionarias.Dominio.Entidades
 {
     public class Venda : EntidadeBase
     {
-        public int VendaId { get; set; }
         public int VeiculoId { get; set; }
         public int ConcessionariaId { get; set; }
         public int ClienteId { get; set; }

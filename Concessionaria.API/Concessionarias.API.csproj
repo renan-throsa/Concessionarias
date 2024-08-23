@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Concessionaria.Domain\Concessionaria.Dominio.csproj" />
-    <ProjectReference Include="..\Concessionaria.ID\Concessionaria.ID.csproj" />
+    <ProjectReference Include="..\Concessionaria.Domain\Concessionarias.Dominio.csproj" />
+    <ProjectReference Include="..\Concessionaria.ID\Concessionarias.ID.csproj" />
   </ItemGroup>
 
 </Project>

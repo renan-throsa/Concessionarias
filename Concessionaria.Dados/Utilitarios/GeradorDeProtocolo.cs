@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 
-namespace Concessionaria.Dados.Utilitarios
+namespace Concessionarias.Dados.Utilitarios
 {
     internal class GeradorDeProtocolo: ValueGenerator<string>
     {

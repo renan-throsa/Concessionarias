@@ -1,31 +1,43 @@
-﻿using Concessionaria.Dominio.Modelos;
+﻿using Concessionarias.Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Text.Json;
 
-namespace Concessionaria.API.Controllers
+namespace Concessionarias.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class ControladorBase : ControllerBase
     {
-        protected ActionResult<ModeloResultadoDaOperação> ErrorResponse(ModeloResultadoDaOperação result)
+        protected ActionResult RespostaCustomizada(ModeloResultadoDaOperação resultado)
         {
-            switch (result.StatusCode)
+
+            if (!resultado.IsValid)
+            {
+                return ErrorResponse(resultado);
+            }
+
+            return Ok(resultado.Content ?? string.Empty);
+        }
+
+        protected ActionResult ErrorResponse(ModeloResultadoDaOperação resultado)
+        {
+            switch (resultado.StatusCode)
             {
                 case HttpStatusCode.BadRequest:
-                    return BadRequest(result);
+                    return BadRequest(resultado);
 
                 case HttpStatusCode.NotFound:
-                    return NotFound(result);
+                    return NotFound(resultado);
 
                 case HttpStatusCode.Unauthorized:
-                    return Unauthorized(result);
+                    return Unauthorized(resultado);
 
                 case HttpStatusCode.Conflict:
-                    return Conflict(result);
+                    return Conflict(resultado);
 
                 default:
-                    return BadRequest(result);
+                    return BadRequest(resultado);
             }
         }
     }

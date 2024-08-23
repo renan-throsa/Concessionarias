@@ -1,10 +1,10 @@
-﻿using Concessionaria.Dominio.Modelos;
+﻿using Concessionarias.Dominio.Modelos;
 
-namespace Concessionaria.Dominio.Interfaces
+namespace Concessionarias.Dominio.Interfaces
 {
     public interface IServiçoConcessionária
     {
-        Task<ModeloResultadoDaOperação> FindAll();
+        ModeloResultadoDaOperação FindAll();
 
         Task<ModeloResultadoDaOperação> FindById(int id);
 

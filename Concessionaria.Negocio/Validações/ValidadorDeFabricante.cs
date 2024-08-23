@@ -1,7 +1,7 @@
-﻿using Concessionaria.Dominio.Entidades;
+﻿using Concessionarias.Dominio.Entidades;
 using FluentValidation;
 
-namespace Concessionaria.Negocio.Validações
+namespace Concessionarias.Negocio.Validações
 {
     internal sealed class ValidadorDeFabricante : AbstractValidator<Fabricante>
     {

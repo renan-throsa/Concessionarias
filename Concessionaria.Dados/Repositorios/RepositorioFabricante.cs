@@ -1,8 +1,8 @@
-﻿using Concessionaria.Dados.Contexto;
-using Concessionaria.Dominio.Entidades;
-using Concessionaria.Dominio.Interfaces;
+﻿using Concessionarias.Dados.Contexto;
+using Concessionarias.Dominio.Entidades;
+using Concessionarias.Dominio.Interfaces;
 
-namespace Concessionaria.Dados.Repositorios
+namespace Concessionarias.Dados.Repositorios
 {
     public class RepositorioFabricante : Repositorio<Fabricante>, IRepositorioFabricante
     {

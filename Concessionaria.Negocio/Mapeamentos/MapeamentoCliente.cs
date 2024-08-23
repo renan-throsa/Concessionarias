@@ -1,15 +1,19 @@
 ﻿using AutoMapper;
-using Concessionaria.Dominio.Entidades;
-using Concessionaria.Dominio.Modelos;
+using Concessionarias.Dominio.Entidades;
+using Concessionarias.Dominio.Modelos;
 
-namespace Concessionaria.Negocio.Mapeamentos
+namespace Concessionarias.Negocio.Mapeamentos
 {
-    internal class MapeamentoCliente: Profile
+    public class MapeamentoCliente : Profile
     {
         public MapeamentoCliente()
         {
-            CreateMap<Cliente, ModeloVisualizaçãoCliente>().ReverseMap();
-            CreateMap<Cliente, ModeloInserçãoCliente>().ReverseMap();
+            CreateMap<Cliente, ModeloVisualizaçãoCliente>()
+                .ForMember(dest => dest.ClienteId, opt => opt.MapFrom(src => src.Id))
+                .ReverseMap();
+
+            CreateMap<Cliente, ModeloInserçãoCliente>()
+                .ReverseMap();
         }
     }
 }

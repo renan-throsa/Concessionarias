@@ -1,4 +1,4 @@
-namespace Concessionaria.IU
+namespace Concessionarias.IU
 {
     public class Program
     {

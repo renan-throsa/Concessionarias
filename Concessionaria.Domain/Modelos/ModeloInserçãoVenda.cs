@@ -1,4 +1,4 @@
-﻿namespace Concessionaria.Dominio.Modelos
+﻿namespace Concessionarias.Dominio.Modelos
 {
     public class ModeloInserçãoVenda
     {       
@@ -7,7 +7,6 @@
         public int ClienteId { get; set; }
         public DateTime DataVenda { get; set; }
         public decimal PrecoVenda { get; set; }
-        public string ProtocoloVenda { get; set; }
     }
 
 }

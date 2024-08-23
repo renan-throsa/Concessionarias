@@ -1,10 +1,9 @@
-﻿using Concessionaria.Dados.Contexto;
-using Concessionaria.Dominio.Entidades;
-using Concessionaria.Dominio.Interfaces;
+﻿using Concessionarias.Dados.Contexto;
+using Concessionarias.Dominio.Entidades;
+using Concessionarias.Dominio.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
-namespace Concessionaria.Dados.Repositorios
+namespace Concessionarias.Dados.Repositorios
 {
     public abstract class Repositorio<TEntity> : IRepositorio<TEntity> where TEntity : EntidadeBase
     {
@@ -17,11 +16,17 @@ namespace Concessionaria.Dados.Repositorios
             _currentSet = _context.Set<TEntity>();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, TEntity>> projection)
-            => await _currentSet.AsNoTracking().Select(projection).ToListAsync();
+        public virtual async Task<TEntity> GetByIdAsync(int id, bool comoRastreada = false)
+        {            
+            var consulta = _currentSet.Where(x => x.Ativo);
+            if (comoRastreada)
+            {
+                return await consulta.FirstAsync(x => x.Id == id);
+            }
 
-        public virtual async Task<TEntity> GetByIdAsync(int id)
-            => await _currentSet.FindAsync(id);
+            return await _currentSet.AsNoTracking().FirstAsync(x => x.Id == id);
+        }
+
 
 
         public virtual async Task InsertAllAsync(IEnumerable<TEntity> entities)
@@ -60,5 +65,7 @@ namespace Concessionaria.Dados.Repositorios
         {
             return _currentSet.AsNoTracking().Where(x => x.Ativo);
         }
+        
+
     }
 }

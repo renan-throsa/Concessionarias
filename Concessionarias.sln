@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionaria.Dominio", "Concessionaria.Domain\Concessionaria.Dominio.csproj", "{ADFF1DA9-0C93-4E5F-B9F1-D126CA4289E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionarias.Dominio", "Concessionaria.Domain\Concessionarias.Dominio.csproj", "{ADFF1DA9-0C93-4E5F-B9F1-D126CA4289E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionaria.Dados", "Concessionaria.Dados\Concessionaria.Dados.csproj", "{BA8ED33C-819D-435D-9726-AA59EB534D60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionarias.Dados", "Concessionaria.Dados\Concessionarias.Dados.csproj", "{BA8ED33C-819D-435D-9726-AA59EB534D60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionaria.ID", "Concessionaria.ID\Concessionaria.ID.csproj", "{88B1C46F-ECC3-4CA5-9C47-10D719CE0F56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionarias.ID", "Concessionaria.ID\Concessionarias.ID.csproj", "{88B1C46F-ECC3-4CA5-9C47-10D719CE0F56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionaria.Negocio", "Concessionaria.Negocio\Concessionaria.Negocio.csproj", "{2511A35A-271F-4A13-BD20-572986BAC75F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionarias.Negocio", "Concessionaria.Negocio\Concessionarias.Negocio.csproj", "{2511A35A-271F-4A13-BD20-572986BAC75F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionaria.IU", "Concessionaria.IU\Concessionaria.IU.csproj", "{96FDE10B-0D21-4ABF-901A-4AAEB3231197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionarias.IU", "Concessionaria.IU\Concessionarias.IU.csproj", "{96FDE10B-0D21-4ABF-901A-4AAEB3231197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionaria.API", "Concessionaria.API\Concessionaria.API.csproj", "{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concessionarias.API", "Concessionaria.API\Concessionarias.API.csproj", "{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concessionarias.Testes", "Concessionarias.Testes\Concessionarias.Testes.csproj", "{180DB128-0A97-45CC-A54D-640421912466}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD3DA983-8ED5-4B58-BD83-4710CC3750F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{180DB128-0A97-45CC-A54D-640421912466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{180DB128-0A97-45CC-A54D-640421912466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{180DB128-0A97-45CC-A54D-640421912466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{180DB128-0A97-45CC-A54D-640421912466}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

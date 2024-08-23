@@ -1,13 +1,30 @@
-﻿using Concessionaria.Dados.Contexto;
-using Concessionaria.Dominio.Entidades;
-using Concessionaria.Dominio.Interfaces;
+﻿using Concessionarias.Dados.Contexto;
+using Concessionarias.Dominio.Entidades;
+using Concessionarias.Dominio.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-namespace Concessionaria.Dados.Repositorios
+namespace Concessionarias.Dados.Repositorios
 {
     public class RepositorioVeiculo : Repositorio<Veiculo>, IRepositorioVeiculo
     {
         public RepositorioVeiculo(SqlContext sqlContext) : base(sqlContext)
         {
         }
+
+        public override async Task<Veiculo> GetByIdAsync(int id, bool comoRastreada = false)
+        {
+            var consulta = _currentSet.Where(x => x.Ativo);
+            if (comoRastreada)
+            {
+                return await consulta.FirstAsync(x => x.Id == id);
+            }
+
+            return await _currentSet
+                .AsNoTracking()
+                .Include(x => x.Fabricante)
+                .Include(x => x.TipoVeiculo)
+                .FirstAsync(x => x.Id == id);
+        }
+
     }
 }

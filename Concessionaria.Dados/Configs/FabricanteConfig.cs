@@ -1,13 +1,14 @@
-﻿using Concessionaria.Dominio.Entidades;
+﻿using Concessionarias.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Concessionaria.Dados.Configs
+namespace Concessionarias.Dados.Configs
 {
     internal sealed class FabricanteConfig : IEntityTypeConfiguration<Fabricante>
     {
         public void Configure(EntityTypeBuilder<Fabricante> builder)
         {
+            builder.Property(x => x.Id).HasColumnName(nameof(Fabricante) + "Id");
             builder.Property(x => x.Nome).HasMaxLength(100);
             builder.Property(x => x.PaisOrigem).HasMaxLength(50);
             builder.Property(x => x.Website).HasMaxLength(50);
@@ -18,7 +19,7 @@ namespace Concessionaria.Dados.Configs
         {
             new Fabricante
             {
-                FabricanteId = 1,
+                Id = 1,
                 Nome = "HyperCars",
                 PaisOrigem = "Brasil",
                 AnoFundacao = 1950,
@@ -26,7 +27,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Fabricante
             {
-                FabricanteId = 2,
+                Id = 2,
                 Nome = "EcoMotors",
                 PaisOrigem = "Estados Unidos",
                 AnoFundacao = 1925,
@@ -34,7 +35,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Fabricante
             {
-                FabricanteId = 3,
+                Id = 3,
                 Nome = "SuperCarros",
                 PaisOrigem = "Itália",
                 AnoFundacao = 1960,
@@ -42,7 +43,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Fabricante
             {
-                FabricanteId = 4,
+                Id = 4,
                 Nome = "TechMotors",
                 PaisOrigem = "Japão",
                 AnoFundacao = 1985,
@@ -50,7 +51,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Fabricante
             {
-                FabricanteId = 5,
+                Id = 5,
                 Nome = "TurboDrive",
                 PaisOrigem = "Coreia do Sul",
                 AnoFundacao = 2003,
@@ -58,7 +59,7 @@ namespace Concessionaria.Dados.Configs
             },
             new Fabricante
             {
-                FabricanteId = 6,
+                Id = 6,
                 Nome = "Electric Wheels",
                 PaisOrigem = "Holanda",
                 AnoFundacao = 2006,

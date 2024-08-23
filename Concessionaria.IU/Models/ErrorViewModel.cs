@@ -1,4 +1,4 @@
-namespace Concessionaria.IU.Models
+namespace Concessionarias.IU.Models
 {
     public class ErrorViewModel
     {

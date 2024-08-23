@@ -1,16 +1,16 @@
 ﻿
-using Concessionaria.Dados.Contexto;
-using Concessionaria.Dados.Repositorios;
-using Concessionaria.Dominio.Interfaces;
-using Concessionaria.ID.Configs;
-using Concessionaria.Negocio.Mapeamentos;
-using Concessionaria.Negocio.Seviços;
+using Concessionarias.Dados.Contexto;
+using Concessionarias.Dados.Repositorios;
+using Concessionarias.Dominio.Interfaces;
+using Concessionarias.ID.Configs;
+using Concessionarias.Negocio.Mapeamentos;
+using Concessionarias.Negocio.Seviços;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Concessionaria.ID
+namespace Concessionarias.ID
 {
     public static class Extensoes
     {
@@ -24,12 +24,16 @@ namespace Concessionaria.ID
             services.AddDbContext<SqlContext>(options => options.UseSqlServer(dataBaseSettings.ConnectionString));
 
             services.AddScoped<IRepositorioCliente, RepositorioCliente>();
-            services.AddScoped<IRepositorioConcessionaria, RepositorioConcessionaria>();
+            services.AddScoped<IRepositorioConcessionária, RepositorioConcessionária>();
             services.AddScoped<IRepositorioFabricante, RepositorioFabricante>();
             services.AddScoped<IRepositorioVeiculo, RepositorioVeiculo>();
             services.AddScoped<IRepositorioVenda, RepositorioVenda>();
 
             services.AddScoped<IServiçoCliente, ServiçoCliente>();
+            services.AddScoped<IServiçoVeiculo, ServiçoVeiculo>();
+            services.AddScoped<IServiçoFabricante, ServiçoFabricante>();
+            services.AddScoped<IServiçoConcessionária, ServiçoConcessionária>();
+            services.AddScoped<IServiçoVenda, ServiçoVenda>();
             return services;
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace Concessionaria.ID.Configs
+﻿namespace Concessionarias.ID.Configs
 {
     internal sealed class SqlConfig
     {

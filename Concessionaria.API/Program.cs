@@ -1,4 +1,4 @@
-using Concessionaria.ID;
+using Concessionarias.ID;
 
 var builder = WebApplication.CreateBuilder(args);
 
