@@ -40,6 +40,7 @@ namespace Concessionarias.Negocio.Seviços
                 return Erro();
 
             await _repositorioFabricante.InsertAsync(entidade);
+            await _repositorioFabricante.SaveChangesAsync();
 
             return Successo(entidade.Id);
         }

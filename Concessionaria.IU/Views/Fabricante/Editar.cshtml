@@ -1,0 +1,66 @@
+﻿﻿@{
+    ViewData["Title"] = "Editar Fabricante";
+
+    List<string> erros = ViewBag.Erros;
+
+    var paises = (new List<string>() { "China", "Estados Unidos", "Japão", "Alemanha", "Coreia do Sul", "Índia", "México", "Espanha", "Brasil", "Canadá", "França", "Tailândia", "Reino Unido", "Turquia", "Rússia", "Chéquia", "Indonésia", "Itália" })
+    .OrderBy(x => x)
+    .Select(x => new SelectListItem() { Value = x, Text = x });
+}
+
+
+@model ModeloVisualizaçãoFabricante
+
+@if (erros is not null && erros.Any())
+{
+    <ul>
+        @foreach (string erro in erros)
+        {
+
+            <li>@erro</li>
+        }
+    </ul>
+
+}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Editar Fabricante
+                        <a asp-controller="Fabricante" asp-action="Listagem" class="btn btn-danger float-end">Voltar</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Fabricante" asp-action="Editar" method="Post">
+
+                        <input hidden asp-for="FabricanteId" />
+
+                        <div class="mb-3">
+                            <label asp-for="Nome">Preencha o nome do fabricante</label>
+                            <input type="text" asp-for="Nome" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="PaisOrigem">Selecione o país de origem</label>
+                            <select asp-for="PaisOrigem" class="form-control" asp-items="paises">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="AnoFundacao">Insera o ano de fundação</label>
+                            <input type="number" asp-for="AnoFundacao" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Website">Adicione a URL do website.</label>
+                            <input type="text" asp-for="Website" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Salvar Fabricante</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

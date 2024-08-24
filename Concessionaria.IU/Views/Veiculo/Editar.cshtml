@@ -1,0 +1,80 @@
+﻿﻿@{
+    ViewData["Title"] = "Novo Veiculo";
+
+    List<string> erros = ViewBag.Erros;
+    List<SelectListItem> fabricantes = ViewBag.Fabricantes;
+}
+
+@model ModeloAtualizaçãoVeiculo
+
+@if (erros is not null && erros.Any())
+{
+    <ul>
+        @foreach (string erro in erros)
+        {
+
+            <li>@erro</li>
+        }
+    </ul>
+
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Editar Veiculo
+                        <a asp-controller="Veiculo" asp-action="Listagem" class="btn btn-danger float-end">Voltar</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Veiculo" asp-action="Editar" method="Post">
+
+                        <input hidden asp-for="VeiculoId" />
+
+                        <div class="mb-3">
+                            <label asp-for="Modelo">Insera o nome do modelo do veículo</label>
+                            <input asp-for="Modelo" type="text"  class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Preco">Insira o preço do veiculo</label>
+                            <input asp-for="Preco" type="number" asp-format="{0:n2}" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="AnoFabricacao">Insira o ano de fabricação</label>
+                            <input type="number" asp-for="AnoFabricacao" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="FabricanteId">Escolha o fabricante associado</label>
+                            <select asp-for="FabricanteId" class="form-control" asp-items="fabricantes">
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="TipoVeiculoId">Selecione o tipo de veículo</label>
+                            <select asp-for="TipoVeiculoId" class="form-control">
+                                <option value="1">Carro</option>
+                                <option value="2">Moto</option>
+                                <option value="3">Caminhão</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Descricao">Adicione uma descrição opcional</label>
+                            <input type="text" asp-for="Descricao" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Salvar Veiculo</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

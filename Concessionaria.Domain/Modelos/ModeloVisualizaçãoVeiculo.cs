@@ -1,5 +1,4 @@
 ﻿using Concessionarias.Dominio.Entidades;
-
 namespace Concessionarias.Dominio.Modelos
 {
     public class ModeloVisualizaçãoVeiculo
@@ -9,7 +8,9 @@ namespace Concessionarias.Dominio.Modelos
         public int TipoVeiculoId { get; set; }
 
         public string Modelo { get; set; }
+
         public int AnoFabricacao { get; set; }
+
         public decimal Preco { get; set; }
 
         public string Descricao { get; set; }

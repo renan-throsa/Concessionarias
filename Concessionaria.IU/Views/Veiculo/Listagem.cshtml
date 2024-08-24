@@ -1,0 +1,56 @@
+﻿@using System.Globalization
+@{
+    ViewData["Title"] = "Veiculos";
+}
+
+@model List<ModeloConsultaVeiculo>
+
+<div class="container mt-4">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Veiculos
+                        <a asp-controller="Veiculo" asp-action="Criar" class="btn btn-primary float-end">Novo Veículo</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Preço</th>
+                                <th scope="col">Ano de Fabricação</th>
+                                <th scope="col">TipoVeiculo</th>
+                                <th scope="col">Fabricante</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (ModeloConsultaVeiculo veiculo in this.Model)
+                            {
+                                <tr>
+                                    <td>@veiculo.Modelo</td>
+                                    <td>@veiculo.Preco.ToString("C", new CultureInfo("pt-BR"))</td>
+                                    <td>@veiculo.AnoFabricacao</td>
+                                    <td>@veiculo.TipoVeiculo</td>
+                                    <td>@veiculo.Fabricante</td>
+                                    <td>
+
+                                        <a asp-route-id="@veiculo.VeiculoId" asp-controller="Veiculo" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

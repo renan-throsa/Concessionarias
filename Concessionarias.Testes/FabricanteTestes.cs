@@ -22,7 +22,7 @@ namespace Concessionarias.Testes
         }
 
         [Fact]
-        public async Task InsercaoComSucesso()
+        public async Task InsercaoComSucesso01()
         {
             var fabricante = new ModeloInserçãoFabricante
             {
@@ -30,6 +30,21 @@ namespace Concessionarias.Testes
                 PaisOrigem = "Estados Unidos",
                 AnoFundacao = 1950,
                 Website = "https://www.acmecorp.com"
+            };
+            var resultado = await _serviçoFabricante.Insert(fabricante);
+
+            Assert.True(resultado.IsValid);
+        }
+
+        [Fact]
+        public async Task InsercaoComSucesso02()
+        {
+            var fabricante = new ModeloInserçãoFabricante
+            {
+                Nome = "Les Chapolins",
+                PaisOrigem = "Mexico",
+                AnoFundacao = 1980,
+                Website = "www.chapolins.mx"
             };
             var resultado = await _serviçoFabricante.Insert(fabricante);
 

@@ -40,6 +40,25 @@ namespace Concessionarias.Testes
         }
 
         [Fact]
+        public async Task AtualizacaoComErro()
+        {
+            var modelo = new ModeloAtualizaçãoVeiculo
+            {
+                VeiculoId = 1,
+                FabricanteId = 0,
+                TipoVeiculoId = 0,
+                Modelo = "Sedan Luxo",
+                AnoFabricacao = 2023,
+                Preco = 0,
+                Descricao = ""
+            };
+
+            var resultado = await _serviçoVeiculo.Update(modelo);
+
+            Assert.False(resultado.IsValid);
+        }
+
+        [Fact]
         public async Task InsercaoComErroPorCausaDaData()
         {
             var modelo = new ModeloInserçãoVeiculo

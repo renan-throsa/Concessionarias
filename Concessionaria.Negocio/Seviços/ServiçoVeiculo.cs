@@ -40,6 +40,7 @@ namespace Concessionarias.Negocio.Seviços
                 return Erro();
 
             await _repositorioVeiculo.InsertAsync(entidade);
+            await _repositorioVeiculo.SaveChangesAsync();
 
             return Successo(entidade.Id);
         }
@@ -59,10 +60,11 @@ namespace Concessionarias.Negocio.Seviços
         }
 
         public async Task<ModeloResultadoDaOperação> Update(ModeloAtualizaçãoVeiculo modelo)
-        {            
+        {
+
             var entidade = await _repositorioVeiculo.GetByIdAsync(modelo.VeiculoId, true);
 
-            if (entidade is null) 
+            if (entidade is null)
                 return Erro($"Não encontrado: {modelo.VeiculoId}", HttpStatusCode.NotFound);
 
             if (!EntityIsValid(new ValidadorDeVeiculo(), entidade))

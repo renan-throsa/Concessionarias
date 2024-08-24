@@ -2,7 +2,7 @@
 {
     public class ModeloVisualizaçãoFabricante
     {
-        public int Id { get; set; }
+        public int FabricanteId { get; set; }
         public string Nome { get; set; }
         public string PaisOrigem { get; set; }
         public int AnoFundacao { get; set; }

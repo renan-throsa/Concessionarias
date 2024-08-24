@@ -1,3 +1,8 @@
+using Concessionarias.IU.Clientes;
+using Concessionarias.IU.Configs;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Net.Http.Headers;
+
 namespace Concessionarias.IU
 {
     public class Program
@@ -8,9 +13,45 @@ namespace Concessionarias.IU
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            IConfigurationSection clientSettingsSection = builder.Configuration.GetSection(nameof(ApiConfigs));
+            string address = clientSettingsSection.Get<ApiConfigs>().Endereco;
+
+            builder.Services.AddHttpClient<IFabricanteClient, FabricanteClient>((HttpClient client) =>
+            {
+                client.BaseAddress = new Uri(address);
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
+            });
+
+            builder.Services.AddHttpClient<IVeiculoClient, VeiculoClient>((HttpClient client) =>
+            {
+                client.BaseAddress = new Uri(address);
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
+            });
+
+            builder.Services.AddHttpClient<IConcessionariaClient, ConcessionariaClient>((HttpClient client) =>
+            {
+                client.BaseAddress = new Uri(address);
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
+            });
+
+            builder.Services.AddCors(options =>
+            {               
+
+                options.AddPolicy("Running", builder =>
+                {
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyOrigin();
+                });
+
+            });
 
             var app = builder.Build();
 
+            app.UseCors();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

@@ -9,7 +9,7 @@ namespace Concessionarias.Negocio.Mapeamentos
         public MapeamentoFabricante()
         {
             CreateMap<Fabricante, ModeloVisualizaçãoFabricante>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.FabricanteId, opt => opt.MapFrom(src => src.Id))
                 .ReverseMap();
 
 

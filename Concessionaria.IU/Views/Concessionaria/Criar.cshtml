@@ -1,0 +1,150 @@
+﻿﻿@{
+    ViewData["Title"] = "Nova Concessionária";
+
+    List<string> erros = ViewBag.Erros;
+
+    var estados = ((new Dictionary<string, string>
+                {
+            { "AC", "Acre" },
+            { "AL", "Alagoas" },
+            { "AP", "Amapá" },
+            { "AM", "Amazonas" },
+            { "BA", "Bahia" },
+            { "CE", "Ceará" },
+            { "DF", "Distrito Federal" },
+            { "ES", "Espírito Santo" },
+            { "GO", "Goiás" },
+            { "MA", "Maranhão" },
+            { "MT", "Mato Grosso" },
+            { "MS", "Mato Grosso do Sul" },
+            { "MG", "Minas Gerais" },
+            { "PA", "Pará" },
+            { "PB", "Paraíba" },
+            { "PR", "Paraná" },
+            { "PE", "Pernambuco" },
+            { "PI", "Piauí" },
+            { "RJ", "Rio de Janeiro" },
+            { "RN", "Rio Grande do Norte" },
+            { "RS", "Rio Grande do Sul" },
+            { "RO", "Rondônia" },
+            { "RR", "Roraima" },
+            { "SC", "Santa Catarina" },
+            { "SP", "São Paulo" },
+            { "SE", "Sergipe" },
+            { "TO", "Tocantins" }
+                }
+
+    ))
+    .Select(x => new SelectListItem() { Value = x.Key, Text = x.Value });
+}
+
+@model ModeloInserçãoConcessionária
+
+@if (erros is not null && erros.Any())
+{
+    <ul>
+        @foreach (string erro in erros)
+        {
+
+            <li>@erro</li>
+        }
+    </ul>
+
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Novo Concessionária
+                        <a asp-controller="Concessionaria" asp-action="Listagem" class="btn btn-danger float-end">Voltar</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Concessionaria" asp-action="Criar" method="POST">
+
+                        <div class="mb-3">
+                            <label asp-for="Nome">Insera o nome da concessionária</label>
+                            <input asp-for="Nome" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CEP">Preencha o Cep</label>
+                            <input asp-for="CEP" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Endereco">Preencha a rua</label>
+                            <input asp-for="Endereco" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Cidade">Preencha a cidade</label>
+                            <input asp-for="Cidade" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Estado">Selecione o estado</label>
+                            <select asp-for="Estado" class="form-control" asp-items="estados">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Telefone">Adicione o telefone</label>
+                            <input asp-for="Telefone" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Email">Adicione email</label>
+                            <input asp-for="Email" type="email" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CapacidadeMaximaVeiculos">Defina a capacidade máxima de veículos.</label>
+                            <input asp-for="CapacidadeMaximaVeiculos" type="number" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Inserir Concessionária</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            let cepField = document.getElementById("CEP");
+            let enderecoField = document.getElementById("Endereco");
+            let cidadeField = document.getElementById("Cidade");
+            let estadoField = document.getElementById("Estado");
+
+            cepField.addEventListener("change", () => {
+
+                if (cepField.value.length >= 8) {
+
+                    $.ajax(
+                        {
+                            typeof: "GET",
+                            url: `https://viacep.com.br/ws/${cepField.value}/json/`,
+                            success: function (resulto) {
+                                enderecoField.value = resulto.logradouro;
+                                cidadeField.value = resulto.localidade;
+                                estadoField.value = resulto.uf;
+                            },
+                            error: function (request, status, error) { console.log(error) }
+                        }
+                    );
+
+                }
+
+            })
+        })
+
+    </script>
+
+}

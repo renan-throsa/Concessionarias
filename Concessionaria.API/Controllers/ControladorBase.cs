@@ -25,19 +25,19 @@ namespace Concessionarias.API.Controllers
             switch (resultado.StatusCode)
             {
                 case HttpStatusCode.BadRequest:
-                    return BadRequest(resultado);
+                    return BadRequest(resultado.Result);
 
                 case HttpStatusCode.NotFound:
-                    return NotFound(resultado);
+                    return NotFound(resultado.Result);
 
                 case HttpStatusCode.Unauthorized:
-                    return Unauthorized(resultado);
+                    return Unauthorized(resultado.Result);
 
                 case HttpStatusCode.Conflict:
-                    return Conflict(resultado);
+                    return Conflict(resultado.Result);
 
                 default:
-                    return BadRequest(resultado);
+                    return BadRequest(resultado.Result);
             }
         }
     }

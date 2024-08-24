@@ -14,7 +14,7 @@ namespace Concessionarias.API.Controllers
             _serviçoFabricante = serviçoFabricante;
         }
 
-        [HttpGet($"{nameof(Todos)}")]
+        [HttpGet]
         public ActionResult<ModeloVisualizaçãoFabricante> Todos()
         {
             return RespostaCustomizada(_serviçoFabricante.FindAll());

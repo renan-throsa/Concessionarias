@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Concessionárias";
+}
+
+@model List<ModeloConsultaConcessionária>
+
+<div class="container mt-4">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Concessionárias
+                        <a asp-controller="Concessionaria" asp-action="Criar" class="btn btn-primary float-end">Nova Concessionária</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>                                
+                                <th scope="col">Cidade</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Telefone</th>
+                                <th scope="col">Cpaxidade de Veículos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (ModeloConsultaConcessionária concessionaria in this.Model)
+                            {
+                                <tr>
+                                    <td>@concessionaria.Nome</td>
+                                    <td>@concessionaria.Cidade</td>
+                                    <td>@concessionaria.Estado</td>
+                                    <td>@concessionaria.Telefone</td>
+                                    <td>@concessionaria.CapacidadeMaximaVeiculos</td>
+                                    <td>
+                                        <!--
+                                            <a asp-route-id="@concessionaria.ConcessionariaId" asp-controller="Fabricante" asp-action="Visualizar" class="btn btn-info btn-sm">Visualizar</a>
+
+                                        -->
+                                            <a asp-route-id="@concessionaria.ConcessionariaId" asp-controller="Concessionaria" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

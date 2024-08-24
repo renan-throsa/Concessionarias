@@ -14,7 +14,7 @@ namespace Concessionarias.API.Controllers
             _serviçoVeiculo = serviçoVeiculo;
         }
 
-        [HttpGet($"{nameof(Todos)}")]
+        [HttpGet]
         public ActionResult<ModeloConsultaVeiculo> Todos()
         {
             return RespostaCustomizada(_serviçoVeiculo.FindAll());

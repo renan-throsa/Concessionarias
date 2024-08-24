@@ -15,7 +15,7 @@ namespace Venda.API.Controllers
             _serviçoVenda = serviçoVenda;
         }
 
-        [HttpGet($"{nameof(Todos)}")]
+        [HttpGet]
         public ActionResult<ModeloConsultaVenda> Todos()
         {
             return RespostaCustomizada(_serviçoVenda.FindAll());

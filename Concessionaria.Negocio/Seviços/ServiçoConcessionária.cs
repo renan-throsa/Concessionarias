@@ -19,7 +19,7 @@ namespace Concessionarias.Negocio.Seviços
 
         public ModeloResultadoDaOperação FindAll()
         {
-            return Successo(Mapper.ProjectTo<ModeloVisualizaçãoConcessionária>(_repositorioConcessionária.Query()));
+            return Successo(Mapper.ProjectTo<ModeloConsultaConcessionária>(_repositorioConcessionária.Query()));
         }
 
         public async Task<ModeloResultadoDaOperação> FindById(int id)
@@ -42,6 +42,7 @@ namespace Concessionarias.Negocio.Seviços
                 return Erro();
 
             await _repositorioConcessionária.InsertAsync(entidade);
+            await _repositorioConcessionária.SaveChangesAsync();
 
             return Successo(entidade.Id);
         }
@@ -69,11 +70,11 @@ namespace Concessionarias.Negocio.Seviços
                 return Erro();
 
 
-            if (entidade is null) return Erro($"Não encontrado: {modelo.ConcessionariaId}", HttpStatusCode.NotFound);            
+            if (entidade is null) return Erro($"Não encontrado: {modelo.ConcessionariaId}", HttpStatusCode.NotFound);
 
             await _repositorioConcessionária.UpdateAsync(Mapper.Map<Concessionaria>(modelo));
             await _repositorioConcessionária.SaveChangesAsync();
-            return Successo();
+            return Successo(modelo.ConcessionariaId);
         }
     }
 }
