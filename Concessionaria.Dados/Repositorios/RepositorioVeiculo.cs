@@ -16,14 +16,14 @@ namespace Concessionarias.Dados.Repositorios
             var consulta = _currentSet.Where(x => x.Ativo);
             if (comoRastreada)
             {
-                return await consulta.FirstAsync(x => x.Id == id);
+                return await consulta.FirstOrDefaultAsync(x => x.Id == id);
             }
 
             return await _currentSet
                 .AsNoTracking()
                 .Include(x => x.Fabricante)
                 .Include(x => x.TipoVeiculo)
-                .FirstAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
     }

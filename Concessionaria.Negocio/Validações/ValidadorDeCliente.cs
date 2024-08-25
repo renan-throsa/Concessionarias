@@ -1,5 +1,6 @@
 ﻿using Concessionarias.Dominio.Entidades;
 using FluentValidation;
+using DocumentValidator;
 
 namespace Concessionarias.Negocio.Validações
 {
@@ -8,7 +9,7 @@ namespace Concessionarias.Negocio.Validações
         public ValidadorDeCliente()
         {
             RuleFor(x => x.Nome).NotEmpty().MaximumLength(100);
-            RuleFor(x => x.CPF).NotEmpty().MaximumLength(11);
+            RuleFor(x => x.CPF).NotEmpty().Must(x => x is not null && CpfValidation.Validate(x));
             RuleFor(x => x.Telefone).NotEmpty().MaximumLength(15);
         }
     }

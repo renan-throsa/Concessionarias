@@ -1,4 +1,6 @@
-﻿namespace Concessionarias.Dominio.Modelos
+﻿using System.Globalization;
+
+namespace Concessionarias.Dominio.Modelos
 {
     public class ModeloConsultaVeiculo
     {
@@ -12,5 +14,13 @@
 
         public string TipoVeiculo { get; set; }
         public string Fabricante { get; set; }
+
+
+        public string Resumo
+        {
+            get { return $"{Modelo} - {Fabricante} - {Preco.ToString("C", new CultureInfo("pt-BR"))}"; }
+
+        }
+
     }
 }

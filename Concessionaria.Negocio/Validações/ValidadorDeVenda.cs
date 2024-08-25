@@ -8,10 +8,9 @@ namespace Concessionarias.Negocio.Validações
         public ValidadorDeVenda(decimal preçoVeiculo)
         {
             RuleFor(x => x.ConcessionariaId).GreaterThan(0);
-            RuleFor(x => x.VeiculoId).GreaterThan(0);
-            RuleFor(x => x.ClienteId).GreaterThan(0);
+            RuleFor(x => x.VeiculoId).GreaterThan(0);           
             RuleFor(x => x.PrecoVenda).LessThanOrEqualTo(preçoVeiculo);
-            RuleFor(x => x.DataVenda).LessThanOrEqualTo(DateTime.Today);
+            RuleFor(x => x.DataVenda).ExclusiveBetween(DateTime.Today.AddMonths(-1), DateTime.Today);
 
         }
     }

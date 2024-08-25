@@ -1,5 +1,5 @@
 ﻿using Concessionarias.Dominio.Modelos;
-using Concessionarias.IU.Clientes;
+using Concessionarias.IU.Clients;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -15,6 +15,7 @@ namespace Concessionarias.IU.Controllers
             _fabricanteClient = fabricanteClient;
         }
 
+        
         public async Task<ActionResult> Listagem()
         {
             var vm = await _fabricanteClient.Listagem();

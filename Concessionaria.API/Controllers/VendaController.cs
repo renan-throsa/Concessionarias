@@ -16,6 +16,7 @@ namespace Venda.API.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client)]
         public ActionResult<ModeloConsultaVenda> Todos()
         {
             return RespostaCustomizada(_serviçoVenda.FindAll());

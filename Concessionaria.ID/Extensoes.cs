@@ -8,6 +8,7 @@ using Concessionarias.Negocio.Seviços;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Reflection;
 
 namespace Concessionarias.ID
@@ -36,5 +37,19 @@ namespace Concessionarias.ID
             services.AddScoped<IServiçoVenda, ServiçoVenda>();
             return services;
         }
+
+        public static async Task AddMigrationsAsync(this IHost webHost)
+        {
+            using (var scope = webHost.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                using (var context = services.GetRequiredService<SqlContext>())
+                {
+                    await context.Database.MigrateAsync();
+                }
+            }
+        }
     }
+
+
 }

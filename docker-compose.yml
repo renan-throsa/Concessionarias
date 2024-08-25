@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: docker-sql
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+      - SA_PASSWORD=MyPass@word
+    ports:
+      - "4000:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+    networks:
+      - app-net
+      
+
+  api:
+    image: conc-api-service
+    container_name: conc-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production    
+    restart: unless-stopped    
+    build:      
+      dockerfile: ./Concessionaria.API/Dockerfile      
+    ports:
+      - "4002:8080"
+    depends_on: 
+      - sql
+    networks:
+      - app-net
+  
+  app:
+    image: conc-app-service
+    container_name: conc-app
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production    
+    restart: unless-stopped    
+    build:      
+      dockerfile: ./Concessionaria.IU/Dockerfile      
+    ports:
+      - "4003:8080"
+    depends_on: 
+      - api
+    networks:
+      - app-net  
+
+volumes:
+  sql-data:
+  nosql-data:
+
+networks:
+  app-net:
+    driver: bridge
+
+  

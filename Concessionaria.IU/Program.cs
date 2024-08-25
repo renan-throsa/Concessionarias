@@ -1,6 +1,5 @@
-using Concessionarias.IU.Clientes;
+using Concessionarias.IU.Clients;
 using Concessionarias.IU.Configs;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
 
 namespace Concessionarias.IU
@@ -20,38 +19,34 @@ namespace Concessionarias.IU
             {
                 client.BaseAddress = new Uri(address);
                 client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
             builder.Services.AddHttpClient<IVeiculoClient, VeiculoClient>((HttpClient client) =>
             {
                 client.BaseAddress = new Uri(address);
                 client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
             builder.Services.AddHttpClient<IConcessionariaClient, ConcessionariaClient>((HttpClient client) =>
             {
                 client.BaseAddress = new Uri(address);
                 client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
-            builder.Services.AddCors(options =>
-            {               
+            builder.Services.AddHttpClient<IVendaClient, VendaClient>((HttpClient client) =>
+            {
+                client.BaseAddress = new Uri(address);
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+            });
 
-                options.AddPolicy("Running", builder =>
-                {
-                    builder.AllowAnyMethod();
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyOrigin();
-                });
-
+            builder.Services.AddHttpClient<IClienteClient, ClienteClient>((HttpClient client) =>
+            {
+                client.BaseAddress = new Uri(address);
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
             });
 
             var app = builder.Build();
 
-            app.UseCors();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

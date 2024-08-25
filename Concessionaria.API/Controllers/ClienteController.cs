@@ -16,6 +16,7 @@ namespace Concessionarias.API.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client)]
         public ActionResult<ModeloVisualizaçãoCliente> Todos()
         {
             return RespostaCustomizada(_serviçoCliente.FindAll());

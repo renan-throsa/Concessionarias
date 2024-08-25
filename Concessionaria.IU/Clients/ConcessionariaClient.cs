@@ -2,27 +2,27 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Concessionarias.IU.Clientes
+namespace Concessionarias.IU.Clients
 {
-    public interface IFabricanteClient
+    public interface IConcessionariaClient
     {
-        Task<IEnumerable<ModeloVisualizaçãoFabricante>> Listagem();
+        Task<IEnumerable<ModeloConsultaConcessionária>> Listagem();
         Task<HttpResponseMessage> Encontrar(int id);
-        Task<HttpResponseMessage> Inserir(ModeloInserçãoFabricante modelo);
-        Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoFabricante modelo);
+        Task<HttpResponseMessage> Inserir(ModeloInserçãoConcessionária modelo);
+        Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoConcessionária modelo);
     }
 
-    public class FabricanteClient : IFabricanteClient
+    public class ConcessionariaClient : IConcessionariaClient
     {
         private readonly HttpClient client;
-        private const string _CONTROLLER = "/Fabricante";
+        private const string _CONTROLLER = "/Concessionaria";
 
-        public FabricanteClient(HttpClient client)
+        public ConcessionariaClient(HttpClient client)
         {
             this.client = client;
         }
 
-        public async Task<IEnumerable<ModeloVisualizaçãoFabricante>> Listagem()
+        public async Task<IEnumerable<ModeloConsultaConcessionária>> Listagem()
         {
             using var response = await client.GetAsync(_CONTROLLER);
 
@@ -35,7 +35,7 @@ namespace Concessionarias.IU.Clientes
                 PropertyNameCaseInsensitive = true
             };
 
-            return JsonSerializer.Deserialize<IEnumerable<ModeloVisualizaçãoFabricante>>(result, option);
+            return JsonSerializer.Deserialize<IEnumerable<ModeloConsultaConcessionária>>(result, option);
         }
 
         public async Task<HttpResponseMessage> Encontrar(int id)
@@ -44,7 +44,7 @@ namespace Concessionarias.IU.Clientes
             return await client.GetAsync(rota);
         }
 
-        public async Task<HttpResponseMessage> Inserir(ModeloInserçãoFabricante modelo)
+        public async Task<HttpResponseMessage> Inserir(ModeloInserçãoConcessionária modelo)
         {
             using StringContent jsonContent = new(JsonSerializer.Serialize(modelo), Encoding.UTF8, "application/json");
 
@@ -52,9 +52,8 @@ namespace Concessionarias.IU.Clientes
 
         }
 
-        public async Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoFabricante modelo)
+        public async Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoConcessionária modelo)
         {
-
             using StringContent jsonContent = new(JsonSerializer.Serialize(modelo), Encoding.UTF8, "application/json");
 
             return await client.PutAsync(_CONTROLLER, jsonContent);

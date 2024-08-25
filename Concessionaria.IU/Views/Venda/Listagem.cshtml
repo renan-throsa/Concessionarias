@@ -1,0 +1,58 @@
+﻿@using System.Globalization
+@{
+    ViewData["Title"] = "Vendas";
+}
+
+@model List<ModeloConsultaVenda>
+
+<div class="container mt-4">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Vendas
+                        <a asp-controller="Venda" asp-action="Criar" class="btn btn-primary float-end">Nova Venda</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Preço da venda</th>
+                                <th scope="col">Data da venda</th>
+                                <th scope="col">Protocolo da venda</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Veiculo</th>
+                                <th scope="col">Concessionaria</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (ModeloConsultaVenda venda in this.Model)
+                            {
+                                <tr>
+                                    <td>@venda.PrecoVenda</td>
+                                    <td>@venda.DataVenda.ToString("dd/MM/yyyy", new CultureInfo("pt-BR"))</td>
+                                    <td>@venda.ProtocoloVenda</td>
+                                    <td>@venda.Cliente</td>
+                                    <td>@venda.Veiculo</td>
+                                    <td>@venda.Concessionaria</td>
+                                    <td>
+
+                                        <a asp-route-id="@venda.VendaId" asp-controller="Venda" asp-action="Visualizar" class="btn btn-info btn-sm">Visualizar</a>
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

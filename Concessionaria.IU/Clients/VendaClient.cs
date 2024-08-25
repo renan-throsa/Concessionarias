@@ -2,26 +2,24 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Concessionarias.IU.Clientes
+namespace Concessionarias.IU.Clients
 {
-    public interface IVeiculoClient
+    public interface IVendaClient
     {
-        Task<IEnumerable<ModeloConsultaVeiculo>> Listagem();
+        Task<IEnumerable<ModeloConsultaVenda>> Listagem();
         Task<HttpResponseMessage> Encontrar(int id);
-        Task<HttpResponseMessage> Inserir(ModeloInserçãoVeiculo modelo);
-        Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoVeiculo modelo);
+        Task<HttpResponseMessage> Inserir(ModeloInserçãoVenda modelo);
     }
 
-    public class VeiculoClient : IVeiculoClient
+    public class VendaClient : IVendaClient
     {
         private readonly HttpClient client;
-        private const string _CONTROLLER = "/Veiculo";
+        private const string _CONTROLLER = "/Venda";
 
-        public VeiculoClient(HttpClient client)
+        public VendaClient(HttpClient client)
         {
             this.client = client;
         }
-
 
         public async Task<HttpResponseMessage> Encontrar(int id)
         {
@@ -29,22 +27,14 @@ namespace Concessionarias.IU.Clientes
             return await client.GetAsync(rota);
         }
 
-        public async Task<HttpResponseMessage> Inserir(ModeloInserçãoVeiculo modelo)
+        public async Task<HttpResponseMessage> Inserir(ModeloInserçãoVenda modelo)
         {
             using StringContent jsonContent = new(JsonSerializer.Serialize(modelo), Encoding.UTF8, "application/json");
 
             return await client.PostAsync(_CONTROLLER, jsonContent);
-
         }
 
-        public async Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoVeiculo modelo)
-        {
-            using StringContent jsonContent = new(JsonSerializer.Serialize(modelo), Encoding.UTF8, "application/json");
-
-            return await client.PutAsync(_CONTROLLER, jsonContent);
-        }
-
-        public async Task<IEnumerable<ModeloConsultaVeiculo>> Listagem()
+        public async Task<IEnumerable<ModeloConsultaVenda>> Listagem()
         {
             using var response = await client.GetAsync(_CONTROLLER);
 
@@ -57,7 +47,7 @@ namespace Concessionarias.IU.Clientes
                 PropertyNameCaseInsensitive = true
             };
 
-            return JsonSerializer.Deserialize<IEnumerable<ModeloConsultaVeiculo>>(result, option);
+            return JsonSerializer.Deserialize<IEnumerable<ModeloConsultaVenda>>(result, option);
         }
     }
 }

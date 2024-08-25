@@ -1,7 +1,7 @@
 ﻿﻿@{
     ViewData["Title"] = "Novo Fabricante";
-    
-    List<string> erros =  ViewBag.Erros;
+
+    List<string> erros = ViewBag.Erros;
 
     var paises = (new List<string>() { "China", "Estados Unidos", "Japão", "Alemanha", "Coreia do Sul", "Índia", "México", "Espanha", "Brasil", "Canadá", "França", "Tailândia", "Reino Unido", "Turquia", "Rússia", "Chéquia", "Indonésia", "Itália" })
     .OrderBy(x => x)
@@ -16,7 +16,7 @@
         @foreach (string erro in erros)
         {
 
-            <li>@erro</li>
+            <li><p style="color:red">@erro</p></li>
         }
     </ul>
 
@@ -41,7 +41,8 @@
                         </div>
                         <div class="mb-3">
                             <label asp-for="PaisOrigem">Selecione o país de origem</label>
-                            <select asp-for="PaisOrigem" class="form-control" asp-items="paises">                                
+                            <select asp-for="PaisOrigem" class="form-control" asp-items="paises">
+                                <option value="">Selecione</option>
                             </select>
                         </div>
                         <div class="mb-3">

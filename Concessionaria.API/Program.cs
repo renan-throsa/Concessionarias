@@ -15,7 +15,10 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 
+
 var app = builder.Build();
+
+await app.AddMigrationsAsync();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
