@@ -1,0 +1,87 @@
+﻿﻿@{
+    ViewData["Title"] = "Nova Venda";
+
+    List<string> erros = ViewBag.Erros;
+    List<SelectListItem> veiculos = ViewBag.Veiculos;
+    List<SelectListItem> concessionarias = ViewBag.Concs;
+}
+
+@model ModeloInserçãoVenda
+
+@if (erros is not null && erros.Any())
+{
+    <ul>
+        @foreach (string erro in erros)
+        {
+
+            <li><p style="color:red">@erro</p></li>
+        }
+    </ul>
+
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Nova Venda
+                        <a asp-controller="Venda" asp-action="Listagem" class="btn btn-danger float-end">Voltar</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Venda" asp-action="Criar" method="POST">
+
+                        <div class="mb-3">
+                            <label asp-for="VeiculoId">Seleciona o veículo desejado</label>
+                            <select asp-for="VeiculoId" class="form-control" asp-items="veiculos">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConcessionariaId">Seleciona a concessionária desejado</label>
+                            <select asp-for="ConcessionariaId" class="form-control" asp-items="concessionarias">
+                                <option value="">Selecione</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="Cliente.Nome">Insera o nome do cliente</label>
+                            <input type="text" asp-for="Cliente.Nome" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Cliente.CPF">Insera o cpf do cliente</label>
+                            <input type="text" asp-for="Cliente.CPF" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Cliente.Telefone">Insera o telefone do cliente</label>
+                            <input type="text" asp-for="Cliente.Telefone" class="form-control">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="DataVenda">Seleciona a data da venda.</label>
+                            <input type="date" asp-for="DataVenda" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PrecoVenda">Seleciona o preço da venda</label>
+                            <input asp-for="PrecoVenda" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Inserir Veiculo</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

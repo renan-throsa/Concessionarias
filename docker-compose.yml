@@ -23,7 +23,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Production    
     restart: unless-stopped    
     build:      
-      dockerfile: ./Concessionaria.API/Dockerfile      
+      dockerfile: ./Concs.Api/Dockerfile      
     ports:
       - "4002:8080"
     depends_on: 
@@ -33,14 +33,14 @@ services:
   
   app:
     image: conc-app-service
-    container_name: conc-app
+    container_name: conc-web
     environment:
       ASPNETCORE_ENVIRONMENT: Production    
     restart: unless-stopped    
     build:      
-      dockerfile: ./Concessionaria.IU/Dockerfile      
+      dockerfile: ./Concs.Web/Dockerfile      
     ports:
-      - "4003:8080"
+      - "4003:80"
     depends_on: 
       - api
     networks:
@@ -48,7 +48,6 @@ services:
 
 volumes:
   sql-data:
-  nosql-data:
 
 networks:
   app-net:
