@@ -17,7 +17,7 @@ namespace Concs.Dados.Repositorios
         }
 
         public virtual async Task<TEntity> GetByIdAsync(int id, bool comoRastreada = false)
-        {            
+        {
             var consulta = _currentSet.Where(x => x.Ativo);
             if (comoRastreada)
             {
@@ -26,8 +26,6 @@ namespace Concs.Dados.Repositorios
 
             return await _currentSet.AsNoTracking().FirstAsync(x => x.Id == id);
         }
-
-
 
         public virtual async Task InsertAllAsync(IEnumerable<TEntity> entities)
         {
@@ -67,5 +65,44 @@ namespace Concs.Dados.Repositorios
         }
         
 
+        public async Task<Relatorio> Resports(int mes, int ano)
+        {
+            var totalVendas = _context.Vendas.Where(x => x.DataVenda.Month == mes && x.DataVenda.Year == ano).Sum(x => x.PrecoVenda);
+
+
+            var VendasPorTipoDeveiculo = await (from venda in _context.Vendas
+                                                join veiculo in _context.Veiculos on venda.VeiculoId equals veiculo.Id
+                                                join tipoVeiculo in _context.TiposVeiculos on veiculo.TipoVeiculoId equals tipoVeiculo.Id
+                                                where venda.DataVenda.Month == mes && venda.DataVenda.Year == ano
+                                                group venda.PrecoVenda by tipoVeiculo.Tipo into grupo
+                                                select new Dado
+                                                {
+                                                    Chave = grupo.Key,
+                                                    Valor = grupo.Sum()
+                                                }).ToListAsync();
+
+            var VendasPorFabricante = await (from venda in _context.Vendas
+                                             join veiculo in _context.Veiculos on venda.VeiculoId equals veiculo.Id
+                                             join fabricante in _context.Fabricantes on veiculo.FabricanteId equals fabricante.Id
+                                             where venda.DataVenda.Month == mes && venda.DataVenda.Year == ano
+                                             group venda.PrecoVenda by fabricante.Nome into grupo
+                                             select new Dado
+                                             {
+                                                 Chave = grupo.Key,
+                                                 Valor = grupo.Sum()
+                                             }).ToListAsync();
+
+            var desempenhoPorConcessionaria = await (from venda in _context.Vendas
+                                                     join concessionaria in _context.Concessionarias on venda.ConcessionariaId equals concessionaria.Id
+                                                     where venda.DataVenda.Month == mes && venda.DataVenda.Year == ano
+                                                     group venda.PrecoVenda by concessionaria.Nome into grupo
+                                                     select new Dado
+                                                     {
+                                                         Chave = grupo.Key,
+                                                         Valor = grupo.Sum()
+                                                     }).ToListAsync();
+
+            return new Relatorio() { Mes = mes, Ano = ano, TotalVendas = totalVendas, VendasPorTipoDeveiculo = VendasPorTipoDeveiculo, VendasPorFabricante = VendasPorFabricante, DesempenhoPorConcessionaria = desempenhoPorConcessionaria };
+        }
     }
 }

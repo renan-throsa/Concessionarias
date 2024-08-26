@@ -30,8 +30,7 @@ namespace Concs.Id
             else
             {
                 services.AddDbContext<SqlContext>(options => options.UseSqlServer(sqlConfig.ConnectionString));
-            }
-            
+            }           
 
             services.AddScoped<IRepositorioCliente, RepositorioCliente>();
             services.AddScoped<IRepositorioConcessionária, RepositorioConcessionária>();

@@ -7,8 +7,9 @@ namespace Concs.Dados.Contexto
     public class SqlContext : DbContext
     {
         public DbSet<Cliente> Clientes { get; init; }
-        public DbSet<Concessionaria> Concs { get; init; }
+        public DbSet<Concessionaria> Concessionarias { get; init; }
         public DbSet<Fabricante> Fabricantes { get; init; }
+        public DbSet<TipoVeiculo> TiposVeiculos { get; init; }
         public DbSet<Veiculo> Veiculos { get; init; }
         public DbSet<Venda> Vendas { get; init; }
         

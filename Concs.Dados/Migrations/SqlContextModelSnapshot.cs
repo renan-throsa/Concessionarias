@@ -253,7 +253,7 @@ namespace Concs.Dados.Migrations
                             Cidade = "São Paulo",
                             Email = "contato@concessionariadovale.com.br",
                             Endereco = "Rua das Flores, 123",
-                            Estado = "SP",
+                            Estado = "São Paulo",
                             Nome = "Concessionária do Vale",
                             Telefone = "(11) 9876-5432"
                         },
@@ -266,7 +266,7 @@ namespace Concs.Dados.Migrations
                             Cidade = "Santo André",
                             Email = "vendas@autocenterabc.com",
                             Endereco = "Av. das Palmeiras, 456",
-                            Estado = "SP",
+                            Estado = "São Paulo",
                             Nome = "Auto Center ABC",
                             Telefone = "(11) 5555-1234"
                         },
@@ -279,7 +279,7 @@ namespace Concs.Dados.Migrations
                             Cidade = "Rio de Janeiro",
                             Email = "vendas@autoshopzeta.com",
                             Endereco = "Rua dos Carros, 789",
-                            Estado = "RJ",
+                            Estado = "Rio de Janeiro",
                             Nome = "Auto Shop Zeta",
                             Telefone = "(21) 9876-5432"
                         },
@@ -292,7 +292,7 @@ namespace Concs.Dados.Migrations
                             Cidade = "Belo Horizonte",
                             Email = "contato@megamotors.com.br",
                             Endereco = "Av. das Rodovias, 567",
-                            Estado = "MG",
+                            Estado = "Minas Gerais",
                             Nome = "Mega Motors",
                             Telefone = "(31) 5555-1234"
                         },
@@ -305,7 +305,7 @@ namespace Concs.Dados.Migrations
                             Cidade = "Curitiba",
                             Email = "vendas@carrosexpress.com",
                             Endereco = "Av. das Velocidades, 789",
-                            Estado = "PR",
+                            Estado = "Paraná",
                             Nome = "Carros Express",
                             Telefone = "(41) 5555-6789"
                         },
@@ -318,7 +318,7 @@ namespace Concs.Dados.Migrations
                             Cidade = "Porto Alegre",
                             Email = "contato@autocenterxyz.com",
                             Endereco = "Rua dos Motores, 567",
-                            Estado = "RS",
+                            Estado = "Rio Grande do Sul",
                             Nome = "Auto Center XYZ",
                             Telefone = "(51) 9876-2345"
                         },
@@ -331,7 +331,7 @@ namespace Concs.Dados.Migrations
                             Cidade = "Florianópolis",
                             Email = "vendas@carrosrapidos.com",
                             Endereco = "Av. das Acelerações, 789",
-                            Estado = "SC",
+                            Estado = "Santa Catarina",
                             Nome = "Carros Rápidos",
                             Telefone = "(48) 9876-5678"
                         },
@@ -344,7 +344,7 @@ namespace Concs.Dados.Migrations
                             Cidade = "Recife",
                             Email = "contato@autocenterabcd.com",
                             Endereco = "Rua dos Motores, 123",
-                            Estado = "PE",
+                            Estado = "Pernambuco",
                             Nome = "Auto Center ABCD",
                             Telefone = "(81) 5555-6789"
                         });
@@ -462,7 +462,7 @@ namespace Concs.Dados.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoVeiculo");
+                    b.ToTable("TiposVeiculos");
 
                     b.HasData(
                         new
@@ -671,7 +671,7 @@ namespace Concs.Dados.Migrations
                             ConcessionariaId = 1,
                             DataVenda = new DateTime(2024, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrecoVenda = 50000.00m,
-                            ProtocoloVenda = "C6536692-A4CD-494C-8",
+                            ProtocoloVenda = "D236EAD2-E1C1-459C-B",
                             VeiculoId = 1
                         },
                         new
@@ -679,10 +679,10 @@ namespace Concs.Dados.Migrations
                             Id = 2,
                             Ativo = true,
                             ClienteId = 2,
-                            ConcessionariaId = 2,
+                            ConcessionariaId = 1,
                             DataVenda = new DateTime(2024, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrecoVenda = 45000.00m,
-                            ProtocoloVenda = "D56ED2D6-322E-4B7C-8",
+                            ProtocoloVenda = "328A44F3-E584-4770-9",
                             VeiculoId = 2
                         },
                         new
@@ -690,10 +690,10 @@ namespace Concs.Dados.Migrations
                             Id = 3,
                             Ativo = true,
                             ClienteId = 3,
-                            ConcessionariaId = 3,
+                            ConcessionariaId = 2,
                             DataVenda = new DateTime(2024, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrecoVenda = 55000.00m,
-                            ProtocoloVenda = "2CE26119-AC62-47D9-8",
+                            ProtocoloVenda = "636C89F6-9BE2-41BF-8",
                             VeiculoId = 3
                         },
                         new
@@ -701,10 +701,10 @@ namespace Concs.Dados.Migrations
                             Id = 4,
                             Ativo = true,
                             ClienteId = 4,
-                            ConcessionariaId = 4,
+                            ConcessionariaId = 2,
                             DataVenda = new DateTime(2024, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrecoVenda = 48000.00m,
-                            ProtocoloVenda = "3B7634B2-1219-4559-8",
+                            ProtocoloVenda = "DA592B58-40E6-4095-8",
                             VeiculoId = 4
                         },
                         new
@@ -715,7 +715,7 @@ namespace Concs.Dados.Migrations
                             ConcessionariaId = 5,
                             DataVenda = new DateTime(2024, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrecoVenda = 52000.00m,
-                            ProtocoloVenda = "EB8B9697-BA3E-401A-A",
+                            ProtocoloVenda = "F99A1C88-3AFF-477C-8",
                             VeiculoId = 5
                         },
                         new
@@ -723,10 +723,10 @@ namespace Concs.Dados.Migrations
                             Id = 6,
                             Ativo = true,
                             ClienteId = 6,
-                            ConcessionariaId = 6,
+                            ConcessionariaId = 5,
                             DataVenda = new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrecoVenda = 47000.00m,
-                            ProtocoloVenda = "56B97D14-B4C8-43AA-9",
+                            ProtocoloVenda = "A79FC038-8E86-45CC-8",
                             VeiculoId = 6
                         },
                         new
@@ -737,7 +737,7 @@ namespace Concs.Dados.Migrations
                             ConcessionariaId = 7,
                             DataVenda = new DateTime(2024, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrecoVenda = 53000.00m,
-                            ProtocoloVenda = "D8E06F73-2477-40BC-B",
+                            ProtocoloVenda = "F046B055-A56E-4D5C-B",
                             VeiculoId = 7
                         },
                         new
@@ -748,8 +748,85 @@ namespace Concs.Dados.Migrations
                             ConcessionariaId = 8,
                             DataVenda = new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrecoVenda = 48000.00m,
-                            ProtocoloVenda = "E74C09E9-4FC5-4F2D-9",
+                            ProtocoloVenda = "467E30E2-8BB3-43C9-B",
                             VeiculoId = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Ativo = true,
+                            ClienteId = 8,
+                            ConcessionariaId = 8,
+                            DataVenda = new DateTime(2024, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrecoVenda = 50000.00m,
+                            ProtocoloVenda = "59233EC1-D5BC-4547-A",
+                            VeiculoId = 8
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Ativo = true,
+                            ClienteId = 7,
+                            ConcessionariaId = 7,
+                            DataVenda = new DateTime(2024, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrecoVenda = 45000.00m,
+                            ProtocoloVenda = "891363E7-FCC8-4540-8",
+                            VeiculoId = 7
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Ativo = true,
+                            ClienteId = 16,
+                            ConcessionariaId = 6,
+                            DataVenda = new DateTime(2024, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrecoVenda = 55000.00m,
+                            ProtocoloVenda = "FE5FCA9D-F89C-4B0D-8",
+                            VeiculoId = 6
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Ativo = true,
+                            ClienteId = 15,
+                            ConcessionariaId = 5,
+                            DataVenda = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrecoVenda = 48000.00m,
+                            ProtocoloVenda = "3BB585D9-DEBD-468A-9",
+                            VeiculoId = 5
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Ativo = true,
+                            ClienteId = 14,
+                            ConcessionariaId = 7,
+                            DataVenda = new DateTime(2024, 5, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrecoVenda = 52000.00m,
+                            ProtocoloVenda = "25BBE750-6C7B-4FA8-9",
+                            VeiculoId = 4
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Ativo = true,
+                            ClienteId = 13,
+                            ConcessionariaId = 5,
+                            DataVenda = new DateTime(2024, 5, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrecoVenda = 47000.00m,
+                            ProtocoloVenda = "6196D799-57CA-4EEA-B",
+                            VeiculoId = 3
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Ativo = true,
+                            ClienteId = 9,
+                            ConcessionariaId = 3,
+                            DataVenda = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrecoVenda = 53000.00m,
+                            ProtocoloVenda = "501C4B9A-15C5-4F0B-9",
+                            VeiculoId = 2
                         });
                 });
 
@@ -780,7 +857,7 @@ namespace Concs.Dados.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Concs.Dominio.Entidades.Concessionaria", "Concessionária")
+                    b.HasOne("Concs.Dominio.Entidades.Concessionaria", "Concessionaria")
                         .WithMany()
                         .HasForeignKey("ConcessionariaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -794,7 +871,7 @@ namespace Concs.Dados.Migrations
 
                     b.Navigation("Cliente");
 
-                    b.Navigation("Concessionária");
+                    b.Navigation("Concessionaria");
 
                     b.Navigation("Veiculo");
                 });

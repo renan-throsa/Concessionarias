@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Venda.API.Controllers
 {
-    
+
     public class VendaController : ControladorBase
     {
         private readonly IServiçoVenda _serviçoVenda;
@@ -28,16 +28,19 @@ namespace Venda.API.Controllers
             return RespostaCustomizada(await _serviçoVenda.FindById(id));
         }
 
-        [HttpPost]
-        public async Task<ActionResult<int>> Inserir([FromBody] ModeloInserçãoVenda modelo)
+        [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client)]
+        [HttpGet(nameof(Relatorios))]
+        public async Task<ActionResult<int>> Relatorios([FromQuery] int mes, int ano)
         {
-            return RespostaCustomizada(await _serviçoVenda.Insert(modelo));
-        }  
+            return RespostaCustomizada(await _serviçoVenda.Relatorios(mes, ano));
+        }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<int>> Atualizar([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoVenda.Remove(id));
         }
+
+
     }
 }

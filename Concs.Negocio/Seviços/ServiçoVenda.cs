@@ -10,8 +10,8 @@ namespace Concs.Negocio.Seviços
     public class ServiçoVenda : Serviço, IServiçoVenda
     {
         private readonly IRepositorioVenda _repositorioVenda;
-        private readonly IRepositorioCliente _repositorioCliente;
         private readonly IRepositorioVeiculo _repositorioVeiculo;
+
         public ServiçoVenda(IMapper mapper, IRepositorioVenda repositorioVenda, IRepositorioVeiculo repositorioVeiculo) : base(mapper)
         {
             _repositorioVenda = repositorioVenda;
@@ -60,6 +60,14 @@ namespace Concs.Negocio.Seviços
             await _repositorioVenda.SaveChangesAsync();
 
             return Successo(entidade.Id);
+        }
+
+        public async Task<ModeloResultadoDaOperação> Relatorios(int mes, int ano)
+        {
+            mes = !(mes < 1 || mes > 12) ? mes : DateTime.Today.Month;
+            ano = !(ano < 1 || ano > DateTime.Today.Year) ? ano : DateTime.Today.Year;
+
+            return Successo(await _repositorioVenda.Resports(mes, ano));
         }
 
         public async Task<ModeloResultadoDaOperação> Remove(int id)

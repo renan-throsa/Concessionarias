@@ -15,6 +15,8 @@ namespace Concs.Web
             IConfigurationSection clientSettingsSection = builder.Configuration.GetSection(nameof(ApiConfigs));
             string address = clientSettingsSection.Get<ApiConfigs>().Endereco;
 
+            builder.Services.Configure<ApiConfigs>(clientSettingsSection); 
+
             builder.Services.AddHttpClient<IFabricanteClient, FabricanteClient>((HttpClient client) =>
             {
                 client.BaseAddress = new Uri(address);

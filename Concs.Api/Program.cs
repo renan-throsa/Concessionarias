@@ -1,5 +1,6 @@
 using Concs.Id;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,15 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowWebAppOrigins",
+                      policy =>
+                      {
+                          policy.WithOrigins("https://localhost:7090");
+                      });
+});
+
 var app = builder.Build();
 
 await app.AddMigrationsAsync();
@@ -24,10 +34,10 @@ await app.AddMigrationsAsync();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("AllowWebAppOrigins");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 
 app.MapControllers();
 

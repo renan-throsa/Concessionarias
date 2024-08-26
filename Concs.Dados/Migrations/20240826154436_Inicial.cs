@@ -26,7 +26,7 @@ namespace Concs.Dados.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Concs",
+                name: "Concessionarias",
                 columns: table => new
                 {
                     ConcessionariaId = table.Column<int>(type: "int", nullable: false)
@@ -64,7 +64,7 @@ namespace Concs.Dados.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoVeiculo",
+                name: "TiposVeiculos",
                 columns: table => new
                 {
                     TipoVeiculoId = table.Column<int>(type: "int", nullable: false)
@@ -74,7 +74,7 @@ namespace Concs.Dados.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoVeiculo", x => x.TipoVeiculoId);
+                    table.PrimaryKey("PK_TiposVeiculos", x => x.TipoVeiculoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,9 +101,9 @@ namespace Concs.Dados.Migrations
                         principalColumn: "FabricanteId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Veiculos_TipoVeiculo_TipoVeiculoId",
+                        name: "FK_Veiculos_TiposVeiculos_TipoVeiculoId",
                         column: x => x.TipoVeiculoId,
-                        principalTable: "TipoVeiculo",
+                        principalTable: "TiposVeiculos",
                         principalColumn: "TipoVeiculoId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -134,7 +134,7 @@ namespace Concs.Dados.Migrations
                     table.ForeignKey(
                         name: "FK_Vendas_Concessionarias_ConcessionariaId",
                         column: x => x.ConcessionariaId,
-                        principalTable: "Concs",
+                        principalTable: "Concessionarias",
                         principalColumn: "ConcessionariaId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -169,18 +169,18 @@ namespace Concs.Dados.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Concs",
+                table: "Concessionarias",
                 columns: new[] { "ConcessionariaId", "Ativo", "CEP", "CapacidadeMaximaVeiculos", "Cidade", "Email", "Endereco", "Estado", "Nome", "Telefone" },
                 values: new object[,]
                 {
-                    { 1, true, "01234567", 150, "São Paulo", "contato@concessionariadovale.com.br", "Rua das Flores, 123", "SP", "Concessionária do Vale", "(11) 9876-5432" },
-                    { 2, true, "09876543", 200, "Santo André", "vendas@autocenterabc.com", "Av. das Palmeiras, 456", "SP", "Auto Center ABC", "(11) 5555-1234" },
-                    { 3, true, "20000123", 180, "Rio de Janeiro", "vendas@autoshopzeta.com", "Rua dos Carros, 789", "RJ", "Auto Shop Zeta", "(21) 9876-5432" },
-                    { 4, true, "30000456", 220, "Belo Horizonte", "contato@megamotors.com.br", "Av. das Rodovias, 567", "MG", "Mega Motors", "(31) 5555-1234" },
-                    { 5, true, "80000789", 190, "Curitiba", "vendas@carrosexpress.com", "Av. das Velocidades, 789", "PR", "Carros Express", "(41) 5555-6789" },
-                    { 6, true, "90000123", 210, "Porto Alegre", "contato@autocenterxyz.com", "Rua dos Motores, 567", "RS", "Auto Center XYZ", "(51) 9876-2345" },
-                    { 7, true, "88000789", 200, "Florianópolis", "vendas@carrosrapidos.com", "Av. das Acelerações, 789", "SC", "Carros Rápidos", "(48) 9876-5678" },
-                    { 8, true, "50000123", 230, "Recife", "contato@autocenterabcd.com", "Rua dos Motores, 123", "PE", "Auto Center ABCD", "(81) 5555-6789" }
+                    { 1, true, "01234567", 150, "São Paulo", "contato@concessionariadovale.com.br", "Rua das Flores, 123", "São Paulo", "Concessionária do Vale", "(11) 9876-5432" },
+                    { 2, true, "09876543", 200, "Santo André", "vendas@autocenterabc.com", "Av. das Palmeiras, 456", "São Paulo", "Auto Center ABC", "(11) 5555-1234" },
+                    { 3, true, "20000123", 180, "Rio de Janeiro", "vendas@autoshopzeta.com", "Rua dos Carros, 789", "Rio de Janeiro", "Auto Shop Zeta", "(21) 9876-5432" },
+                    { 4, true, "30000456", 220, "Belo Horizonte", "contato@megamotors.com.br", "Av. das Rodovias, 567", "Minas Gerais", "Mega Motors", "(31) 5555-1234" },
+                    { 5, true, "80000789", 190, "Curitiba", "vendas@carrosexpress.com", "Av. das Velocidades, 789", "Paraná", "Carros Express", "(41) 5555-6789" },
+                    { 6, true, "90000123", 210, "Porto Alegre", "contato@autocenterxyz.com", "Rua dos Motores, 567", "Rio Grande do Sul", "Auto Center XYZ", "(51) 9876-2345" },
+                    { 7, true, "88000789", 200, "Florianópolis", "vendas@carrosrapidos.com", "Av. das Acelerações, 789", "Santa Catarina", "Carros Rápidos", "(48) 9876-5678" },
+                    { 8, true, "50000123", 230, "Recife", "contato@autocenterabcd.com", "Rua dos Motores, 123", "Pernambuco", "Auto Center ABCD", "(81) 5555-6789" }
                 });
 
             migrationBuilder.InsertData(
@@ -197,7 +197,7 @@ namespace Concs.Dados.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "TipoVeiculo",
+                table: "TiposVeiculos",
                 columns: new[] { "TipoVeiculoId", "Ativo", "Tipo" },
                 values: new object[,]
                 {
@@ -226,14 +226,21 @@ namespace Concs.Dados.Migrations
                 columns: new[] { "VendaId", "Ativo", "ClienteId", "ConcessionariaId", "DataVenda", "PrecoVenda", "ProtocoloVenda", "VeiculoId" },
                 values: new object[,]
                 {
-                    { 1, true, 1, 1, new DateTime(2024, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "C6536692-A4CD-494C-8", 1 },
-                    { 2, true, 2, 2, new DateTime(2024, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "D56ED2D6-322E-4B7C-8", 2 },
-                    { 3, true, 3, 3, new DateTime(2024, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "2CE26119-AC62-47D9-8", 3 },
-                    { 4, true, 4, 4, new DateTime(2024, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "3B7634B2-1219-4559-8", 4 },
-                    { 5, true, 5, 5, new DateTime(2024, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "EB8B9697-BA3E-401A-A", 5 },
-                    { 6, true, 6, 6, new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "56B97D14-B4C8-43AA-9", 6 },
-                    { 7, true, 7, 7, new DateTime(2024, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "D8E06F73-2477-40BC-B", 7 },
-                    { 8, true, 8, 8, new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "E74C09E9-4FC5-4F2D-9", 8 }
+                    { 1, true, 1, 1, new DateTime(2024, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "D236EAD2-E1C1-459C-B", 1 },
+                    { 2, true, 2, 1, new DateTime(2024, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "328A44F3-E584-4770-9", 2 },
+                    { 3, true, 3, 2, new DateTime(2024, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "636C89F6-9BE2-41BF-8", 3 },
+                    { 4, true, 4, 2, new DateTime(2024, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "DA592B58-40E6-4095-8", 4 },
+                    { 5, true, 5, 5, new DateTime(2024, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "F99A1C88-3AFF-477C-8", 5 },
+                    { 6, true, 6, 5, new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "A79FC038-8E86-45CC-8", 6 },
+                    { 7, true, 7, 7, new DateTime(2024, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "F046B055-A56E-4D5C-B", 7 },
+                    { 8, true, 8, 8, new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "467E30E2-8BB3-43C9-B", 8 },
+                    { 9, true, 8, 8, new DateTime(2024, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "59233EC1-D5BC-4547-A", 8 },
+                    { 10, true, 7, 7, new DateTime(2024, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "891363E7-FCC8-4540-8", 7 },
+                    { 11, true, 16, 6, new DateTime(2024, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "FE5FCA9D-F89C-4B0D-8", 6 },
+                    { 12, true, 15, 5, new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "3BB585D9-DEBD-468A-9", 5 },
+                    { 13, true, 14, 7, new DateTime(2024, 5, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "25BBE750-6C7B-4FA8-9", 4 },
+                    { 14, true, 13, 5, new DateTime(2024, 5, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "6196D799-57CA-4EEA-B", 3 },
+                    { 15, true, 9, 3, new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "501C4B9A-15C5-4F0B-9", 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -244,7 +251,7 @@ namespace Concs.Dados.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Concessionarias_Nome",
-                table: "Concs",
+                table: "Concessionarias",
                 column: "Nome",
                 unique: true);
 
@@ -294,7 +301,7 @@ namespace Concs.Dados.Migrations
                 name: "Clientes");
 
             migrationBuilder.DropTable(
-                name: "Concs");
+                name: "Concessionarias");
 
             migrationBuilder.DropTable(
                 name: "Veiculos");
@@ -303,7 +310,7 @@ namespace Concs.Dados.Migrations
                 name: "Fabricantes");
 
             migrationBuilder.DropTable(
-                name: "TipoVeiculo");
+                name: "TiposVeiculos");
         }
     }
 }

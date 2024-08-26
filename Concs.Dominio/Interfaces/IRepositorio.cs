@@ -1,4 +1,5 @@
 ﻿using Concs.Dominio.Entidades;
+using System.Collections.Generic;
 
 namespace Concs.Dominio.Interfaces
 {
@@ -20,8 +21,9 @@ namespace Concs.Dominio.Interfaces
         Task DeleteAllAsync(IEnumerable<TEntity> entities);
 
         Task<int> SaveChangesAsync();
-
         IQueryable<TEntity> Query();
+
+        Task<Relatorio> Resports(int mes, int ano);
 
     }
 }
