@@ -1,5 +1,7 @@
-﻿using Concs.Dominio.Modelos;
+﻿using Concs.Dominio.Interfaces;
+using Concs.Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace Concs.Api.Controllers
@@ -8,6 +10,25 @@ namespace Concs.Api.Controllers
     [Route("[controller]")]
     public class ControladorBase : ControllerBase
     {
+        protected readonly ICacheamento _cacheamento;
+
+        public ControladorBase(ICacheamento cacheamento)
+        {
+            _cacheamento = cacheamento;
+        }
+
+        protected async Task<ActionResult> RespostaCustomizada(ModeloResultadoDaOperação resultado, string chave)
+        {
+
+            if (!resultado.IsValid)
+            {
+                return ErrorResponse(resultado);
+            }
+            
+            await _cacheamento.DefinirAsync(chave, JsonConvert.SerializeObject(resultado.Content, Formatting.Indented));
+            return Ok(resultado.Content);
+        }
+
         protected ActionResult RespostaCustomizada(ModeloResultadoDaOperação resultado)
         {
 
@@ -16,7 +37,7 @@ namespace Concs.Api.Controllers
                 return ErrorResponse(resultado);
             }
 
-            return Ok(resultado.Content ?? string.Empty);
+            return Ok(resultado.Content);
         }
 
         protected ActionResult ErrorResponse(ModeloResultadoDaOperação resultado)

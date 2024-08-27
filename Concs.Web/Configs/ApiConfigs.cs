@@ -2,6 +2,7 @@
 {
     public class ApiConfigs
     {
-        public string Endereco { get; set; }
+        public string AppParaApiEndereco { get; set; }
+        public string WebParaApiEndereco { get; set; }
     }
 }

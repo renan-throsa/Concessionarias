@@ -1,5 +1,6 @@
 ﻿using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
+using Concs.Negocio.Seviços;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Concs.Api.Controllers
@@ -9,16 +10,27 @@ namespace Concs.Api.Controllers
     {
         private readonly IServiçoFabricante _serviçoFabricante;
 
-        public FabricanteController(IServiçoFabricante serviçoFabricante)
+        public FabricanteController(IServiçoFabricante serviçoFabricante, ICacheamento cacheamento) : base(cacheamento)
         {
             _serviçoFabricante = serviçoFabricante;
         }
 
-        [HttpGet]
-        [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client)]
-        public ActionResult<ModeloVisualizaçãoFabricante> Todos()
+        [HttpGet]        
+        public async Task <ActionResult<IEnumerable<ModeloVisualizaçãoFabricante>>> Todos()
         {
-            return RespostaCustomizada(_serviçoFabricante.FindAll());
+            var chave = "ChaveListagemFabricantes";
+            var opereçãoListagem = await _cacheamento.ObtertAsync(chave);
+
+            if (!string.IsNullOrEmpty(opereçãoListagem))
+            {
+                return Ok(opereçãoListagem);
+            }
+            else
+            {
+                var operaçãoListagem = _serviçoFabricante.FindAll();
+                return await RespostaCustomizada(operaçãoListagem, chave);
+            }
+           
         }
 
         [HttpGet("{id:int}")]

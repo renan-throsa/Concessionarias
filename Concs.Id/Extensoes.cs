@@ -15,23 +15,15 @@ namespace Concs.Id
 {
     public static class Extensoes
     {
-        public static IServiceCollection AddDependencies(this IServiceCollection services, IConfiguration configuration, bool IsProduction)
+        public static IServiceCollection AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
 
             var sqlConfig = configuration.GetSection(nameof(SqlConfig)).Get<SqlConfig>();
+            var webConfig = configuration.GetSection(nameof(WebConfig)).Get<WebConfig>();
 
             services.AddAutoMapper(Assembly.GetAssembly(typeof(AutoMapperProfiles)));
 
-            if (IsProduction)
-            {
-                //TODO : bug quando em produção.
-                services.AddDbContext<SqlContext>(options => options.UseSqlServer("Server=docker-sql;Database=CONCS_PROD;User Id=sa;Password=MyPass@word;TrustServerCertificate=True;"));
-            }
-            else
-            {
-                services.AddDbContext<SqlContext>(options => options.UseSqlServer(sqlConfig.ConnectionString));
-            }           
-
+            services.AddDbContext<SqlContext>(options => options.UseSqlServer(sqlConfig.ConnectionString));
             services.AddScoped<IRepositorioCliente, RepositorioCliente>();
             services.AddScoped<IRepositorioConcessionária, RepositorioConcessionária>();
             services.AddScoped<IRepositorioFabricante, RepositorioFabricante>();
@@ -43,6 +35,14 @@ namespace Concs.Id
             services.AddScoped<IServiçoFabricante, ServiçoFabricante>();
             services.AddScoped<IServiçoConcessionária, ServiçoConcessionária>();
             services.AddScoped<IServiçoVenda, ServiçoVenda>();
+
+            services.AddScoped<ICacheamento, ServiçoCacheamento>();
+
+            services.AddStackExchangeRedisCache(x =>
+            {
+                x.Configuration = webConfig.Cache;
+            });
+
             return services;
         }
 
@@ -52,7 +52,7 @@ namespace Concs.Id
             {
                 var services = scope.ServiceProvider;
                 using (var context = services.GetRequiredService<SqlContext>())
-                {                    
+                {
                     await context.Database.MigrateAsync();
                 }
             }

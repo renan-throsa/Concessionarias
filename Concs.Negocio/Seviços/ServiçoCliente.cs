@@ -16,7 +16,7 @@ namespace Concs.Negocio.Seviços
         }
 
         public ModeloResultadoDaOperação FindAll()
-        {
+        {            
             return Successo(Mapper.ProjectTo<ModeloVisualizaçãoCliente>(_repositorioCliente.Query()));
         }
 

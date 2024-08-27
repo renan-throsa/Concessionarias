@@ -14,7 +14,7 @@ namespace Concs.App.Controllers
         public HomeController(ILogger<HomeController> logger, IOptions<ApiConfigs> appSettings)
         {
             _logger = logger;
-            _apiEndereco = appSettings.Value.Endereco;
+            _apiEndereco = appSettings.Value.WebParaApiEndereco;
         }
 
         public IActionResult Index()

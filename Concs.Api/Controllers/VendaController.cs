@@ -1,25 +1,34 @@
-﻿using Concs.Api.Controllers;
-using Concs.Dominio.Interfaces;
+﻿using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
+using Concs.Negocio.Seviços;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Venda.API.Controllers
+namespace Concs.Api.Controllers
 {
-
     public class VendaController : ControladorBase
     {
         private readonly IServiçoVenda _serviçoVenda;
 
-        public VendaController(IServiçoVenda serviçoVenda)
+        public VendaController(IServiçoVenda serviçoVenda, ICacheamento cacheamento) : base(cacheamento)
         {
             _serviçoVenda = serviçoVenda;
         }
 
         [HttpGet]
-        [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client)]
-        public ActionResult<ModeloConsultaVenda> Todos()
+        public async Task<ActionResult<IEnumerable<ModeloConsultaVenda>>> Todos()
         {
-            return RespostaCustomizada(_serviçoVenda.FindAll());
+            var chave = "ChaveListagemaVendas";
+            var opereçãoListagem = await _cacheamento.ObtertAsync(chave);
+
+            if (!string.IsNullOrEmpty(opereçãoListagem))
+            {
+                return Ok(opereçãoListagem);
+            }
+            else
+            {
+                var operaçãoListagem = _serviçoVenda.FindAll();
+                return await RespostaCustomizada(operaçãoListagem, chave);
+            }
         }
 
         [HttpGet("{id:int}")]

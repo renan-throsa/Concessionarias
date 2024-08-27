@@ -1,6 +1,4 @@
-﻿
-
-using Concs.Dominio.Interfaces;
+﻿using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +8,27 @@ namespace Concs.Api.Controllers
     {
         private readonly IServiçoCliente _serviçoCliente;
 
-        public ClienteController(IServiçoCliente serviçoCliente)
+        public ClienteController(IServiçoCliente serviçoCliente, ICacheamento cacheamento) : base(cacheamento)
         {
             _serviçoCliente = serviçoCliente;
         }
 
         [HttpGet]
-        [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client)]
-        public ActionResult<ModeloVisualizaçãoCliente> Todos()
+        public async Task<ActionResult<IEnumerable<ModeloVisualizaçãoCliente>>> Todos()
         {
-            return RespostaCustomizada(_serviçoCliente.FindAll());
+            var chave = "ChaveListagemClientes";
+            var opereçãoListagem = await _cacheamento.ObtertAsync(chave);
+
+            if (!string.IsNullOrEmpty(opereçãoListagem))
+            {
+                return Ok(opereçãoListagem);
+            }
+            else
+            {
+                var operaçãoListagem = _serviçoCliente.FindAll();
+                return await RespostaCustomizada(operaçãoListagem, chave);
+            }
+
         }
 
         [HttpGet("{id:int}")]
@@ -46,6 +55,6 @@ namespace Concs.Api.Controllers
         {
             return RespostaCustomizada(await _serviçoCliente.Remove(id));
         }
-        
+
     }
 }

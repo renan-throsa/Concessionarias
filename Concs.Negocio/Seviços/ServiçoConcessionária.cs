@@ -8,7 +8,6 @@ using System.Net;
 namespace Concs.Negocio.Seviços
 {
 
-
     public class ServiçoConcessionária : Serviço, IServiçoConcessionária
     {
         private readonly IRepositorioConcessionária _repositorioConcessionária;

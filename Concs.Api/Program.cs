@@ -1,28 +1,31 @@
 using Concs.Id;
+using Concs.Id.Configs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+IConfigurationSection webConfigSettingsSection = builder.Configuration.GetSection(nameof(WebConfig));
+
+var webConfig = webConfigSettingsSection.Get<WebConfig>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDependencies(builder.Configuration, builder.Environment.IsProduction());
+builder.Services.AddDependencies(builder.Configuration);
+
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
 });
 
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowWebAppOrigins",
+    options.AddPolicy(webConfig.Policy,
                       policy =>
                       {
-                          policy.WithOrigins("https://localhost:7090");
+                          policy.WithOrigins(webConfig.Origin);
                       });
 });
 
@@ -34,7 +37,7 @@ await app.AddMigrationsAsync();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseCors("AllowWebAppOrigins");
+app.UseCors(webConfig.Policy);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

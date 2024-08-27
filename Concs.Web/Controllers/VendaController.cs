@@ -13,6 +13,7 @@ namespace Concs.App.Controllers
         private readonly IConcessionariaClient _concessionariaClient;
         private readonly IVendaClient _vendaClient;
         private readonly IClienteClient _clienteClient;
+        
 
         public VendaController(IVendaClient vendaClient, IVeiculoClient VeiculoClient, IConcessionariaClient concessionariaClient, IClienteClient clienteClient)
         {
@@ -66,9 +67,9 @@ namespace Concs.App.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Vizualizar(int id)
+        public async Task<ActionResult> Visualizar(int id)
         {
-            var response = await _veiculoClient.Encontrar(id);
+            var response = await _vendaClient.Encontrar(id);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
@@ -79,10 +80,7 @@ namespace Concs.App.Controllers
                 };
 
                 var model = JsonSerializer.Deserialize<ModeloVisualizaçãoVenda>(result, option);
-
-                ViewBag.Erros = new List<string>();
-                ViewBag.Veiculos = (await _veiculoClient.Listagem()).Select(x => new SelectListItem() { Text = x.Resumo, Value = x.VeiculoId.ToString() }).ToList();
-                ViewBag.Concs = (await _concessionariaClient.Listagem()).Select(x => new SelectListItem() { Text = x.Resumo, Value = x.ConcessionariaId.ToString() }).ToList();
+                                
 
                 return View(model);
             }

@@ -12,44 +12,45 @@ namespace Concs.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            
             IConfigurationSection clientSettingsSection = builder.Configuration.GetSection(nameof(ApiConfigs));
-            string address = clientSettingsSection.Get<ApiConfigs>().Endereco;
+            string address = clientSettingsSection.Get<ApiConfigs>().AppParaApiEndereco;
 
             builder.Services.Configure<ApiConfigs>(clientSettingsSection); 
 
             builder.Services.AddHttpClient<IFabricanteClient, FabricanteClient>((HttpClient client) =>
             {
                 client.BaseAddress = new Uri(address);
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
             builder.Services.AddHttpClient<IVeiculoClient, VeiculoClient>((HttpClient client) =>
             {
                 client.BaseAddress = new Uri(address);
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
             builder.Services.AddHttpClient<IConcessionariaClient, ConcessionariaClient>((HttpClient client) =>
             {
                 client.BaseAddress = new Uri(address);
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
             builder.Services.AddHttpClient<IVendaClient, VendaClient>((HttpClient client) =>
             {
                 client.BaseAddress = new Uri(address);
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
             builder.Services.AddHttpClient<IClienteClient, ClienteClient>((HttpClient client) =>
             {
                 client.BaseAddress = new Uri(address);
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");

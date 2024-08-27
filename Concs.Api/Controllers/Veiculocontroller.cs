@@ -1,5 +1,6 @@
 ﻿using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
+using Concs.Negocio.Seviços;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Concs.Api.Controllers
@@ -9,16 +10,26 @@ namespace Concs.Api.Controllers
     {
         private readonly IServiçoVeiculo _serviçoVeiculo;
 
-        public Veiculocontroller(IServiçoVeiculo serviçoVeiculo)
+        public Veiculocontroller(IServiçoVeiculo serviçoVeiculo, ICacheamento cacheamento) : base(cacheamento)
         {
             _serviçoVeiculo = serviçoVeiculo;
         }
 
         [HttpGet]
-        [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client)]
-        public ActionResult<ModeloConsultaVeiculo> Todos()
+        public async Task<ActionResult<IEnumerable<ModeloConsultaVeiculo>>> Todos()
         {
-            return RespostaCustomizada(_serviçoVeiculo.FindAll());
+            var chave = "ChaveListagemaVeiculos";
+            var opereçãoListagem = await _cacheamento.ObtertAsync(chave);
+
+            if (!string.IsNullOrEmpty(opereçãoListagem))
+            {
+                return Ok(opereçãoListagem);
+            }
+            else
+            {
+                var operaçãoListagem = _serviçoVeiculo.FindAll();
+                return await RespostaCustomizada(operaçãoListagem, chave);
+            }
         }
 
         [HttpGet("{id:int}")]
