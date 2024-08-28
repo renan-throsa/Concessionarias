@@ -106,5 +106,57 @@ namespace Concs.App.Controllers
 
             return View(modeloAtualizaçãoVeiculo);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Detalhes(int id)
+        {
+            var response = await _veiculoClient.Encontrar(id);
+            var option = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            if (response.IsSuccessStatusCode)
+            {
+                var sucssesResult = await response.Content.ReadAsStringAsync();               
+
+                var model = JsonSerializer.Deserialize<ModeloVisualizaçãoVeiculo>(sucssesResult, option);
+
+                ViewBag.Erros = new List<string>();
+                
+                return View(model);
+            }
+
+           
+            var erroResult = await response.Content.ReadAsStringAsync();
+            var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
+
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Detalhes(ModeloVisualizaçãoVeiculo modeloVisualizaçãoVeiculo)
+        {
+            var response = await _veiculoClient.Excluir(modeloVisualizaçãoVeiculo.VeiculoId);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Listagem", "Veiculo");
+            }
+
+            var option = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var erroResult = await response.Content.ReadAsStringAsync();
+            var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
+
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
+
+            return View(modeloVisualizaçãoVeiculo);
+        }
     }
 }

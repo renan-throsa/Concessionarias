@@ -35,7 +35,7 @@
                 }
 
     ))
-    .Select(x => new SelectListItem() { Value = x.Key, Text = x.Value });
+    .Select(x => new SelectListItem() { Value = x.Value, Text = x.Value });
 }
 
 @model ModeloAtualizaçãoConcessionária
@@ -100,7 +100,7 @@
 
                         <div class="mb-3">
                             <label asp-for="CapacidadeMaximaVeiculos">Defina a capacidade máxima de veículos.</label>
-                            <input asp-for="CapacidadeMaximaVeiculos" type="number" class="form-control">
+                            <input asp-for="CapacidadeMaximaVeiculos" type="number" min="1" class="form-control">
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Salvar Concessionária</button>

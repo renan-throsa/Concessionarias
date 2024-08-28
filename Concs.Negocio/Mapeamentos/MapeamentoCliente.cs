@@ -14,6 +14,10 @@ namespace Concs.Negocio.Mapeamentos
 
             CreateMap<Cliente, ModeloInserçãoCliente>()
                 .ReverseMap();
+
+
+            CreateMap<Cliente, ModeloAtualizaçãoCliente>()
+                .ReverseMap();
         }
     }
 }

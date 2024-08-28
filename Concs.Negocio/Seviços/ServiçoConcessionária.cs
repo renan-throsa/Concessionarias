@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Concs.Dominio;
 using Concs.Dominio.Entidades;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
@@ -11,9 +12,12 @@ namespace Concs.Negocio.Seviços
     public class ServiçoConcessionária : Serviço, IServiçoConcessionária
     {
         private readonly IRepositorioConcessionária _repositorioConcessionária;
-        public ServiçoConcessionária(IMapper mapper, IRepositorioConcessionária repositorioConcessionária) : base(mapper)
+        private readonly ICacheamento _cacheamento;
+
+        public ServiçoConcessionária(IMapper mapper, IRepositorioConcessionária repositorioConcessionária, ICacheamento cacheamento) : base(mapper)
         {
             _repositorioConcessionária = repositorioConcessionária;
+            _cacheamento = cacheamento;
         }
 
         public ModeloResultadoDaOperação FindAll()
@@ -40,8 +44,16 @@ namespace Concs.Negocio.Seviços
             if (!EntityIsValid(new ValidadorDeConcessionária(), entidade))
                 return Erro();
 
+            var nomeCadastrado = await _repositorioConcessionária.NomeCadastrado(entidade.Nome);
+
+            if (nomeCadastrado)
+            {
+                return Erro($"Já existe um Concessionária com o nome {entidade.Nome} no banco.", HttpStatusCode.Conflict);
+            }
+
             await _repositorioConcessionária.InsertAsync(entidade);
             await _repositorioConcessionária.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMCONCESSIONARIAS);
 
             return Successo(entidade.Id);
         }
@@ -65,14 +77,24 @@ namespace Concs.Negocio.Seviços
 
             var entidade = await _repositorioConcessionária.GetByIdAsync(modelo.ConcessionariaId, false);
 
-            if (!EntityIsValid(new ValidadorDeConcessionária(), entidade))
-                return Erro();
-
-
             if (entidade is null) return Erro($"Não encontrado: {modelo.ConcessionariaId}", HttpStatusCode.NotFound);
 
-            await _repositorioConcessionária.UpdateAsync(Mapper.Map<Concessionaria>(modelo));
+            var paraAtualizar = Mapper.Map<Concessionaria>(modelo);
+
+            if (!EntityIsValid(new ValidadorDeConcessionária(), paraAtualizar))
+                return Erro();
+
+            var nomeCadastrado = await _repositorioConcessionária.NomeCadastrado(paraAtualizar.Id, paraAtualizar.Nome);
+
+            if (nomeCadastrado)
+            {
+                return Erro($"Já existe um Concessionária com o nome {paraAtualizar.Nome} no banco.", HttpStatusCode.Conflict);
+            }
+
+            await _repositorioConcessionária.UpdateAsync(paraAtualizar);
             await _repositorioConcessionária.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMCONCESSIONARIAS);
+
             return Successo(modelo.ConcessionariaId);
         }
     }

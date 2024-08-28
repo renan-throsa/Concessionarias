@@ -1,4 +1,5 @@
-﻿using Concs.Dominio.Interfaces;
+﻿using Concs.Dominio;
+using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Concs.Negocio.Seviços;
 using Microsoft.AspNetCore.Mvc;
@@ -17,8 +18,7 @@ namespace Concs.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ModeloConsultaVenda>>> Todos()
         {
-            var chave = "ChaveListagemaVendas";
-            var opereçãoListagem = await _cacheamento.ObtertAsync(chave);
+            var opereçãoListagem = await _cacheamento.ObtertAsync(Constantes.CHAVELISTAGEMVENDAS);
 
             if (!string.IsNullOrEmpty(opereçãoListagem))
             {
@@ -27,7 +27,7 @@ namespace Concs.Api.Controllers
             else
             {
                 var operaçãoListagem = _serviçoVenda.FindAll();
-                return await RespostaCustomizada(operaçãoListagem, chave);
+                return await RespostaCustomizada(operaçãoListagem, Constantes.CHAVELISTAGEMVENDAS);
             }
         }
 
@@ -35,6 +35,12 @@ namespace Concs.Api.Controllers
         public async Task<ActionResult<ModeloVisualizaçãoVenda>> Encontrar([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoVenda.FindById(id));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Inserir([FromBody] ModeloInserçãoVenda modelo)
+        {
+            return RespostaCustomizada(await _serviçoVenda.Insert(modelo));
         }
 
         [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client)]
@@ -45,7 +51,7 @@ namespace Concs.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<int>> Atualizar([FromRoute] int id)
+        public async Task<ActionResult<int>> Excluir([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoVenda.Remove(id));
         }

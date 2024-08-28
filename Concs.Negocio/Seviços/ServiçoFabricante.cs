@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Concs.Dominio;
 using Concs.Dominio.Entidades;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
@@ -10,9 +11,14 @@ namespace Concs.Negocio.Seviços
     public class ServiçoFabricante : Serviço, IServiçoFabricante
     {
         private readonly IRepositorioFabricante _repositorioFabricante;
-        public ServiçoFabricante(IMapper mapper, IRepositorioFabricante repositorioFabricante) : base(mapper)
+        private readonly IRepositorioVeiculo _repositorioVeiculo;
+        private readonly ICacheamento _cacheamento;
+
+        public ServiçoFabricante(IMapper mapper, IRepositorioFabricante repositorioFabricante, ICacheamento cacheamento, IRepositorioVeiculo repositorioVeiculo) : base(mapper)
         {
             _repositorioFabricante = repositorioFabricante;
+            _cacheamento = cacheamento;
+            _repositorioVeiculo = repositorioVeiculo;
         }
 
         public ModeloResultadoDaOperação FindAll()
@@ -39,9 +45,15 @@ namespace Concs.Negocio.Seviços
             if (!EntityIsValid(new ValidadorDeFabricante(), entidade))
                 return Erro();
 
+            var nomeCadastrado = await _repositorioFabricante.NomeCadastrado(entidade.Nome);
+
+            if (nomeCadastrado)
+            {
+                return Erro($"Já existe um Fabricante com o nome {entidade.Nome} no banco.", HttpStatusCode.Conflict);
+            }
             await _repositorioFabricante.InsertAsync(entidade);
             await _repositorioFabricante.SaveChangesAsync();
-
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMFABRICANTES);
             return Successo(entidade.Id);
         }
 
@@ -54,28 +66,42 @@ namespace Concs.Negocio.Seviços
                 return Erro($"Não encontrado: {id}", HttpStatusCode.NotFound);
             }
 
+            var possuiRestriçãoDerelacionamento = _repositorioVeiculo.Query().Where(x => x.FabricanteId == id).Any();
+
+            if (possuiRestriçãoDerelacionamento)
+            {
+                return Erro($"Fabricante possui vinculo com um veículo ativo. Não é possível excluir.", HttpStatusCode.Conflict);
+            }
+
+
             entidade.Ativo = false;
             await _repositorioFabricante.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMFABRICANTES);
             return Successo(id);
         }
 
         public async Task<ModeloResultadoDaOperação> Update(ModeloAtualizaçãoFabricante modelo)
-        {            
+        {
 
-            var entidade = await _repositorioFabricante.GetByIdAsync(modelo.FabricanteId, true);
-
-            if (!EntityIsValid(new ValidadorDeFabricante(), entidade))
-                return Erro();
-
+            var entidade = await _repositorioFabricante.GetByIdAsync(modelo.FabricanteId, false);
 
             if (entidade is null) return Erro($"Não encontrado: {modelo.FabricanteId}", HttpStatusCode.NotFound);
 
-            entidade.Nome = modelo.Nome;
-            entidade.PaisOrigem = modelo.PaisOrigem;
-            entidade.AnoFundacao = modelo.AnoFundacao;
-            entidade.Website = modelo.Website;
+            var paraAtualizar = Mapper.Map<Fabricante>(modelo);
 
+            if (!EntityIsValid(new ValidadorDeFabricante(), paraAtualizar))
+                return Erro();
+
+            var nomeCadastrado = await _repositorioFabricante.NomeCadastrado(modelo.FabricanteId, modelo.Nome);
+
+            if (nomeCadastrado)
+            {
+                return Erro($"Já existe um Fabricante com nome {modelo.Nome} no banco.", HttpStatusCode.Conflict);
+            }
+
+            await _repositorioFabricante.UpdateAsync(paraAtualizar);
             await _repositorioFabricante.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMFABRICANTES);
             return Successo();
         }
     }

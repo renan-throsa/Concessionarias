@@ -58,18 +58,23 @@ namespace Concs.App.Controllers
         public async Task<ActionResult> Editar(int id)
         {
             var response = await _concessionariaClient.Encontrar(id);
+            var option = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadAsStringAsync();
+                var sucssesResult = await response.Content.ReadAsStringAsync();             
 
-                var option = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-
-                var model = JsonSerializer.Deserialize<ModeloAtualizaçãoConcessionária>(result, option);
+                var model = JsonSerializer.Deserialize<ModeloAtualizaçãoConcessionária>(sucssesResult, option);
                 return View(model);
             }
+
+            var erroResult = await response.Content.ReadAsStringAsync();
+            var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
+
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
             return View();
         }
 
@@ -93,7 +98,7 @@ namespace Concs.App.Controllers
             var result = await response.Content.ReadAsStringAsync();
             var erros = JsonSerializer.Deserialize<ValidationResult>(result, option);
 
-            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage);
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
 
 
             return View(modeloAtualizaçãoConcessionaria);

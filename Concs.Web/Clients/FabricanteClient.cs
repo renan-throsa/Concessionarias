@@ -10,6 +10,7 @@ namespace Concs.App.Clients
         Task<HttpResponseMessage> Encontrar(int id);
         Task<HttpResponseMessage> Inserir(ModeloInserçãoFabricante modelo);
         Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoFabricante modelo);
+        Task<HttpResponseMessage> Excluir(int id);
     }
 
     public class FabricanteClient : IFabricanteClient
@@ -58,6 +59,12 @@ namespace Concs.App.Clients
             using StringContent jsonContent = new(JsonSerializer.Serialize(modelo), Encoding.UTF8, "application/json");
 
             return await client.PutAsync(_CONTROLLER, jsonContent);
+        }
+
+        public async Task<HttpResponseMessage> Excluir(int id)
+        {
+            var rota = new StringBuilder(_CONTROLLER).Append("/").Append(id).ToString();
+            return await client.DeleteAsync(rota);
         }
     }
 }

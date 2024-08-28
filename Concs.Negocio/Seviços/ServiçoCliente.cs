@@ -1,22 +1,27 @@
 ﻿using AutoMapper;
+using Concs.Dominio;
 using Concs.Dominio.Entidades;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Concs.Negocio.Validações;
 using System.Net;
+using static StackExchange.Redis.Role;
 
 namespace Concs.Negocio.Seviços
 {
     public class ServiçoCliente : Serviço, IServiçoCliente
     {
         private readonly IRepositorioCliente _repositorioCliente;
-        public ServiçoCliente(IMapper mapper, IRepositorioCliente repositorioCliente) : base(mapper)
+        private readonly ICacheamento _cacheamento;
+
+        public ServiçoCliente(IMapper mapper, IRepositorioCliente repositorioCliente, ICacheamento cacheamento) : base(mapper)
         {
             _repositorioCliente = repositorioCliente;
+            _cacheamento = cacheamento;
         }
 
         public ModeloResultadoDaOperação FindAll()
-        {            
+        {
             return Successo(Mapper.ProjectTo<ModeloVisualizaçãoCliente>(_repositorioCliente.Query()));
         }
 
@@ -39,8 +44,19 @@ namespace Concs.Negocio.Seviços
             if (!EntityIsValid(new ValidadorDeCliente(), entidade))
                 return Erro();
 
+            entidade.CPF = entidade.CPF.Replace(".", "").Replace("-", "");
+
+            var cPFCadastrado = await _repositorioCliente.CPFCadastrado(entidade.CPF);
+
+            if (cPFCadastrado)
+            {
+                return Erro($"Já existe um cliente com {modelo.CPF} no banco.", HttpStatusCode.Conflict);
+            }
+
             await _repositorioCliente.InsertAsync(entidade);
             await _repositorioCliente.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMCLIENTES);
+
             return Successo(entidade.Id);
         }
 
@@ -60,24 +76,29 @@ namespace Concs.Negocio.Seviços
 
         public async Task<ModeloResultadoDaOperação> Update(ModeloAtualizaçãoCliente modelo)
         {
-            if (!await _repositorioCliente.TuplaUnica(modelo.ClienteId, modelo.CPF))
-            {
-                return Erro($"Cpf {modelo.CPF} já cadastrado", HttpStatusCode.NotFound);
-            }
+            
+            if (!EntityIsValid(new ValidadorDeCliente(), Mapper.Map<Cliente>(modelo)))
+                return Erro();
 
             var entidade = await _repositorioCliente.GetByIdAsync(modelo.ClienteId, true);
 
-            if (!EntityIsValid(new ValidadorDeCliente(), entidade))
-                return Erro();
-
-
             if (entidade is null) return Erro($"Não encontrado: {modelo.ClienteId}", HttpStatusCode.NotFound);
+
+            modelo.CPF = modelo.CPF.Replace(".", "").Replace("-", "");
+
+            var cPFCadastrado = await _repositorioCliente.CPFCadastrado(modelo.ClienteId, modelo.CPF);
+
+            if (cPFCadastrado)
+            {
+                return Erro($"Já existe um cliente com {modelo.CPF} no banco.", HttpStatusCode.Conflict);
+            }
 
             entidade.Nome = modelo.Nome;
             entidade.CPF = modelo.CPF;
-            entidade.Telefone = modelo.CPF;
+            entidade.Telefone = modelo.Telefone;
 
             await _repositorioCliente.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMCLIENTES);
             return Successo();
         }
     }

@@ -1,6 +1,8 @@
-﻿using Concs.Dominio.Interfaces;
+﻿using Concs.Dominio;
+using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata;
 
 namespace Concs.Api.Controllers
 {
@@ -16,8 +18,7 @@ namespace Concs.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ModeloVisualizaçãoCliente>>> Todos()
         {
-            var chave = "ChaveListagemClientes";
-            var opereçãoListagem = await _cacheamento.ObtertAsync(chave);
+            var opereçãoListagem = await _cacheamento.ObtertAsync(Constantes.CHAVELISTAGEMCLIENTES);
 
             if (!string.IsNullOrEmpty(opereçãoListagem))
             {
@@ -26,7 +27,7 @@ namespace Concs.Api.Controllers
             else
             {
                 var operaçãoListagem = _serviçoCliente.FindAll();
-                return await RespostaCustomizada(operaçãoListagem, chave);
+                return await RespostaCustomizada(operaçãoListagem, Constantes.CHAVELISTAGEMCLIENTES);
             }
 
         }

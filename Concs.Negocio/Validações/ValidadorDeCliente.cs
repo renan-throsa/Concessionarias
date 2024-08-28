@@ -10,7 +10,7 @@ namespace Concs.Negocio.Validações
         {
             RuleFor(x => x.Nome).NotEmpty().MaximumLength(100);
             RuleFor(x => x.CPF).NotEmpty().Must(x => x is not null && CpfValidation.Validate(x));
-            RuleFor(x => x.Telefone).NotEmpty().MaximumLength(15);
+            RuleFor(x => x.Telefone).NotEmpty().Matches(@"^\(?\d{2}\)?[\s-]?[\s9]?\d{4}-?\d{4}$");
         }
     }
 }

@@ -11,14 +11,18 @@ namespace Concs.Testes
     public class FabricanteTestes
     {
         private readonly Mock<IRepositorioFabricante> _repositorioFabricanteMock;
+        private readonly Mock<IRepositorioVeiculo> _repositorioVeiculoMock;
+        private readonly Mock<ICacheamento> _cacheamentoMock;
         private readonly ServiçoFabricante _serviçoFabricante;
         private readonly IMapper _mapper;
 
         public FabricanteTestes()
         {
             _repositorioFabricanteMock = new Mock<IRepositorioFabricante>();
+            _repositorioVeiculoMock = new Mock<IRepositorioVeiculo>();
+            _cacheamentoMock = new Mock<ICacheamento>();
             _mapper = new MapperConfiguration(mc => mc.AddProfile(new MapeamentoFabricante())).CreateMapper();
-            _serviçoFabricante = new ServiçoFabricante(_mapper, _repositorioFabricanteMock.Object);
+            _serviçoFabricante = new ServiçoFabricante(_mapper, _repositorioFabricanteMock.Object, _cacheamentoMock.Object, _repositorioVeiculoMock.Object);
         }
 
         [Fact]

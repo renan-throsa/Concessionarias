@@ -12,6 +12,7 @@
                 <div class="card-header">
                     <h4>
                         Clientes
+                        <a asp-controller="Cliente" asp-action="Criar" class="btn btn-primary float-end">Novo Cliente</a>
                     </h4>
                 </div>
                 <div class="card-body">
@@ -32,6 +33,11 @@
                                     <td>@cliente.Nome</td>
                                     <td>@cliente.CPF</td>
                                     <td>@cliente.Telefone</td>
+                                    <td>
+
+                                        <a asp-route-id="@cliente.ClienteId" asp-controller="Cliente" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>                                        
+
+                                    </td>
                                 </tr>
                             }
 

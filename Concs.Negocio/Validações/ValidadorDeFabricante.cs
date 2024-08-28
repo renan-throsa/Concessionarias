@@ -10,7 +10,7 @@ namespace Concs.Negocio.Validações
         {
             RuleFor(x => x.Nome).NotEmpty().MaximumLength(100);
             RuleFor(x => x.PaisOrigem).NotEmpty().MaximumLength(50);
-            RuleFor(x => x.AnoFundacao).InclusiveBetween(1886, anoPassado);
+            RuleFor(x => x.AnoFundacao).NotEmpty().InclusiveBetween(1886, anoPassado);
             RuleFor(x => x.Website).NotEmpty().MaximumLength(50).Matches(@"^(http|https|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$");
         }
     }

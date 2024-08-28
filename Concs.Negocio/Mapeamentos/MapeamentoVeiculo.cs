@@ -20,6 +20,8 @@ namespace Concs.Negocio.Mapeamentos
 
 
             CreateMap<Veiculo, ModeloInserçãoVeiculo>().ReverseMap();
+            
+            CreateMap<Veiculo, ModeloAtualizaçãoVeiculo>().ReverseMap();
         }
     }
 }

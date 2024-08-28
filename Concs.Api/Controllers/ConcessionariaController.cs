@@ -1,6 +1,6 @@
-﻿using Concs.Dominio.Interfaces;
+﻿using Concs.Dominio;
+using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
-using Concs.Negocio.Seviços;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Concs.Api.Controllers
@@ -18,8 +18,7 @@ namespace Concs.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ModeloVisualizaçãoConcessionária>>> Todos()
         {
-            var chave = "ChaveListagemConcessionarias";
-            var opereçãoListagem = await _cacheamento.ObtertAsync(chave);
+            var opereçãoListagem = await _cacheamento.ObtertAsync(Constantes.CHAVELISTAGEMCONCESSIONARIAS);
 
             if (!string.IsNullOrEmpty(opereçãoListagem))
             {
@@ -28,7 +27,7 @@ namespace Concs.Api.Controllers
             else
             {
                 var operaçãoListagem = _serviçoConcessionaria.FindAll();
-                return await RespostaCustomizada(operaçãoListagem, chave);
+                return await RespostaCustomizada(operaçãoListagem, Constantes.CHAVELISTAGEMCONCESSIONARIAS);
             }
 
         }

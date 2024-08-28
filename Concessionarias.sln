@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concs.Api", "Concs.Api\Concs.Api.csproj", "{AF97A570-A838-406B-B36E-165AA6188C60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concs.Api", "Concs.Api\Concs.Api.csproj", "{AF97A570-A838-406B-B36E-165AA6188C60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concs.Dominio", "Concs.Dominio\Concs.Dominio.csproj", "{D8FB4C35-CB07-41EB-B6EA-30BD225C052A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concs.Dominio", "Concs.Dominio\Concs.Dominio.csproj", "{D8FB4C35-CB07-41EB-B6EA-30BD225C052A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concs.Dados", "Concs.Dados\Concs.Dados.csproj", "{2F821D7E-9DA8-4A21-9D08-BC3CCC8CECC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concs.Dados", "Concs.Dados\Concs.Dados.csproj", "{2F821D7E-9DA8-4A21-9D08-BC3CCC8CECC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concs.Negocio", "Concs.Negocio\Concs.Negocio.csproj", "{5F533431-3C20-49B1-B803-C859203E41D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concs.Negocio", "Concs.Negocio\Concs.Negocio.csproj", "{5F533431-3C20-49B1-B803-C859203E41D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concs.Id", "Concs.Id\Concs.Id.csproj", "{71CA5262-794B-446F-AAD9-B8547406B4C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concs.Id", "Concs.Id\Concs.Id.csproj", "{71CA5262-794B-446F-AAD9-B8547406B4C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concs.Testes", "Concs.Testes\Concs.Testes.csproj", "{3917BEDA-64E7-4F91-8531-1F784F7E6CA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concs.Testes", "Concs.Testes\Concs.Testes.csproj", "{3917BEDA-64E7-4F91-8531-1F784F7E6CA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concs.Web", "Concs.Web\Concs.Web.csproj", "{9931D16D-A8CF-4AE3-9942-12549CB1C1A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concs.Web", "Concs.Web\Concs.Web.csproj", "{9931D16D-A8CF-4AE3-9942-12549CB1C1A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

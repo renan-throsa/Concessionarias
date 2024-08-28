@@ -11,14 +11,16 @@ namespace Concs.Testes
     public class ConcessionariaTestes
     {
         private readonly Mock<IRepositorioConcessionária> _repositorioConcessionariaMock;
+        private readonly Mock<ICacheamento> _cacheamentoMock;
         private readonly ServiçoConcessionária _serviçoConcessionaria;
         private readonly IMapper _mapper;
 
         public ConcessionariaTestes()
         {
             _repositorioConcessionariaMock = new Mock<IRepositorioConcessionária>();
+            _cacheamentoMock = new Mock<ICacheamento>();
             _mapper = new MapperConfiguration(mc => mc.AddProfile(new MapeamentoConcessionária())).CreateMapper();
-            _serviçoConcessionaria = new ServiçoConcessionária(_mapper, _repositorioConcessionariaMock.Object);
+            _serviçoConcessionaria = new ServiçoConcessionária(_mapper, _repositorioConcessionariaMock.Object, _cacheamentoMock.Object);
         }
 
         [Fact]

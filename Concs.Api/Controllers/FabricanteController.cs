@@ -1,4 +1,5 @@
-﻿using Concs.Dominio.Interfaces;
+﻿using Concs.Dominio;
+using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Concs.Negocio.Seviços;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,7 @@ namespace Concs.Api.Controllers
         [HttpGet]        
         public async Task <ActionResult<IEnumerable<ModeloVisualizaçãoFabricante>>> Todos()
         {
-            var chave = "ChaveListagemFabricantes";
-            var opereçãoListagem = await _cacheamento.ObtertAsync(chave);
+            var opereçãoListagem = await _cacheamento.ObtertAsync(Constantes.CHAVELISTAGEMFABRICANTES);
 
             if (!string.IsNullOrEmpty(opereçãoListagem))
             {
@@ -28,7 +28,7 @@ namespace Concs.Api.Controllers
             else
             {
                 var operaçãoListagem = _serviçoFabricante.FindAll();
-                return await RespostaCustomizada(operaçãoListagem, chave);
+                return await RespostaCustomizada(operaçãoListagem, Constantes.CHAVELISTAGEMFABRICANTES);
             }
            
         }
@@ -53,7 +53,7 @@ namespace Concs.Api.Controllers
 
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<int>> Atualizar([FromRoute] int id)
+        public async Task<ActionResult<int>> Excluir([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoFabricante.Remove(id));
         }

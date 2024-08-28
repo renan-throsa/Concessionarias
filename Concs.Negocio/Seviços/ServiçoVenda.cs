@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Concs.Dominio;
 using Concs.Dominio.Entidades;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Concs.Negocio.Validações;
+using System;
 using System.Net;
 
 namespace Concs.Negocio.Seviços
@@ -11,11 +13,15 @@ namespace Concs.Negocio.Seviços
     {
         private readonly IRepositorioVenda _repositorioVenda;
         private readonly IRepositorioVeiculo _repositorioVeiculo;
+        private readonly IRepositorioCliente _repositorioCliente;
+        private readonly ICacheamento _cacheamento;
 
-        public ServiçoVenda(IMapper mapper, IRepositorioVenda repositorioVenda, IRepositorioVeiculo repositorioVeiculo) : base(mapper)
+        public ServiçoVenda(IMapper mapper, IRepositorioVenda repositorioVenda, IRepositorioVeiculo repositorioVeiculo, ICacheamento cacheamento, IRepositorioCliente repositorioCliente) : base(mapper)
         {
             _repositorioVenda = repositorioVenda;
             _repositorioVeiculo = repositorioVeiculo;
+            _cacheamento = cacheamento;
+            _repositorioCliente = repositorioCliente;
         }
 
         public ModeloResultadoDaOperação FindAll()
@@ -49,16 +55,22 @@ namespace Concs.Negocio.Seviços
             if (!EntityIsValid(new ValidadorDeVenda(veiculo.Preco), entidade))
                 return Erro();
 
-            if (modelo.ClienteId == 0)
-            {
-                if (!EntityIsValid(new ValidadorDeCliente(), Mapper.Map<Cliente>(modelo.Cliente)))
-                    return Erro();
-            }
+
+            if (!EntityIsValid(new ValidadorDeCliente(), entidade.Cliente))
+                return Erro();
 
             entidade.Cliente.CPF = entidade.Cliente.CPF.Replace(".", "").Replace("-", "");
+
+            var cPFCadastrado = await _repositorioCliente.CPFCadastrado(entidade.Cliente.CPF);
+
+            if (cPFCadastrado)
+            {
+                return Erro($"Já existe um cliente com {modelo.Cliente.CPF} no banco.", HttpStatusCode.Conflict);
+            }
+
             await _repositorioVenda.InsertAsync(entidade);
             await _repositorioVenda.SaveChangesAsync();
-
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMVENDAS);
             return Successo(entidade.Id);
         }
 

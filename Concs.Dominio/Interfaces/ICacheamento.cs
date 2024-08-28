@@ -4,5 +4,6 @@
     {
         Task DefinirAsync(string chave, string valor);
         Task<string> ObtertAsync(string chave);
+        Task RemoverAsync(string chave);
     }
 }

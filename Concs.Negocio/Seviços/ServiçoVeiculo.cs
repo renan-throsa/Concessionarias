@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Concs.Dominio;
 using Concs.Dominio.Entidades;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
@@ -10,9 +11,14 @@ namespace Concs.Negocio.Seviços
     public class ServiçoVeiculo : Serviço, IServiçoVeiculo
     {
         private readonly IRepositorioVeiculo _repositorioVeiculo;
-        public ServiçoVeiculo(IMapper mapper, IRepositorioVeiculo repositorioVeiculo) : base(mapper)
+        private readonly IRepositorioVenda _repositorioVenda;
+        private readonly ICacheamento _cacheamento;
+
+        public ServiçoVeiculo(IMapper mapper, IRepositorioVeiculo repositorioVeiculo, IRepositorioVenda repositorioVenda, ICacheamento cacheamento) : base(mapper)
         {
             _repositorioVeiculo = repositorioVeiculo;
+            _cacheamento = cacheamento;
+            _repositorioVenda = repositorioVenda;
         }
 
         public ModeloResultadoDaOperação FindAll()
@@ -41,7 +47,7 @@ namespace Concs.Negocio.Seviços
 
             await _repositorioVeiculo.InsertAsync(entidade);
             await _repositorioVeiculo.SaveChangesAsync();
-
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMVEICULOS);
             return Successo(entidade.Id);
         }
 
@@ -54,30 +60,36 @@ namespace Concs.Negocio.Seviços
                 return Erro($"Não encontrado: {id}", HttpStatusCode.NotFound);
             }
 
+            var possuiRestriçãoDerelacionamento = _repositorioVenda.Query().Where(x => x.VeiculoId == id).Any();
+
+            if (possuiRestriçãoDerelacionamento)
+            {
+                return Erro($"Veículo possui vinculo com um venda ativa. Não é possível excluir.", HttpStatusCode.Conflict);
+            }
+
             entidade.Ativo = false;
             await _repositorioVeiculo.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMVEICULOS);
             return Successo(id);
         }
 
         public async Task<ModeloResultadoDaOperação> Update(ModeloAtualizaçãoVeiculo modelo)
         {
 
-            var entidade = await _repositorioVeiculo.GetByIdAsync(modelo.VeiculoId, true);
+            var entidade = await _repositorioVeiculo.GetByIdAsync(modelo.VeiculoId, false);
 
             if (entidade is null)
                 return Erro($"Não encontrado: {modelo.VeiculoId}", HttpStatusCode.NotFound);
 
-            if (!EntityIsValid(new ValidadorDeVeiculo(), entidade))
+            var paraAtualizar = Mapper.Map<Veiculo>(modelo);
+
+            if (!EntityIsValid(new ValidadorDeVeiculo(),paraAtualizar ))
                 return Erro();
 
-            entidade.FabricanteId = modelo.FabricanteId;
-            entidade.TipoVeiculoId = modelo.TipoVeiculoId;
-            entidade.Modelo = modelo.Modelo;
-            entidade.AnoFabricacao = modelo.AnoFabricacao;
-            entidade.Preco = modelo.Preco;
-            entidade.Modelo = modelo.Modelo;
 
+            await _repositorioVeiculo.UpdateAsync(paraAtualizar);
             await _repositorioVeiculo.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMVEICULOS);
             return Successo();
         }
     }

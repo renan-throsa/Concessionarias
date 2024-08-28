@@ -24,5 +24,11 @@ namespace Concs.Negocio.Seviços
         {
             return await _distributedCache.GetStringAsync(chave);
         }
+
+        //TODO remover apenas a ocrorrência que mudou
+        public async Task RemoverAsync(string chave)
+        {
+            await _distributedCache.RemoveAsync(chave);
+        }
     }
 }

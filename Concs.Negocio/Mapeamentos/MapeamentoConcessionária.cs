@@ -18,7 +18,8 @@ namespace Concs.Negocio.Mapeamentos
                 .ReverseMap();
 
             CreateMap<Concessionaria, ModeloInserçãoConcessionária>().ReverseMap();
-            CreateMap<Concessionaria, ModeloAtualizaçãoConcessionária>().ReverseMap();
+
+            CreateMap<Concessionaria, ModeloAtualizaçãoConcessionária>().ForMember(dest => dest.ConcessionariaId, opt => opt.MapFrom(src => src.Id)).ReverseMap();
         }
     }
 }

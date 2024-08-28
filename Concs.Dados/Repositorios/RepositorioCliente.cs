@@ -9,9 +9,14 @@ namespace Concs.Dados.Repositorios
     {
         public RepositorioCliente(SqlContext sqlContext) : base(sqlContext) { }
 
-        public async Task<bool> TuplaUnica(int id, string cpf)
+        public async Task<bool> CPFCadastrado(string cpf)
         {
-            return !await _currentSet.Where(x=> x.Ativo && x.Id != id).AnyAsync(x=> x.CPF.Equals(cpf));
+            return await _currentSet.Where(x => x.Ativo).AnyAsync(x => x.CPF.Equals(cpf));
+        }
+
+        public async Task<bool> CPFCadastrado(int id, string cpf)
+        {
+            return await _currentSet.Where(x=> x.Ativo && x.Id != id).AnyAsync(x=> x.CPF.Equals(cpf));
         }
     }
 }
