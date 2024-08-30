@@ -1,7 +1,7 @@
-﻿using Concs.Dominio;
+﻿using Concs.Api.Filtros;
+using Concs.Dominio;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
-using Concs.Negocio.Seviços;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Concs.Api.Controllers
@@ -16,8 +16,9 @@ namespace Concs.Api.Controllers
             _serviçoFabricante = serviçoFabricante;
         }
 
-        [HttpGet]        
-        public async Task <ActionResult<IEnumerable<ModeloVisualizaçãoFabricante>>> Todos()
+        [HttpGet]
+        [Authorization(Claim: "Fabricante.Ler")]
+        public async Task <ActionResult<IEnumerable<ModeloVisualizaçãoFabricante>>> Ler()
         {
             var opereçãoListagem = await _cacheamento.ObtertAsync(Constantes.CHAVELISTAGEMFABRICANTES);
 
@@ -34,18 +35,21 @@ namespace Concs.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ModeloVisualizaçãoFabricante>> Encontrar([FromRoute] int id)
+        [Authorization(Claim: "Fabricante.Ler")]
+        public async Task<ActionResult<ModeloVisualizaçãoFabricante>> Ler([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoFabricante.FindById(id));
         }
 
         [HttpPost]
+        [Authorization(Claim: "Fabricante.Inserir")]
         public async Task<ActionResult<int>> Inserir([FromBody] ModeloInserçãoFabricante modelo)
         {
             return RespostaCustomizada(await _serviçoFabricante.Insert(modelo));
         }
 
         [HttpPut]
+        [Authorization(Claim: "Fabricante.Atualizar")]
         public async Task<ActionResult<int>> Atualizar([FromBody] ModeloAtualizaçãoFabricante modelo)
         {
             return RespostaCustomizada(await _serviçoFabricante.Update(modelo));
@@ -53,6 +57,7 @@ namespace Concs.Api.Controllers
 
 
         [HttpDelete("{id:int}")]
+        [Authorization(Claim: "Fabricante.Atualizar")]
         public async Task<ActionResult<int>> Excluir([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoFabricante.Remove(id));

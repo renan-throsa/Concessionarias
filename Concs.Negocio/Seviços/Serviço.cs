@@ -12,6 +12,7 @@ namespace Concs.Negocio.Seviços
         protected readonly IMapper Mapper;
         private ValidationResult _validationResult;
 
+        protected Serviço() { }
         protected Serviço(IMapper mapper) => Mapper = mapper;
 
         protected ModeloResultadoDaOperação Erro() => new ModeloResultadoDaOperação(_validationResult);
@@ -43,6 +44,15 @@ namespace Concs.Negocio.Seviços
 
             if (result.IsValid) return true;
 
+            _validationResult = result;
+            return false;
+        }
+
+        protected bool EntityIsValid<TV, TE>(TV validator, TE entity) where TV : AbstractValidator<TE>
+        {
+            ValidationResult result;
+            result = validator.Validate(entity);
+            if (result.IsValid) return true;
             _validationResult = result;
             return false;
         }

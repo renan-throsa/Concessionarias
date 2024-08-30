@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject IUsuarioServiço serviço
+
+@{
     ViewData["Title"] = "Fabricantes";
 }
 
@@ -11,8 +13,16 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        Fabricantes
-                        <a asp-controller="Fabricante" asp-action="Criar" class="btn btn-primary float-end">Novo Fabricante</a>
+                        Fabricantes                      
+
+                        @if (serviço.TemPermissão("Fabricante.Inserir"))
+                        {
+                            <a asp-controller="Fabricante" asp-action="Criar" class="btn btn-primary float-end">Novo Fabricante</a>
+                        }
+                        else {
+                            <a class="disabled btn btn-primary float-end">Novo Fabricante</a>
+                        }
+
                     </h4>
                 </div>
                 <div class="card-body">
@@ -36,8 +46,16 @@
                                     <td>@fabricante.AnoFundacao</td>                                   
                                     <td>@fabricante.Website</td>
                                     <td>
+
+                                        @if (serviço.TemPermissão("Fabricante.Editar"))
+                                        {
+                                            <a asp-route-id="@fabricante.FabricanteId" asp-controller="Fabricante" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="disabled  btn btn-success btn-sm">Editar</a>
+                                        }
                                         
-                                        <a asp-route-id="@fabricante.FabricanteId" asp-controller="Fabricante" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>
                                         <a asp-route-id="@fabricante.FabricanteId" asp-controller="Fabricante" asp-action="Detalhes" class="btn btn-info btn-sm">Detalhes</a>
                                         
                                     </td>

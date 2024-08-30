@@ -5,7 +5,6 @@ using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Concs.Negocio.Validações;
 using System.Net;
-using static StackExchange.Redis.Role;
 
 namespace Concs.Negocio.Seviços
 {

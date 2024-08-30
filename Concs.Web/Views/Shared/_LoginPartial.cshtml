@@ -1,0 +1,23 @@
+﻿@inject IUsuarioServiço serviço
+
+
+<ul class="navbar-nav">
+    @if (serviço.UsuarioValido())
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark">@serviço.ObterUsuario().Nome</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-controller="Usuario" asp-action="Sair" method="POST">
+                <button type="submit" class="nav-link btn btn-link text-dark">Sair</button>
+            </form>
+        </li>
+    }
+    else
+    {
+
+        <li class="nav-item">
+            <a asp-controller="Usuario" asp-action="Autenticar" class="nav-link text-dark">Autenticar-se</a>
+        </li>
+    }
+</ul>

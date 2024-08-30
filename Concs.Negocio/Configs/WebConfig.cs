@@ -1,9 +1,9 @@
-﻿namespace Concs.Id.Configs
+﻿namespace Concs.Negocio.Configs
 {
     public class WebConfig
     {
         public string Origin { get; set; }
         public string Policy { get; set; }
-        public string Cache { get; set; }
+        public string CacheHost { get; set; }
     }
 }

@@ -103,5 +103,33 @@ namespace Concs.App.Controllers
 
             return View(modeloAtualizaçãoConcessionaria);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Detalhes(int id)
+        {
+            var response = await _concessionariaClient.Encontrar(id);
+            var option = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            if (response.IsSuccessStatusCode)
+            {
+                var sucssesResult = await response.Content.ReadAsStringAsync();
+
+                var model = JsonSerializer.Deserialize<ModeloVisualizaçãoConcessionária>(sucssesResult, option);
+
+                ViewBag.Erros = new List<string>();
+
+                return View(model);
+            }
+
+
+            var erroResult = await response.Content.ReadAsStringAsync();
+            var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
+
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
+            return View();
+        }
     }
 }

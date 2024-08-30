@@ -1,0 +1,78 @@
+﻿﻿@{
+    ViewData["Title"] = "Autenticação";
+
+    List<string> erros = ViewBag.Erros;
+}
+
+@model ModeloAutencicaçãoUsuario
+
+@if (erros is not null && erros.Any())
+{
+    <ul>
+        @foreach (string erro in erros)
+        {
+
+            <li><p style="color:red">@erro</p></li>
+        }
+    </ul>
+
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Autenticação
+                        <a asp-controller="Home" asp-action="Listagem" class="btn btn-danger float-end">Voltar</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+
+                    <form asp-controller="Usuario" asp-action="Autenticar" method="POST">                        
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Email">Email</label>
+                            <input class="form-control"
+                                   aria-required="true"
+                                   placeholder="name@example.com"
+                                   type="email"
+                                   asp-for="Email" value="manoelhugocarvalho@demasi.com.br">
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Senha">Senha</label>
+                            <input class="form-control"
+                                   aria-required="true"
+                                   placeholder="name@example.com"
+                                   type="password"
+                                   asp-for="Senha"
+                                   value="3oACF@Ycqz$L3eRJ">
+
+                        </div>
+
+                        <div class="checkbox mb-3">
+                            <label class="form-label" asp-for="LembrasSe" data-dashlane-label="true">
+                                <input class="form-check-input" type="checkbox" data-val="true" data-val-required="The Remember me? field is required." asp-for="LembrasSe" value="true">
+                                Lambrar-se?
+                            </label>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Autenticar-se</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+
+
+}

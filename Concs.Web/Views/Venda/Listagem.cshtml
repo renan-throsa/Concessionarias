@@ -1,4 +1,6 @@
-﻿@using System.Globalization
+﻿@inject IUsuarioServiço serviço
+
+@using System.Globalization
 @{
     ViewData["Title"] = "Vendas";
 }
@@ -13,7 +15,15 @@
                 <div class="card-header">
                     <h4>
                         Vendas
-                        <a asp-controller="Venda" asp-action="Criar" class="btn btn-primary float-end">Nova Venda</a>
+                        @if (serviço.TemPermissão("Venda.Inserir"))
+                        {
+                            <a asp-controller="Venda" asp-action="Criar" class="btn btn-primary float-end">Nova Venda</a>
+                        }
+                        else
+                        {
+                            <a class="disabled btn btn-primary float-end" disabled>Nova Venda</a>
+                        }
+                        
                     </h4>
                 </div>
                 <div class="card-body">

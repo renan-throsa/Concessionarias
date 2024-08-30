@@ -1,8 +1,8 @@
-﻿using Concs.Dominio;
+﻿using Concs.Api.Filtros;
+using Concs.Dominio;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata;
 
 namespace Concs.Api.Controllers
 {
@@ -16,7 +16,8 @@ namespace Concs.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ModeloVisualizaçãoCliente>>> Todos()
+        [Authorization(Claim: "Cliente.Ler")]
+        public async Task<ActionResult<IEnumerable<ModeloVisualizaçãoCliente>>> Ler()
         {
             var opereçãoListagem = await _cacheamento.ObtertAsync(Constantes.CHAVELISTAGEMCLIENTES);
 
@@ -33,18 +34,21 @@ namespace Concs.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ModeloVisualizaçãoCliente>> Encontrar([FromRoute] int id)
+        [Authorization(Claim: "Cliente.Ler")]
+        public async Task<ActionResult<ModeloVisualizaçãoCliente>> Ler([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoCliente.FindById(id));
         }
 
         [HttpPost]
+        [Authorization(Claim: "Cliente.Inserir")]
         public async Task<ActionResult<int>> Inserir([FromBody] ModeloInserçãoCliente modelo)
         {
             return RespostaCustomizada(await _serviçoCliente.Insert(modelo));
         }
 
         [HttpPut]
+        [Authorization(Claim: "Cliente.Atualizar")]
         public async Task<ActionResult<int>> Atualizar([FromBody] ModeloAtualizaçãoCliente modelo)
         {
             return RespostaCustomizada(await _serviçoCliente.Update(modelo));
@@ -52,6 +56,7 @@ namespace Concs.Api.Controllers
 
 
         [HttpDelete("{id:int}")]
+        [Authorization(Claim: "Cliente.Atualizar")]
         public async Task<ActionResult<int>> Atualizar([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoCliente.Remove(id));

@@ -99,13 +99,13 @@ namespace Concs.Dados.Migrations
                         column: x => x.FabricanteId,
                         principalTable: "Fabricantes",
                         principalColumn: "FabricanteId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Veiculos_TiposVeiculos_TipoVeiculoId",
                         column: x => x.TipoVeiculoId,
                         principalTable: "TiposVeiculos",
                         principalColumn: "TipoVeiculoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,21 +226,21 @@ namespace Concs.Dados.Migrations
                 columns: new[] { "VendaId", "Ativo", "ClienteId", "ConcessionariaId", "DataVenda", "PrecoVenda", "ProtocoloVenda", "VeiculoId" },
                 values: new object[,]
                 {
-                    { 1, true, 1, 1, new DateTime(2024, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "D236EAD2-E1C1-459C-B", 1 },
-                    { 2, true, 2, 1, new DateTime(2024, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "328A44F3-E584-4770-9", 2 },
-                    { 3, true, 3, 2, new DateTime(2024, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "636C89F6-9BE2-41BF-8", 3 },
-                    { 4, true, 4, 2, new DateTime(2024, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "DA592B58-40E6-4095-8", 4 },
-                    { 5, true, 5, 5, new DateTime(2024, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "F99A1C88-3AFF-477C-8", 5 },
-                    { 6, true, 6, 5, new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "A79FC038-8E86-45CC-8", 6 },
-                    { 7, true, 7, 7, new DateTime(2024, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "F046B055-A56E-4D5C-B", 7 },
-                    { 8, true, 8, 8, new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "467E30E2-8BB3-43C9-B", 8 },
-                    { 9, true, 8, 8, new DateTime(2024, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "59233EC1-D5BC-4547-A", 8 },
-                    { 10, true, 7, 7, new DateTime(2024, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "891363E7-FCC8-4540-8", 7 },
-                    { 11, true, 16, 6, new DateTime(2024, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "FE5FCA9D-F89C-4B0D-8", 6 },
-                    { 12, true, 15, 5, new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "3BB585D9-DEBD-468A-9", 5 },
-                    { 13, true, 14, 7, new DateTime(2024, 5, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "25BBE750-6C7B-4FA8-9", 4 },
-                    { 14, true, 13, 5, new DateTime(2024, 5, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "6196D799-57CA-4EEA-B", 3 },
-                    { 15, true, 9, 3, new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "501C4B9A-15C5-4F0B-9", 2 }
+                    { 1, true, 1, 1, new DateTime(2024, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "CF122B6A-9946-49E8-A", 1 },
+                    { 2, true, 2, 1, new DateTime(2024, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "A46C5E56-AE03-43E0-B", 2 },
+                    { 3, true, 3, 2, new DateTime(2024, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "09048A2D-3ECA-4CD8-8", 3 },
+                    { 4, true, 4, 2, new DateTime(2024, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "00CBAE7C-6763-4AC5-9", 4 },
+                    { 5, true, 5, 5, new DateTime(2024, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "82E927D2-3861-4EE2-A", 5 },
+                    { 6, true, 6, 5, new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "44D7901F-0F9D-4F5D-A", 6 },
+                    { 7, true, 7, 7, new DateTime(2024, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "75EF1BC2-03A4-455C-8", 7 },
+                    { 8, true, 8, 8, new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "02E52FE5-6F20-4893-8", 8 },
+                    { 9, true, 8, 8, new DateTime(2024, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 50000.00m, "AFFD5F09-7266-4D05-B", 8 },
+                    { 10, true, 7, 7, new DateTime(2024, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 45000.00m, "528ADF11-0867-4C69-B", 7 },
+                    { 11, true, 16, 6, new DateTime(2024, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 55000.00m, "65CB24B0-33F2-4F55-8", 6 },
+                    { 12, true, 15, 5, new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 48000.00m, "7FD9663B-AB7D-4EB3-9", 5 },
+                    { 13, true, 14, 7, new DateTime(2024, 5, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 52000.00m, "7E5D30AA-24FC-46DE-B", 4 },
+                    { 14, true, 13, 5, new DateTime(2024, 5, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 47000.00m, "95684945-C254-421D-9", 3 },
+                    { 15, true, 9, 3, new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 53000.00m, "06A001F0-CC76-4033-A", 2 }
                 });
 
             migrationBuilder.CreateIndex(

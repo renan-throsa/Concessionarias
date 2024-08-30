@@ -12,6 +12,11 @@ namespace Concs.Api.Controllers
     {
         protected readonly ICacheamento _cacheamento;
 
+        public ControladorBase()
+        {
+            
+        }
+
         public ControladorBase(ICacheamento cacheamento)
         {
             _cacheamento = cacheamento;

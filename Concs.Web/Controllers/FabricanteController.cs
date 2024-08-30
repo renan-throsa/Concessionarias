@@ -15,13 +15,14 @@ namespace Concs.App.Controllers
             _fabricanteClient = fabricanteClient;
         }
 
-        
+        [HttpGet]
         public async Task<ActionResult> Listagem()
         {
             var vm = await _fabricanteClient.Listagem();
             return View(vm);
         }
 
+        [HttpGet]
         public ActionResult Criar()
         {
             ViewBag.Erros = new List<string>();

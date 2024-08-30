@@ -1,21 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.33" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.33" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.29" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
-	
+
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Concs.Dados\Concs.Dados.csproj" />
-	  <ProjectReference Include="..\Concs.Negocio\Concs.Negocio.csproj" />
+		<ProjectReference Include="..\Concs.Dados\Concs.Dados.csproj" />
+		<ProjectReference Include="..\Concs.Negocio\Concs.Negocio.csproj" />
 	</ItemGroup>
 </Project>

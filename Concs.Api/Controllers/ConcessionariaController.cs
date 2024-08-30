@@ -1,4 +1,5 @@
-﻿using Concs.Dominio;
+﻿using Concs.Api.Filtros;
+using Concs.Dominio;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,8 @@ namespace Concs.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ModeloVisualizaçãoConcessionária>>> Todos()
+        [Authorization(Claim: "Concessionária.Ler")]
+        public async Task<ActionResult<IEnumerable<ModeloVisualizaçãoConcessionária>>> Ler()
         {
             var opereçãoListagem = await _cacheamento.ObtertAsync(Constantes.CHAVELISTAGEMCONCESSIONARIAS);
 
@@ -33,18 +35,21 @@ namespace Concs.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ModeloVisualizaçãoConcessionária>> Encontrar([FromRoute] int id)
+        [Authorization(Claim: "Concessionária.Ler")]
+        public async Task<ActionResult<ModeloVisualizaçãoConcessionária>> Ler([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoConcessionaria.FindById(id));
         }
 
         [HttpPost]
+        [Authorization(Claim: "Concessionária.Inserir")]
         public async Task<ActionResult<int>> Inserir([FromBody] ModeloInserçãoConcessionária modelo)
         {
             return RespostaCustomizada(await _serviçoConcessionaria.Insert(modelo));
         }
 
         [HttpPut]
+        [Authorization(Claim: "Concessionária.Atualizar")]
         public async Task<ActionResult<int>> Atualizar([FromBody] ModeloAtualizaçãoConcessionária modelo)
         {
             return RespostaCustomizada(await _serviçoConcessionaria.Update(modelo));
@@ -52,6 +57,7 @@ namespace Concs.Api.Controllers
 
 
         [HttpDelete("{id:int}")]
+        [Authorization(Claim: "Concessionária.Atualizar")]
         public async Task<ActionResult<int>> Atualizar([FromRoute] int id)
         {
             return RespostaCustomizada(await _serviçoConcessionaria.Remove(id));

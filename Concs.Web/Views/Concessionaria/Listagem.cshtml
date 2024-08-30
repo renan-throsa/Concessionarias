@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject IUsuarioServiço serviço
+
+@{
     ViewData["Title"] = "Concessionárias";
 }
 
@@ -12,7 +14,15 @@
                 <div class="card-header">
                     <h4>
                         Concessionárias
-                        <a asp-controller="Concessionaria" asp-action="Criar" class="btn btn-primary float-end">Nova Concessionária</a>
+                        @if (serviço.TemPermissão("Concessionária.Inserir"))
+                        {
+                            <a asp-controller="Concessionaria" asp-action="Criar" class="btn btn-primary float-end">Nova Concessionária</a>
+                        }
+                        else
+                        {
+                            <a class="disabled btn btn-primary float-end">Nova Concessionária</a>
+                        }
+
                     </h4>
                 </div>
                 <div class="card-body">
@@ -20,7 +30,7 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Nome</th>                                
+                                <th scope="col">Nome</th>
                                 <th scope="col">Cidade</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Telefone</th>
@@ -38,11 +48,17 @@
                                     <td>@concessionaria.Telefone</td>
                                     <td>@concessionaria.CapacidadeMaximaVeiculos</td>
                                     <td>
-                                        <!--
-                                            <a asp-route-id="@concessionaria.ConcessionariaId" asp-controller="Fabricante" asp-action="Visualizar" class="btn btn-info btn-sm">Visualizar</a>
-
-                                        -->
+                                        
+                                        @if (serviço.TemPermissão("Concessionária.Atualizar"))
+                                        {
                                             <a asp-route-id="@concessionaria.ConcessionariaId" asp-controller="Concessionaria" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="disabled btn btn-success btn-sm">Editar</a>
+                                        }
+
+                                        <a asp-route-id="@concessionaria.ConcessionariaId" asp-controller="Concessionaria" asp-action="Detalhes" class="btn btn-info btn-sm">Detalhes</a>
 
                                     </td>
                                 </tr>

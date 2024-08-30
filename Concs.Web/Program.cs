@@ -1,5 +1,7 @@
 using Concs.App.Clients;
 using Concs.App.Configs;
+using Concs.Web.Clients;
+using Concs.Web.Serviços;
 using Microsoft.Net.Http.Headers;
 
 namespace Concs.Web
@@ -12,11 +14,11 @@ namespace Concs.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            
+
             IConfigurationSection clientSettingsSection = builder.Configuration.GetSection(nameof(ApiConfigs));
             string address = clientSettingsSection.Get<ApiConfigs>().AppParaApiEndereco;
 
-            builder.Services.Configure<ApiConfigs>(clientSettingsSection); 
+            builder.Services.Configure<ApiConfigs>(clientSettingsSection);
 
             builder.Services.AddHttpClient<IFabricanteClient, FabricanteClient>((HttpClient client) =>
             {
@@ -48,9 +50,17 @@ namespace Concs.Web
                 client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
 
+            builder.Services.AddHttpClient<IUsuarioClient, UsuarioClient>((HttpClient client) =>
+            {
+                client.BaseAddress = new Uri(address);
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
+            });
+
+            builder.Services.AddSingleton<IUsuarioServiço, UsuarioServiço>();
+
             var app = builder.Build();
 
-            
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -67,7 +77,7 @@ namespace Concs.Web
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}");
 
             app.Run();
         }

@@ -1,6 +1,6 @@
-﻿namespace Concs.Id.Configs
+﻿namespace Concs.Dados.Configs
 {
-    internal sealed class SqlConfig
+    public class SqlConfig
     {
         public string ConnectionString { get; set; }
     }

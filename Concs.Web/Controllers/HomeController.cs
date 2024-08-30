@@ -1,5 +1,6 @@
 ﻿using Concs.App.Configs;
 using Concs.App.Models;
+using Concs.Web.Serviços;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
@@ -8,11 +9,13 @@ namespace Concs.App.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUsuarioServiço _serviço;
         private readonly ILogger<HomeController> _logger;
         private readonly string _apiEndereco;
 
-        public HomeController(ILogger<HomeController> logger, IOptions<ApiConfigs> appSettings)
+        public HomeController(IUsuarioServiço serviço,ILogger<HomeController> logger, IOptions<ApiConfigs> appSettings)
         {
+            _serviço = serviço;
             _logger = logger;
             _apiEndereco = appSettings.Value.WebParaApiEndereco;
         }
@@ -20,6 +23,7 @@ namespace Concs.App.Controllers
         public IActionResult Index()
         {
             ViewBag.ApiEndereco = _apiEndereco;
+            ViewBag.Usuario = _serviço.ObterToken();
             return View();
         }        
 

@@ -10,12 +10,10 @@
 
   <ItemGroup>    
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />    
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Concs.Dominio\Concs.Dominio.csproj" />
     <ProjectReference Include="..\Concs.Id\Concs.Id.csproj" />
   </ItemGroup>
 
