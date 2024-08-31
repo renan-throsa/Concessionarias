@@ -1,11 +1,19 @@
-﻿@inject IUsuarioServiço serviço
-
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Concs.Web.Models
+﻿@{    
+    ModeloUsuario usuario = new ModeloUsuario()
+            {
+                Nome = HttpContextAccessor.HttpContext.User.HasClaim(x => x.Type == "name") ? HttpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "name").Value : "",
+                Email = HttpContextAccessor.HttpContext.User.HasClaim(x => x.Type == "email") ? HttpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "email").Value : "",
+                Id = HttpContextAccessor.HttpContext.User.HasClaim(x => x.Type == "jti") ? HttpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "jti").Value : "",
+            };
+}
 
 <ul class="navbar-nav">
-    @if (serviço.UsuarioValido())
+    @if (usuario.Valido)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark">@serviço.ObterUsuario().Nome</a>
+            <a class="nav-link text-dark">@usuario.Nome</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-controller="Usuario" asp-action="Sair" method="POST">

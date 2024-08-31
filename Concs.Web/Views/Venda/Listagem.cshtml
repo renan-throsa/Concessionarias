@@ -1,8 +1,7 @@
-﻿@inject IUsuarioServiço serviço
-
-@using System.Globalization
+﻿@using System.Globalization
 @{
     ViewData["Title"] = "Vendas";
+    bool podeInserir = ViewBag.PodeInserir;
 }
 
 @model List<ModeloConsultaVenda>
@@ -15,7 +14,7 @@
                 <div class="card-header">
                     <h4>
                         Vendas
-                        @if (serviço.TemPermissão("Venda.Inserir"))
+                        @if (podeInserir)
                         {
                             <a asp-controller="Venda" asp-action="Criar" class="btn btn-primary float-end">Nova Venda</a>
                         }

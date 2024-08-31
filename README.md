@@ -27,6 +27,7 @@ otimização de desempenho.
 
 * **Frontend**: Bootstrap, JavaScript (AJAX), HTML/CSS
 * **Backend**: ASP.NET Core MVC, Entity Framework Core
+* **Autenticação**: Identity Framework
 * **Banco de Dados**: SQL Server
 * **Caching**: Redis
 * **Relatórios**: Google Charts 

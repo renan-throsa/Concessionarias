@@ -3,9 +3,11 @@ using Concs.App.Clients;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Concs.App.Controllers
 {
+    [Authorize]
     public class ConcessionariaController : Controller
     {
         private readonly IConcessionariaClient _concessionariaClient;
@@ -19,6 +21,8 @@ namespace Concs.App.Controllers
         public async Task<ActionResult> Listagem()
         {
             var vm = await _concessionariaClient.Listagem();
+            ViewBag.PodeInserir = HttpContext.User.HasClaim("Permissões", "Concessionária.Inserir");
+            ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Concessionária.Atualizar");
             return View(vm);
         }
 
@@ -120,7 +124,7 @@ namespace Concs.App.Controllers
                 var model = JsonSerializer.Deserialize<ModeloVisualizaçãoConcessionária>(sucssesResult, option);
 
                 ViewBag.Erros = new List<string>();
-
+                ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Concessionária.Atualizar");
                 return View(model);
             }
 

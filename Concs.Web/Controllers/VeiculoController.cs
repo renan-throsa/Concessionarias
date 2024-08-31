@@ -4,9 +4,11 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Concs.App.Controllers
 {
+    [Authorize]
     public class VeiculoController : Controller
     {
         private readonly IVeiculoClient _veiculoClient;
@@ -20,6 +22,8 @@ namespace Concs.App.Controllers
         public async Task<ActionResult> Listagem()
         {
             var vm = await _veiculoClient.Listagem();
+            ViewBag.PodeInserir = HttpContext.User.HasClaim("Permissões", "Veículo.Inserir");
+            ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Veículo.Atualizar");
             return View(vm);
         }
 
@@ -33,7 +37,7 @@ namespace Concs.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Criar(ModeloInserçãoVeiculo  modeloInserçãoVeiculo)
+        public async Task<ActionResult> Criar(ModeloInserçãoVeiculo modeloInserçãoVeiculo)
         {
             var response = await _veiculoClient.Inserir(modeloInserçãoVeiculo);
 
@@ -83,7 +87,7 @@ namespace Concs.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Editar(ModeloAtualizaçãoVeiculo  modeloAtualizaçãoVeiculo)
+        public async Task<ActionResult> Editar(ModeloAtualizaçãoVeiculo modeloAtualizaçãoVeiculo)
         {
             var response = await _veiculoClient.Atualizar(modeloAtualizaçãoVeiculo);
 
@@ -118,16 +122,17 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var sucssesResult = await response.Content.ReadAsStringAsync();               
+                var sucssesResult = await response.Content.ReadAsStringAsync();
 
                 var model = JsonSerializer.Deserialize<ModeloVisualizaçãoVeiculo>(sucssesResult, option);
 
                 ViewBag.Erros = new List<string>();
-                
+                ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Fabricante.Atualizar");
+
                 return View(model);
             }
 
-           
+
             var erroResult = await response.Content.ReadAsStringAsync();
             var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
 

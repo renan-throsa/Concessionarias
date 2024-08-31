@@ -1,6 +1,7 @@
-﻿@inject IUsuarioServiço serviço
-@{
+﻿@{
     ViewData["Title"] = "Clientes";
+    bool podeInserir = ViewBag.PodeInserir;
+    bool podeAtualizar = ViewBag.PodeAtualizar;
 }
 
 @model List<ModeloVisualizaçãoCliente>
@@ -13,16 +14,16 @@
                 <div class="card-header">
                     <h4>
                         Clientes
-                        @if (serviço.TemPermissão("Cliente.Inserir"))
+                        @if (podeInserir)
                         {
                             <a asp-controller="Cliente" asp-action="Criar" class="btn btn-primary float-end">Novo Cliente</a>
-                            
+
                         }
                         else
                         {
                             <a class="disabled btn btn-primary float-end">Novo Cliente</a>
                         }
-                        
+
                     </h4>
                 </div>
                 <div class="card-body">
@@ -44,8 +45,15 @@
                                     <td>@cliente.CPF</td>
                                     <td>@cliente.Telefone</td>
                                     <td>
+                                        @if (podeAtualizar)
+                                        {
+                                            <a asp-route-id="@cliente.ClienteId" asp-controller="Cliente" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="disabled btn btn-success btn-sm">Editar</a>
+                                        }
 
-                                        <a asp-route-id="@cliente.ClienteId" asp-controller="Cliente" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>                                        
 
                                     </td>
                                 </tr>

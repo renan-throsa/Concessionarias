@@ -1,6 +1,6 @@
-﻿﻿@{
-    ViewData["Title"] = "Detalhes Concessionária";
-    
+﻿@{
+    ViewData["Title"] = "Detalhes Concessionária";    
+    bool podeAtualizar = ViewBag.PodeAtualizar;
 }
 
 @model ModeloVisualizaçãoConcessionária
@@ -57,8 +57,17 @@
                             <input asp-for="CapacidadeMaximaVeiculos" type="number" min="1" class="form-control" readonly>
                         </div>
 
+                        
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-danger">Excluir Concessionária</button>
+                            @if (podeAtualizar)
+                            {                                
+                                <button type="submit" class="btn btn-danger">Excluir Concessionária</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="disabled btn btn-danger">Excluir Concessionária</button>
+                            }
+                            
                         </div>
 
                     </form>

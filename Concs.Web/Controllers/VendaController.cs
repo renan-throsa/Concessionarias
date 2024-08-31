@@ -4,9 +4,11 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Concs.App.Controllers
 {
+    [Authorize]
     public class VendaController : Controller
     {
         private readonly IVeiculoClient _veiculoClient;
@@ -27,6 +29,7 @@ namespace Concs.App.Controllers
         public async Task<ActionResult> Listagem()
         {
             var vm = await _vendaClient.Listagem();
+            ViewBag.PodeInserir = HttpContext.User.HasClaim("Permissões", "Venda.Inserir");
             return View(vm);
         }
 

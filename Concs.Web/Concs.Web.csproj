@@ -17,4 +17,8 @@
 		<ProjectReference Include="..\Concs.Dominio\Concs.Dominio.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="filtros\" />
+	</ItemGroup>
+
 </Project>

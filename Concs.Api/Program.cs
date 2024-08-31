@@ -1,4 +1,5 @@
 using Concs.Id;
+using Concs.Negocio.Configs;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +10,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddWebApiDoc();
 builder.Services.AddDependencies(builder.Configuration);
-
-
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {

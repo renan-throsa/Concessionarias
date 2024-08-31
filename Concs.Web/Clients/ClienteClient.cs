@@ -1,5 +1,4 @@
 ﻿using Concs.Dominio.Modelos;
-using Concs.Web.Serviços;
 using System.Text;
 using System.Text.Json;
 
@@ -18,10 +17,11 @@ namespace Concs.App.Clients
         private readonly HttpClient _client;
         private const string _CONTROLLER = "/Cliente";
 
-        public ClienteClient(HttpClient client, IUsuarioServiço serviço)
+        public ClienteClient(HttpClient client, IHttpContextAccessor httpContextAccessor)
         {
             _client = client;
-            _client.DefaultRequestHeaders.Add("Authorization", serviço.ObterToken());
+            var bearer = $"Bearer {httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "token").Value}";
+            _client.DefaultRequestHeaders.Add("Authorization", bearer);
         }
 
         public async Task<IEnumerable<ModeloVisualizaçãoCliente>> Listagem()

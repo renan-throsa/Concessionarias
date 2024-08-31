@@ -22,9 +22,14 @@ namespace Concs.Dados.Repositorios
             return await _currentSet
                 .AsNoTracking()
                 .Include(x => x.Cliente)
-                .Include(x => x.Veiculo).ThenInclude(x=> x.TipoVeiculo)
+                .Include(x => x.Veiculo).ThenInclude(x => x.TipoVeiculo)
                 .Include(x => x.Concessionaria)
                 .FirstAsync(x => x.Id == id);
+        }
+
+        public async Task<bool> vendaComVeiculo(int veiculoId)
+        {
+            return await Query().Where(x => x.VeiculoId == veiculoId).AnyAsync();
         }
     }
 }

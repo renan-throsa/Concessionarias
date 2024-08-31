@@ -1,7 +1,7 @@
 using Concs.App.Clients;
 using Concs.App.Configs;
 using Concs.Web.Clients;
-using Concs.Web.Serviços;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Net.Http.Headers;
 
 namespace Concs.Web
@@ -12,18 +12,28 @@ namespace Concs.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
             IConfigurationSection clientSettingsSection = builder.Configuration.GetSection(nameof(ApiConfigs));
             string address = clientSettingsSection.Get<ApiConfigs>().AppParaApiEndereco;
 
             builder.Services.Configure<ApiConfigs>(clientSettingsSection);
 
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                            .AddCookie(options =>
+                            {
+                                options.LoginPath = "/Usuario/Autenticar";
+                            });
+
+            
             builder.Services.AddHttpClient<IFabricanteClient, FabricanteClient>((HttpClient client) =>
-            {
+            {                
                 client.BaseAddress = new Uri(address);
-                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
+                client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");              
+                
             });
 
             builder.Services.AddHttpClient<IVeiculoClient, VeiculoClient>((HttpClient client) =>
@@ -55,8 +65,7 @@ namespace Concs.Web
                 client.BaseAddress = new Uri(address);
                 client.DefaultRequestHeaders.Add(HeaderNames.Accept, "text/plain");
             });
-
-            builder.Services.AddSingleton<IUsuarioServiço, UsuarioServiço>();
+            
 
             var app = builder.Build();
 
@@ -72,7 +81,7 @@ namespace Concs.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

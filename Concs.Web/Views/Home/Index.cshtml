@@ -12,7 +12,7 @@
                 <input type="month" id="mesAno" class="form-control">
             </div>
         </div>
-    </div> 
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -34,84 +34,87 @@
 </div>
 
 <p hidden id="apiEndereco">@ViewData["ApiEndereco"]</p>
+<p hidden id="ApiToken">@ViewData["ApiToken"]</p>
 
 @section Scripts {
 
     <script>
 
-       
-       let totalVendas;
-       let vendasPorTipoDeveiculo=[];
-       let vendasPorFabricante=[];
-       let desempenhoPorConcessionaria=[];
 
-       
-        document.addEventListener("DOMContentLoaded",quandoPaginaCarregada);
+        let totalVendas;
+        let vendasPorTipoDeveiculo = [];
+        let vendasPorFabricante = [];
+        let desempenhoPorConcessionaria = [];
 
-        function quandoPaginaCarregada(){
-            google.charts.load('current', { 'packages': ['corechart'] });            
 
-             google.charts.setOnLoadCallback(tipoVeiculoPiechart);   
-             google.charts.setOnLoadCallback(fabrVeiculoPiechart);
-             google.charts.setOnLoadCallback(concessionaColchart);
+        document.addEventListener("DOMContentLoaded", quandoPaginaCarregada);
 
-            let selectData = document.getElementById("mesAno");            
+        function quandoPaginaCarregada() {
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+            google.charts.setOnLoadCallback(tipoVeiculoPiechart);
+            google.charts.setOnLoadCallback(fabrVeiculoPiechart);
+            google.charts.setOnLoadCallback(concessionaColchart);
+
+            let selectData = document.getElementById("mesAno");
 
             selectData.valueAsDate = new Date();
-            document.getElementById("mesAno").addEventListener("change",quandoDataAlterada);
+            document.getElementById("mesAno").addEventListener("change", quandoDataAlterada);
             selectData.dispatchEvent(new Event('change'))
         }
 
-        function quandoDataAlterada(event){
-            
+        function quandoDataAlterada(event) {
+
             let apiEndereco = document.getElementById("apiEndereco").innerHTML;
-             let data = event.target.value.split("-"); 
-                let ano = data[0];
-                let mes = data[1];                
-                
-                $.ajax(
-                        {
-                            typeof: "GET",
-                            url: `${apiEndereco}/Venda/Relatorios?mes=${mes}&ano=${ano}`,
-                            success: quandoDadosBaixados,
-                            error: function (request, status, error) { console.log(error) }
-                        }
-                    );
+            let ApiToken = document.getElementById("ApiToken").innerHTML;
+            let data = event.target.value.split("-");
+            let ano = data[0];
+            let mes = data[1];
+
+            $.ajax(
+                {
+                    typeof: "GET",
+                    url: `${apiEndereco}/Venda/Relatorios?mes=${mes}&ano=${ano}`,
+                    headers: {"Accept":"text/plain","Cache-Control": "no-cache","Authorization": "Bearer " + ApiToken},                    
+                    success: quandoDadosBaixados,
+                    error: function (request, status, error) { console.log(error) }
+                }
+            );
         }
 
-        function quandoDadosBaixados(resultado){
-        
-             totalVendas = resultado.totalVendas;
-             vendasPorTipoDeveiculo = resultado.vendasPorTipoDeveiculo.map(x=> [x.chave,x.valor]);
-             vendasPorFabricante = resultado.vendasPorFabricante.map(x=> [x.chave,x.valor]);
-             desempenhoPorConcessionaria = resultado.desempenhoPorConcessionaria.map(x=> [x.chave,x.valor]);  
-                       
-             google.charts.setOnLoadCallback(tipoVeiculoPiechart);   
-             google.charts.setOnLoadCallback(fabrVeiculoPiechart);
-             google.charts.setOnLoadCallback(concessionaColchart);
+        function quandoDadosBaixados(resultado) {
 
-             document.getElementById("total").innerHTML = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(totalVendas);
+            totalVendas = resultado.totalVendas;
+            vendasPorTipoDeveiculo = resultado.vendasPorTipoDeveiculo.map(x => [x.chave, x.valor]);
+            vendasPorFabricante = resultado.vendasPorFabricante.map(x => [x.chave, x.valor]);
+            desempenhoPorConcessionaria = resultado.desempenhoPorConcessionaria.map(x => [x.chave, x.valor]);
+
+            google.charts.setOnLoadCallback(tipoVeiculoPiechart);
+            google.charts.setOnLoadCallback(fabrVeiculoPiechart);
+            google.charts.setOnLoadCallback(concessionaColchart);
+
+            document.getElementById("total").innerHTML = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalVendas);
 
         }
 
-        function tipoVeiculoPiechart(){
-                
-                let data = google.visualization.arrayToDataTable([['Tipo', 'Quantidade'],...vendasPorTipoDeveiculo]);
+        function tipoVeiculoPiechart() {
 
-                let options = {
-                    title: 'Vendas por tipo de veículo'
-                };
+            let data = google.visualization.arrayToDataTable([['Tipo', 'Quantidade'], ...vendasPorTipoDeveiculo]);
 
-                let chart = new google.visualization.PieChart(document.getElementById('tipoVeiculoPiechart'));
+            let options = {
+                title: 'Vendas por tipo de veículo'
+            };
 
-                chart.draw(data, options);
+            let chart = new google.visualization.PieChart(document.getElementById('tipoVeiculoPiechart'));
 
-      }
+            chart.draw(data, options);
 
-      function fabrVeiculoPiechart() {
+        }
+
+        function fabrVeiculoPiechart() {
 
             let data = google.visualization.arrayToDataTable([
-                ['Fabricante', 'Quantidade'],...vendasPorFabricante
+                ['Fabricante', 'Quantidade'], ...vendasPorFabricante
             ]);
 
             let options = {
@@ -121,27 +124,27 @@
             let chart = new google.visualization.PieChart(document.getElementById('fabrVeiculoPiechart'));
 
             chart.draw(data, options);
-       }
+        }
 
-       function concessionaColchart() {
-        let data = google.visualization.arrayToDataTable([
-                    ['concessionária', 'Vendas'],...desempenhoPorConcessionaria
-                ]);
+        function concessionaColchart() {
+            let data = google.visualization.arrayToDataTable([
+                ['concessionária', 'Vendas'], ...desempenhoPorConcessionaria
+            ]);
 
-        let options = {
-            title: "Desempenho de cada concessionária",
-            bar: { groupWidth: '95%' },
-            legend: { position: 'none' },
-        };
+            let options = {
+                title: "Desempenho de cada concessionária",
+                bar: { groupWidth: '95%' },
+                legend: { position: 'none' },
+            };
 
-        let chart = new google.visualization.ColumnChart(document.getElementById('concessionaColchart'));
-        chart.draw(data, options);
-      }
-        
+            let chart = new google.visualization.ColumnChart(document.getElementById('concessionaColchart'));
+            chart.draw(data, options);
+        }
 
-        
 
-        
+
+
+
 
     </script>
 

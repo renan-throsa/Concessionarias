@@ -5,6 +5,7 @@ using Concs.Negocio.Mapeamentos;
 using Moq;
 using Xunit;
 using Concs.Dominio.Modelos;
+using Concs.Testes.Utilidades;
 
 namespace Concs.Testes
 {
@@ -82,6 +83,39 @@ namespace Concs.Testes
                 Website = "https://www.acmecorp.com"
             };
             var resultado = await _serviçoFabricante.Insert(fabricante);
+
+            Assert.False(resultado.IsValid);
+        }
+
+        [Fact]
+        public async Task InsercaoComErroPorCausaDoNomeDuplicado()
+        {
+            var fabricante = Dados.Fabricantes().First();
+
+            _repositorioFabricanteMock.Setup(x => x.NomeCadastrado(fabricante.Nome)).ReturnsAsync(true);
+
+            var modelo = new ModeloInserçãoFabricante
+            {
+                Nome = fabricante.Nome,
+                PaisOrigem = "Estados Unidos",
+                AnoFundacao = 1950,
+                Website = "https://www.acmecorp.com"
+            };
+            var resultado = await _serviçoFabricante.Insert(modelo);
+
+            Assert.False(resultado.IsValid);
+        }
+
+        [Fact]
+        public async Task ExclusãoComErro()
+        {
+            var fabricante = Dados.Fabricantes().First();
+            var veiculo = Dados.Veiculos().Where(x => x.FabricanteId == fabricante.Id).First();
+
+            _repositorioFabricanteMock.Setup(r => r.GetByIdAsync(fabricante.Id, true)).ReturnsAsync(fabricante);
+            _repositorioVeiculoMock.Setup(r => r.veiculoComFabricanteCom(fabricante.Id)).ReturnsAsync(true);
+
+            var resultado = await _serviçoFabricante.Remove(fabricante.Id);
 
             Assert.False(resultado.IsValid);
         }

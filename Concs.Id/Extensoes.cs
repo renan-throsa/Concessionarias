@@ -82,6 +82,7 @@ namespace Concs.Id
                                   policy =>
                                   {
                                       policy.WithOrigins(webConfig.Origin);
+                                      policy.AllowAnyHeader();
                                   });
             });
 

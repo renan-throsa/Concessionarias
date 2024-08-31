@@ -57,10 +57,10 @@ namespace Concs.Negocio.Seviços
 
             if (entidade is null)
             {
-                return Erro($"Não encontrado: {id}", HttpStatusCode.NotFound);
+                return Erro($"Veículo com id {id} não encontrado", HttpStatusCode.NotFound);
             }
 
-            var possuiRestriçãoDerelacionamento = _repositorioVenda.Query().Where(x => x.VeiculoId == id).Any();
+            var possuiRestriçãoDerelacionamento = await _repositorioVenda.vendaComVeiculo(id);
 
             if (possuiRestriçãoDerelacionamento)
             {
@@ -83,7 +83,7 @@ namespace Concs.Negocio.Seviços
 
             var paraAtualizar = Mapper.Map<Veiculo>(modelo);
 
-            if (!EntityIsValid(new ValidadorDeVeiculo(),paraAtualizar ))
+            if (!EntityIsValid(new ValidadorDeVeiculo(), paraAtualizar))
                 return Erro();
 
 

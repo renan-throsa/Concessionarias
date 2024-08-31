@@ -1,22 +1,24 @@
 ﻿using Concs.Dominio.Modelos;
 using Concs.Web.Clients;
-using Concs.Web.Serviços;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace Concs.Web.Controllers
 {
+
     public class UsuarioController : Controller
     {
 
         private readonly IUsuarioClient _usuarioClient;
-        private readonly IUsuarioServiço _usuarioServiço;
 
-        public UsuarioController(IUsuarioClient usuarioClient, IUsuarioServiço usuarioServiço)
+        public UsuarioController(IUsuarioClient usuarioClient)
         {
             _usuarioClient = usuarioClient;
-            _usuarioServiço = usuarioServiço;
         }
 
         [HttpGet]
@@ -32,7 +34,21 @@ namespace Concs.Web.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                _usuarioServiço.GuardarUsuario(await response.Content.ReadAsStringAsync());
+                var token = await response.Content.ReadAsStringAsync();
+
+                var resultado = new JwtSecurityToken(jwtEncodedString: token);
+
+                var claimsIdentity = new ClaimsIdentity(resultado.Claims.Append(new Claim("token", token)), CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    ExpiresUtc = resultado.ValidTo,
+                    IsPersistent = modeloAutencicaçãoUsuario.LembrasSe,
+                    IssuedUtc = resultado.IssuedAt,
+                };
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -50,9 +66,9 @@ namespace Concs.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Sair()
+        public async Task<IActionResult> Sair()
         {
-            _usuarioServiço.ApagarUsuario();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Autenticar", "Usuario");
         }
     }

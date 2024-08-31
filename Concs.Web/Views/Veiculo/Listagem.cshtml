@@ -1,7 +1,9 @@
-﻿@inject IUsuarioServiço serviço
+﻿
 @using System.Globalization
 @{
     ViewData["Title"] = "Veiculos";
+    bool podeInserir = ViewBag.PodeInserir;
+    bool podeAtualizar = ViewBag.PodeAtualizar;
 }
 
 @model List<ModeloConsultaVeiculo>
@@ -14,7 +16,7 @@
                 <div class="card-header">
                     <h4>
                         Veiculos
-                        @if (serviço.TemPermissão("Veículo.Inserir"))
+                        @if (podeInserir)
                         {
                             <a asp-controller="Veiculo" asp-action="Criar" class="btn btn-primary float-end">Novo Veículo</a>
                         }
@@ -49,7 +51,7 @@
                                     <td>@veiculo.Fabricante</td>
                                     <td>
                                         Concessionárias
-                                        @if (serviço.TemPermissão("Veículo.Atualizar"))
+                                        @if (podeAtualizar)
                                         {
                                             <a asp-route-id="@veiculo.VeiculoId" asp-controller="Veiculo" asp-action="Editar" class="btn btn-success btn-sm">Editar</a>
                                         }

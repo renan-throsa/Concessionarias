@@ -1,7 +1,6 @@
 ﻿using Concs.Dominio.Modelos;
 using System.Text.Json;
 using System.Text;
-using Concs.Web.Serviços;
 
 namespace Concs.Web.Clients
 {
@@ -15,10 +14,9 @@ namespace Concs.Web.Clients
         private readonly HttpClient _client;
         private const string _CONTROLLER = "/Usuario";
 
-        public UsuarioClient(HttpClient client, IUsuarioServiço serviço)
+        public UsuarioClient(HttpClient client)
         {
-            _client = client;
-            _client.DefaultRequestHeaders.Add("Authorization", serviço.ObterToken());
+            _client = client;            
         }
 
         public async Task<HttpResponseMessage> Autenticar(ModeloAutencicaçãoUsuario modeloAutencicaçãoUsuario)

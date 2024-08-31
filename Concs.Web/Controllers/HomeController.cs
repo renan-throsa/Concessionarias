@@ -1,21 +1,21 @@
 ﻿using Concs.App.Configs;
 using Concs.App.Models;
-using Concs.Web.Serviços;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace Concs.App.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        private readonly IUsuarioServiço _serviço;
+
         private readonly ILogger<HomeController> _logger;
         private readonly string _apiEndereco;
 
-        public HomeController(IUsuarioServiço serviço,ILogger<HomeController> logger, IOptions<ApiConfigs> appSettings)
+        public HomeController(ILogger<HomeController> logger, IOptions<ApiConfigs> appSettings)
         {
-            _serviço = serviço;
             _logger = logger;
             _apiEndereco = appSettings.Value.WebParaApiEndereco;
         }
@@ -23,9 +23,10 @@ namespace Concs.App.Controllers
         public IActionResult Index()
         {
             ViewBag.ApiEndereco = _apiEndereco;
-            ViewBag.Usuario = _serviço.ObterToken();
+            ViewBag.ApiToken = HttpContext.User.HasClaim(x => x.Type == "token") ? HttpContext.User.Claims.First(x => x.Type == "token").Value : "";
+            ViewBag.PodeLer = HttpContext.User.HasClaim("Permissões", "Relatorio.Ler");
             return View();
-        }        
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

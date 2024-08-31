@@ -66,7 +66,7 @@ namespace Concs.Negocio.Seviços
                 return Erro($"Não encontrado: {id}", HttpStatusCode.NotFound);
             }
 
-            var possuiRestriçãoDerelacionamento = _repositorioVeiculo.Query().Where(x => x.FabricanteId == id).Any();
+            var possuiRestriçãoDerelacionamento = await _repositorioVeiculo.veiculoComFabricanteCom(id);
 
             if (possuiRestriçãoDerelacionamento)
             {

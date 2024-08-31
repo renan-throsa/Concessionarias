@@ -20,5 +20,6 @@ namespace Concs.Dados.Repositorios
         {
             return await _currentSet.Where(x => x.Ativo && x.Id != id).AnyAsync(x => x.Nome.Equals(cpf));
         }
+        
     }
 }

@@ -1,8 +1,7 @@
 ﻿﻿@{
     ViewData["Title"] = "Detalhes Fabricante";
-
     List<string> erros = ViewBag.Erros;
-    
+    bool podeAtualizar = ViewBag.PodeAtualizar;
 }
 
 @model ModeloVisualizaçãoFabricante
@@ -54,7 +53,15 @@
                         </div>
 
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-danger">Excluir Fabricante</button>
+                            @if (podeAtualizar)
+                            {
+                                <button type="submit" class="btn btn-danger">Excluir Fabricante</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="disabled btn btn-danger">Excluir Fabricante</button>
+                            }
+                           
                         </div>
 
                     </form>

@@ -4,6 +4,7 @@ using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Concs.Negocio.Mapeamentos;
 using Concs.Negocio.Seviços;
+using Concs.Testes.Utilidades;
 using Moq;
 using Xunit;
 
@@ -38,7 +39,7 @@ namespace Concs.Testes
         [Fact]
         public async Task InsercaoComSucesso()
         {
-            Veiculo veiculo = Utilidades.Veiculos().First(x => x.Id == 8);
+            Veiculo veiculo = Dados.Veiculos().First(x => x.Id == 8);
             ModeloInserçãoCliente cliente = new ModeloInserçãoCliente() { Nome = "Esther Vitória Peixoto", CPF = "848.076.188-14", Telefone = "(81) 98795-2530" };
 
             _repositorioVeiculoMock.Setup(r => r.GetByIdAsync(veiculo.Id, false)).ReturnsAsync(veiculo);
@@ -61,7 +62,7 @@ namespace Concs.Testes
         [Fact]
         public async Task InsercaoComErroPorCausaDaData()
         {
-            Veiculo veiculo = Utilidades.Veiculos().First(x => x.Id == 8);
+            Veiculo veiculo = Dados.Veiculos().First(x => x.Id == 8);
 
             _repositorioVeiculoMock.Setup(r => r.GetByIdAsync(veiculo.Id, false)).ReturnsAsync(veiculo);
 
@@ -83,7 +84,7 @@ namespace Concs.Testes
         [Fact]
         public async Task InsercaoComErroPorCausaDoPreço()
         {
-            Veiculo veiculo = Utilidades.Veiculos().First(x => x.Id == 8);
+            Veiculo veiculo = Dados.Veiculos().First(x => x.Id == 8);
 
             _repositorioVeiculoMock.Setup(r => r.GetByIdAsync(veiculo.Id, false)).ReturnsAsync(veiculo);
 

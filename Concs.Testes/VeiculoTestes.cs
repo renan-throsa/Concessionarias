@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Concs.Dominio.Entidades;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Concs.Negocio.Mapeamentos;
 using Concs.Negocio.Seviços;
+using Concs.Testes.Utilidades;
 using Moq;
+using System.Reflection;
 using Xunit;
 
 namespace Concs.Testes
@@ -58,6 +61,20 @@ namespace Concs.Testes
             };
 
             var resultado = await _serviçoVeiculo.Update(modelo);
+
+            Assert.False(resultado.IsValid);
+        }
+
+        [Fact]
+        public async Task ExclusãoComErro()
+        {
+            var venda  = Dados.Vendas().First();
+            var veiculo = Dados.Veiculos().Where(x => x.Id == venda.VeiculoId).First();
+
+            _repositorioVeiculoMock.Setup(r => r.GetByIdAsync(veiculo.Id, true)).ReturnsAsync(veiculo);
+            _repositorioVendaMock.Setup(r => r.vendaComVeiculo(venda.VeiculoId)).ReturnsAsync(true);
+
+            var resultado = await _serviçoVeiculo.Remove(veiculo.Id);
 
             Assert.False(resultado.IsValid);
         }

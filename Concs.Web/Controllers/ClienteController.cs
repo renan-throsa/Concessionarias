@@ -1,12 +1,13 @@
 ﻿using Concs.App.Clients;
 using Concs.Dominio.Modelos;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
 
 namespace Concs.App.Controllers
 {
+    [Authorize]
     public class ClienteController : Controller
     {
         private readonly IClienteClient _clienteClient;
@@ -20,6 +21,7 @@ namespace Concs.App.Controllers
         public async Task<ActionResult> Listagem()
         {
             var vm = await _clienteClient.Listagem();
+            ViewBag.PodeInserir = HttpContext.User.HasClaim("Permissões", "Cliente.Inserir");
             return View(vm);
         }
 

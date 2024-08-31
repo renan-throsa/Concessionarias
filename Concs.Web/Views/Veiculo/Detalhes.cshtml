@@ -2,6 +2,7 @@
     ViewData["Title"] = "Detalhes Veículo";
 
     List<string> erros = ViewBag.Erros;
+    bool podeAtualizar = ViewBag.PodeAtualizar;
     
 }
 
@@ -64,7 +65,14 @@
                             <input readonly asp-for="Descricao" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-danger">Excluir Veículo</button>
+                            @if (podeAtualizar)
+                            {
+                                <button type="submit" class="btn btn-danger">Excluir Veículo</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="disabled btn btn-danger">Excluir Veículo</button>
+                            }                            
                         </div>
 
                     </form>
