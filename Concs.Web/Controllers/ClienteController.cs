@@ -22,6 +22,7 @@ namespace Concs.App.Controllers
         {
             var vm = await _clienteClient.Listagem();
             ViewBag.PodeInserir = HttpContext.User.HasClaim("Permissões", "Cliente.Inserir");
+            ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Cliente.Atualizar");
             return View(vm);
         }
 

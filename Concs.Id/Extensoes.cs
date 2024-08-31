@@ -50,8 +50,7 @@ namespace Concs.Id
                 options.Lockout.AllowedForNewUsers = true;
 
                 // User settings.
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
 
             }).AddEntityFrameworkStores<SqlContext>();
@@ -70,7 +69,7 @@ namespace Concs.Id
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(segConfig.Segredo)),
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = true,                    
+                    ValidateLifetime = true,
                     ValidAudience = segConfig.Audiencia,
                     ValidIssuer = segConfig.Emissor
                 };
