@@ -35,7 +35,7 @@ namespace Concs.App.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<ActionResult> Criar(ModeloInserçãoFabricante modeloInserçãoFabricante)
         {
             var response = await _fabricanteClient.Inserir(modeloInserçãoFabricante);
@@ -80,7 +80,7 @@ namespace Concs.App.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<ActionResult> Editar(ModeloAtualizaçãoFabricante modeloAtualizaçãoFabricante)
         {
             var response = await _fabricanteClient.Atualizar(modeloAtualizaçãoFabricante);
@@ -134,7 +134,7 @@ namespace Concs.App.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<ActionResult> Detalhes(ModeloVisualizaçãoFabricante modeloVisualizaçãoFabricante)
         {
             var response = await _fabricanteClient.Excluir(modeloVisualizaçãoFabricante.FabricanteId);

@@ -42,7 +42,7 @@ namespace Concs.App.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<ActionResult> Criar(ModeloInserçãoVenda modeloInserçãoVenda)
         {
             var response = await _vendaClient.Inserir(modeloInserçãoVenda);

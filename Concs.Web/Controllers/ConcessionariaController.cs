@@ -34,7 +34,7 @@ namespace Concs.App.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<ActionResult> Criar(ModeloInserçãoConcessionária modeloInserçãoConcessionaria)
         {
             var response = await _concessionariaClient.Inserir(modeloInserçãoConcessionaria);
@@ -84,7 +84,7 @@ namespace Concs.App.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<ActionResult> Editar(ModeloAtualizaçãoConcessionária modeloAtualizaçãoConcessionaria)
         {
             var response = await _concessionariaClient.Atualizar(modeloAtualizaçãoConcessionaria);

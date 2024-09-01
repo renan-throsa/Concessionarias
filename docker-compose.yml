@@ -36,7 +36,7 @@ services:
     build:      
       dockerfile: ./Concs.Api/Dockerfile      
     ports:
-      - "4002:8080"
+      - "4002:80"
     depends_on: 
       - sql
       - redis

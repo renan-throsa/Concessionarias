@@ -127,6 +127,11 @@
         }
 
         function concessionaColchart() {
+
+            if (desempenhoPorConcessionaria.length == 0) {
+                desempenhoPorConcessionaria = [['', 0]];
+            }
+
             let data = google.visualization.arrayToDataTable([
                 ['concessionária', 'Vendas'], ...desempenhoPorConcessionaria
             ]);
