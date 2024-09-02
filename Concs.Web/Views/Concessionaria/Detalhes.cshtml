@@ -1,11 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Detalhes Concessionária";    
     bool podeAtualizar = ViewBag.PodeAtualizar;
+    List<string> erros = ViewBag.Erros;
 }
 
 @model ModeloVisualizaçãoConcessionária
 
+@if (erros is not null && erros.Any())
+{
+    <ul>
+        @foreach (string erro in erros)
+        {
 
+            <li><p style="color:red">@erro</p></li>
+        }
+    </ul>
+
+}
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-12">
@@ -17,7 +28,7 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <form asp-controller="Concessionaria" asp-action="Editar" method="POST">
+                    <form asp-controller="Concessionaria" asp-action="Detalhes" method="POST">
 
                         <input hidden asp-for="ConcessionariaId" />
 
@@ -40,7 +51,7 @@
 
                         <div class="mb-3">
                             <label asp-for="Estado">Estado</label>
-                            <input asp-for="Estado" type="text" class="form-control" readonly>
+                            <input asp-for="Estado" type="text" id="Detalhes-Estado" class="form-control" readonly>
                         </div>
                         
                         <div class="mb-3">
@@ -65,7 +76,7 @@
                             }
                             else
                             {
-                                <button type="submit" class="disabled btn btn-danger">Excluir Concessionária</button>
+                                <button class="disabled btn btn-danger">Excluir Concessionária</button>
                             }
                             
                         </div>

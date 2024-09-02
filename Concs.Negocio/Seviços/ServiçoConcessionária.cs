@@ -12,11 +12,13 @@ namespace Concs.Negocio.Seviços
     public class ServiçoConcessionária : Serviço, IServiçoConcessionária
     {
         private readonly IRepositorioConcessionária _repositorioConcessionária;
+        private readonly IRepositorioVenda _repositorioVenda;
         private readonly ICacheamento _cacheamento;
 
-        public ServiçoConcessionária(IMapper mapper, IRepositorioConcessionária repositorioConcessionária, ICacheamento cacheamento) : base(mapper)
+        public ServiçoConcessionária(IMapper mapper, IRepositorioConcessionária repositorioConcessionária, IRepositorioVenda repositorioVenda, ICacheamento cacheamento) : base(mapper)
         {
             _repositorioConcessionária = repositorioConcessionária;
+            _repositorioVenda = repositorioVenda;
             _cacheamento = cacheamento;
         }
 
@@ -54,7 +56,6 @@ namespace Concs.Negocio.Seviços
             await _repositorioConcessionária.InsertAsync(entidade);
             await _repositorioConcessionária.SaveChangesAsync();
             await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMCONCESSIONARIAS);
-
             return Successo(entidade.Id);
         }
 
@@ -67,8 +68,16 @@ namespace Concs.Negocio.Seviços
                 return Erro($"Não encontrado: {id}", HttpStatusCode.NotFound);
             }
 
+            var possuiRestriçãoDerelacionamento = await _repositorioVenda.vendaComConcessionária(id);
+
+            if (possuiRestriçãoDerelacionamento)
+            {
+                return Erro($"Concessionária possui vinculo com uma venda ativa. Não é possível excluir.", HttpStatusCode.Conflict);
+            }
+
             entidade.Ativo = false;
             await _repositorioConcessionária.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMCONCESSIONARIAS);
             return Successo(id);
         }
 

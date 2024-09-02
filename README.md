@@ -63,7 +63,7 @@ Este projeto apresenta uma arquitetura Monolítica dividido em camadas.
 
 ![](Diagrama.png)
 
-# 6. Testes
+# 5. Testes
 
 * Estratégia de Testes: testes de integração relacionados à camadas de Negócio como Mock da camada de Dados.
 * Ferramentas de Teste: xUnit e Moq.

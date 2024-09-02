@@ -7,7 +7,15 @@
 @model List<ModeloConsultaConcessionária>
 
 <div class="container mt-4">
+    @if (TempData["MemsagemDeSucesso"] is not null)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
 
+            <div>@TempData["MemsagemDeSucesso"]</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    }
     <div class="row">
         <div class="col-md-12">
             <div class="card">

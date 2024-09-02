@@ -21,7 +21,7 @@ namespace Concs.Dados.Repositorios
             var consulta = _currentSet.Where(x => x.Ativo);
             if (comoRastreada)
             {
-                return await consulta.FirstAsync(x => x.Id == id);
+                return await consulta.FirstOrDefaultAsync(x => x.Id == id);
             }
 
             return await _currentSet.AsNoTracking().FirstAsync(x => x.Id == id);

@@ -42,6 +42,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Novo fabricante registrado !";
                 return RedirectToAction("Listagem", "Fabricante");
             }
 
@@ -87,6 +88,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Alterações salvas com sucesso !";
                 return RedirectToAction("Listagem", "Fabricante");
             }
 
@@ -141,6 +143,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "A remoção foi efetuada com salva com sucesso !";
                 return RedirectToAction("Listagem", "Fabricante");
             }
 
@@ -153,6 +156,7 @@ namespace Concs.App.Controllers
             var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
 
             ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
+            ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Fabricante.Atualizar");
 
             return View(modeloVisualizaçãoFabricante);
         }

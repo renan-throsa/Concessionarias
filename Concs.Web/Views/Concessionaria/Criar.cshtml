@@ -66,39 +66,39 @@
                     <form asp-controller="Concessionaria" asp-action="Criar" method="POST">
 
                         <div class="mb-3">
-                            <label asp-for="Nome">Insera o nome da concessionária</label>
-                            <input asp-for="Nome" type="text" class="form-control">
+                            <label asp-for="Nome">Insira o nome da concessionária</label>
+                            <input required asp-for="Nome" type="text" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label asp-for="CEP">Preencha o Cep</label>
-                            <input asp-for="CEP" type="text" class="form-control">
+                            <input required asp-for="CEP" type="text" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label asp-for="Endereco">Preencha a rua</label>
-                            <input asp-for="Endereco" type="text" class="form-control">
+                            <input required asp-for="Endereco" type="text" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label asp-for="Cidade">Preencha a cidade</label>
-                            <input asp-for="Cidade" type="text" class="form-control">
+                            <input required asp-for="Cidade" type="text" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label asp-for="Estado">Selecione o estado</label>
-                            <select asp-for="Estado" class="form-control" asp-items="estados">
+                            <select required asp-for="Estado" class="form-control" asp-items="estados">
                                 <option value="">Selecione</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label asp-for="Telefone">Adicione o telefone</label>
-                            <input asp-for="Telefone" type="text" class="form-control">
+                            <input required asp-for="Telefone" type="text" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label asp-for="Email">Adicione email</label>
-                            <input asp-for="Email" type="email" class="form-control">
+                            <input required asp-for="Email" type="email" class="form-control">
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="CapacidadeMaximaVeiculos">Defina a capacidade máxima de veículos.</label>
-                            <input asp-for="CapacidadeMaximaVeiculos" type="number" min="1" class="form-control">
+                            <input required asp-for="CapacidadeMaximaVeiculos" type="number" min="1" class="form-control">
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Inserir Concessionária</button>

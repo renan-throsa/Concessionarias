@@ -64,7 +64,7 @@ namespace Concs.Negocio.Seviços
 
             if (possuiRestriçãoDerelacionamento)
             {
-                return Erro($"Veículo possui vinculo com um venda ativa. Não é possível excluir.", HttpStatusCode.Conflict);
+                return Erro($"Veículo possui vinculo com uma venda ativa. Não é possível excluir.", HttpStatusCode.Conflict);
             }
 
             entidade.Ativo = false;

@@ -31,5 +31,15 @@ namespace Concs.Dados.Repositorios
         {
             return await Query().Where(x => x.VeiculoId == veiculoId).AnyAsync();
         }
+
+        public async Task<bool> vendaComCliente(int cliente)
+        {
+            return await Query().Where(x => x.ClienteId == cliente).AnyAsync();
+        }
+
+        public async Task<bool> vendaComConcessionária(int concessionariaId)
+        {
+            return await Query().Where(x => x.ConcessionariaId == concessionariaId).AnyAsync();
+        }
     }
 }

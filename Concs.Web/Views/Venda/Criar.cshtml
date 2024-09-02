@@ -34,15 +34,15 @@
                     <form asp-controller="Venda" asp-action="Criar" method="POST">
 
                         <div class="mb-3">
-                            <label asp-for="VeiculoId">Seleciona o veículo desejado</label>
-                            <select asp-for="VeiculoId" class="form-control" asp-items="veiculos">
+                            <label asp-for="VeiculoId">Selecione o veículo desejado</label>
+                            <select required asp-for="VeiculoId" id="VeiculoSelect" class="form-control" asp-items="veiculos">
                                 <option value="">Selecione</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="ConcessionariaId">Seleciona a concessionária desejado</label>
-                            <select asp-for="ConcessionariaId" class="form-control" asp-items="concessionarias">
+                            <label asp-for="ConcessionariaId">Selecione a concessionária desejado</label>
+                            <select required asp-for="ConcessionariaId" id="ConcessionariaSelect" class="form-control" asp-items="concessionarias">
                                 <option value="">Selecione</option>
                             </select>
 
@@ -50,29 +50,29 @@
 
 
                         <div class="mb-3">
-                            <label asp-for="Cliente.Nome">Insera o nome do cliente</label>
-                            <input type="text" asp-for="Cliente.Nome" class="form-control">
+                            <label asp-for="Cliente.Nome">Insira o nome do cliente</label>
+                            <input required type="text" asp-for="Cliente.Nome" class="form-control">
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Cliente.CPF">Insera o cpf do cliente</label>
-                            <input type="text" asp-for="Cliente.CPF" class="form-control">
+                            <label asp-for="Cliente.CPF">Insira o cpf do cliente</label>
+                            <input required type="text" asp-for="Cliente.CPF" class="form-control">
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Cliente.Telefone">Insera o telefone do cliente</label>
-                            <input type="text" asp-for="Cliente.Telefone" class="form-control">
+                            <label asp-for="Cliente.Telefone">Insira o telefone do cliente</label>
+                            <input required type="text" asp-for="Cliente.Telefone" class="form-control">
                         </div>
 
 
                         <div class="mb-3">
-                            <label asp-for="DataVenda">Seleciona a data da venda.</label>
-                            <input type="date" max="2024-08-26" asp-for="DataVenda" class="form-control">
+                            <label asp-for="DataVenda">Selecione a data da venda.</label>
+                            <input required type="date" asp-for="DataVenda" class="form-control">
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="PrecoVenda">Seleciona o preço da venda</label>
-                            <input asp-for="PrecoVenda" class="form-control">
+                            <label asp-for="PrecoVenda">Selecione o preço da venda</label>
+                            <input required asp-for="PrecoVenda" class="form-control">
                         </div>
 
                         <div class="mb-3">
@@ -93,7 +93,10 @@
           document.addEventListener("DOMContentLoaded",quandoPaginaCarregada);
 
           function quandoPaginaCarregada(){
-              document.getElementById("DataVenda").max = new Date().toISOString().split("T")[0];
+              let hoje = new Date();
+              let dataVenda = document.getElementById("DataVenda");
+              dataVenda.max = hoje.toISOString().split("T")[0];
+              dataVenda.min = new Date(hoje.setMonth(hoje.getMonth() - 1)).toISOString().split("T")[0];
           }    
 
     </script>

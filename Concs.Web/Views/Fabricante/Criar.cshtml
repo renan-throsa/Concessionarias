@@ -46,7 +46,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="AnoFundacao">Insera o ano de fundação</label>
+                            <label asp-for="AnoFundacao">Insira o ano de fundação</label>
                             <input asp-for="AnoFundacao" type="number" class="form-control">
                         </div>
                         <div class="mb-3">
@@ -63,3 +63,11 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#PaisOrigem').select2();
+        });
+    </script>
+}

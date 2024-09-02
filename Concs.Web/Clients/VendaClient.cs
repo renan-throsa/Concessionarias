@@ -9,6 +9,7 @@ namespace Concs.App.Clients
         Task<IEnumerable<ModeloConsultaVenda>> Listagem();
         Task<HttpResponseMessage> Encontrar(int id);
         Task<HttpResponseMessage> Inserir(ModeloInserçãoVenda modelo);
+        Task<HttpResponseMessage> Remover(int id);
     }
 
     public class VendaClient : IVendaClient
@@ -50,6 +51,12 @@ namespace Concs.App.Clients
             };
 
             return JsonSerializer.Deserialize<IEnumerable<ModeloConsultaVenda>>(result, option);
+        }
+
+        public async Task<HttpResponseMessage> Remover(int id)
+        {
+            var rota = new StringBuilder(_CONTROLLER).Append("/").Append(id).ToString();
+            return await _client.DeleteAsync(rota);
         }
     }
 }

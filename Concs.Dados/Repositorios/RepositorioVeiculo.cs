@@ -28,7 +28,7 @@ namespace Concs.Dados.Repositorios
 
         public async Task<bool> veiculoComFabricanteCom(int fabricanteId)
         {
-            return await Query().Where(x => x.Id == fabricanteId).AnyAsync();
+            return await Query().Where(x => x.FabricanteId == fabricanteId).AnyAsync();
         }
 
     }

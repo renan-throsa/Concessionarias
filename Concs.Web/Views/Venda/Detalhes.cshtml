@@ -1,0 +1,81 @@
+﻿﻿@{
+    ViewData["Title"] = "Detalhes da Venda";
+    bool podeAtualizar = ViewBag.PodeAtualizar;
+    List<string> erros = ViewBag.Erros;
+}
+
+@model ModeloVisualizaçãoVenda
+
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Detalhes da Venda
+                        <a asp-controller="Venda" asp-action="Listagem" class="btn btn-danger float-end">Voltar</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Venda" asp-action="Detalhes" method="POST">
+
+                        <input hidden asp-for="VendaId" />
+
+                        <div class="mb-3">
+                            <label asp-for="Veiculo.Modelo">Veículo</label>
+                            <input readonly type="text" asp-for="Veiculo.Modelo" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Concessionaria.Nome">Concessionária</label>
+                            <input readonly type="text" asp-for="Concessionaria.Nome" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Concessionaria.Endereco">Endereço da Concessionária</label>
+                            <input readonly type="text" asp-for="Concessionaria.Endereco" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Cliente.Nome">Cliente</label>
+                            <input readonly type="text" asp-for="Cliente.Nome" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Cliente.Telefone">Contato do cliente</label>
+                            <input readonly type="text" asp-for="Cliente.Telefone" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DataVenda">Data da venda</label>
+                            <input readonly type="date" asp-for="DataVenda" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PrecoVenda">Preço da venda</label>
+                            <input readonly asp-for="PrecoVenda" class="form-control">
+                        </div>                       
+
+                        <div class="mb-3">
+                            <label asp-for="ProtocoloVenda">Protocolo da venda</label>
+                            <input readonly asp-for="ProtocoloVenda" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            @if (podeAtualizar)
+                            {
+                                <button type="submit" class="btn btn-danger">Excluir Venda</button>
+                            }
+                            else
+                            {
+                                <button class="disabled btn btn-danger">Excluir Venda</button>
+                            }
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

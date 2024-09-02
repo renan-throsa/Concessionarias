@@ -49,6 +49,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Nova venda registrada !";
                 return RedirectToAction("Listagem", "Venda");
             }
 
@@ -70,7 +71,7 @@ namespace Concs.App.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Visualizar(int id)
+        public async Task<ActionResult> Detalhes(int id)
         {
             var response = await _vendaClient.Encontrar(id);
             if (response.IsSuccessStatusCode)
@@ -83,11 +84,38 @@ namespace Concs.App.Controllers
                 };
 
                 var model = JsonSerializer.Deserialize<ModeloVisualizaçãoVenda>(result, option);
-                                
 
+                ViewBag.Erros = new List<string>();
+                ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Venda.Atualizar");
                 return View(model);
             }
             return View();
+        }
+
+        [HttpPost]
+
+        public async Task<ActionResult> Detalhes(ModeloVisualizaçãoVenda modeloVisualizaçãoVenda)
+        {
+            var response = await _vendaClient.Remover(modeloVisualizaçãoVenda.VendaId);
+
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["MemsagemDeSucesso"] = "A remoção foi efetuada com salva com sucesso !";
+                return RedirectToAction("Listagem", "Venda");
+            }
+
+            var option = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var erroResult = await response.Content.ReadAsStringAsync();
+            var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
+
+            ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Venda.Atualizar");
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
+
+            return View(modeloVisualizaçãoVenda);
         }
     }
 }

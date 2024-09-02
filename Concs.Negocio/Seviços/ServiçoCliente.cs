@@ -11,11 +11,13 @@ namespace Concs.Negocio.Seviços
     public class ServiçoCliente : Serviço, IServiçoCliente
     {
         private readonly IRepositorioCliente _repositorioCliente;
+        private readonly IRepositorioVenda _repositorioVenda;
         private readonly ICacheamento _cacheamento;
 
-        public ServiçoCliente(IMapper mapper, IRepositorioCliente repositorioCliente, ICacheamento cacheamento) : base(mapper)
+        public ServiçoCliente(IMapper mapper, IRepositorioCliente repositorioCliente, IRepositorioVenda repositorioVenda, ICacheamento cacheamento) : base(mapper)
         {
             _repositorioCliente = repositorioCliente;
+            _repositorioVenda = repositorioVenda;
             _cacheamento = cacheamento;
         }
 
@@ -68,14 +70,22 @@ namespace Concs.Negocio.Seviços
                 return Erro($"Não encontrado: {id}", HttpStatusCode.NotFound);
             }
 
+            var possuiRestriçãoDerelacionamento = await _repositorioVenda.vendaComCliente(id);
+
+            if (possuiRestriçãoDerelacionamento)
+            {
+                return Erro($"Cliente possui vinculo com uma venda ativa. Não é possível excluir.", HttpStatusCode.Conflict);
+            }
+
             entidade.Ativo = false;
             await _repositorioCliente.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMCLIENTES);
             return Successo(id);
         }
 
         public async Task<ModeloResultadoDaOperação> Update(ModeloAtualizaçãoCliente modelo)
         {
-            
+
             if (!EntityIsValid(new ValidadorDeCliente(), Mapper.Map<Cliente>(modelo)))
                 return Erro();
 

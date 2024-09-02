@@ -40,7 +40,7 @@ namespace Concs.Api.Controllers
         }
 
         [HttpPost]
-        [Authorization(Claim: "Venda.Criar")]
+        [Authorization(Claim: "Venda.Inserir")]
         public async Task<ActionResult<int>> Inserir([FromBody] ModeloInserçãoVenda modelo)
         {
             return RespostaCustomizada(await _serviçoVenda.Insert(modelo));

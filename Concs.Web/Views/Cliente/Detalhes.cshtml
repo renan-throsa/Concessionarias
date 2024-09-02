@@ -1,0 +1,69 @@
+﻿﻿@{
+    ViewData["Title"] = "Detalhes Cliente"; 
+    bool podeAtualizar = ViewBag.PodeAtualizar;
+    List<string> erros = ViewBag.Erros;
+}
+
+@model ModeloVisualizaçãoCliente
+
+@if (erros is not null && erros.Any())
+{
+    <ul>
+        @foreach (string erro in erros)
+        {
+
+            <li><p style="color:red">@erro</p></li>
+        }
+    </ul>
+
+}
+
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Novo Cliente
+                        <a asp-controller="Cliente" asp-action="Listagem" class="btn btn-danger float-end">Voltar</a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Cliente" asp-action="Detalhes" method="POST">
+
+                        <input hidden asp-for="ClienteId" />
+
+                        <div class="mb-3">
+                            <label asp-for="Nome">Nome do Cliente</label>
+                            <input readonly asp-for="Nome" type="text" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CPF">CPF do Cliente</label>
+                            <input readonly asp-for="CPF" type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Telefone">Telefone do Cliente</label>
+                            <input readonly asp-for="Telefone" type="text" class="form-control">
+                        </div>
+                       
+
+                        <div class="mb-3">
+                            @if (podeAtualizar)
+                            {
+                                <button type="submit" class="btn btn-danger">Excluir Cliente</button>
+                            }
+                            else
+                            {
+                                <button class="disabled btn btn-danger">Excluir Cliente</button>
+                            }
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

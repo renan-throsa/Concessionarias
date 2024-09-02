@@ -6,7 +6,19 @@
 
 @model List<ModeloVisualizaçãoCliente>
 
-<div class="container mt-4">
+
+<div class="container mt-5">
+
+    @if (TempData["MemsagemDeSucesso"] is not null)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+
+            <div>@TempData["MemsagemDeSucesso"]</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    }
+    
 
     <div class="row">
         <div class="col-md-12">
@@ -33,7 +45,7 @@
                             <tr>
                                 <th scope="col">Nome</th>
                                 <th scope="col">CPF</th>
-                                <th scope="col">Estado</th>
+                                <th scope="col">Telefone</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,7 +54,7 @@
                             {
                                 <tr>
                                     <td>@cliente.Nome</td>
-                                    <td>@cliente.CPF</td>
+                                    <td>@cliente.CPFFormatado</td>
                                     <td>@cliente.Telefone</td>
                                     <td>
                                         @if (podeAtualizar)
@@ -53,7 +65,7 @@
                                         {
                                             <a class="disabled btn btn-success btn-sm">Editar</a>
                                         }
-
+                                        <a asp-route-id="@cliente.ClienteId" asp-controller="Cliente" asp-action="Detalhes" class="btn btn-info btn-sm">Detalhes</a>
 
                                     </td>
                                 </tr>

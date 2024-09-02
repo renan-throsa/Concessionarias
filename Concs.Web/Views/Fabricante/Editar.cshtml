@@ -39,20 +39,20 @@
 
                         <div class="mb-3">
                             <label asp-for="Nome">Preencha o nome do fabricante</label>
-                            <input type="text" asp-for="Nome" class="form-control">
+                            <input required type="text" asp-for="Nome" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label asp-for="PaisOrigem">Selecione o país de origem</label>
-                            <select asp-for="PaisOrigem" class="form-control" asp-items="paises">
+                            <select required asp-for="PaisOrigem" class="form-control" asp-items="paises">
                             </select>
                         </div>
                         <div class="mb-3">
                             <label asp-for="AnoFundacao">Insera o ano de fundação</label>
-                            <input type="number" asp-for="AnoFundacao" class="form-control">
+                            <input required type="number" asp-for="AnoFundacao" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label asp-for="Website">Adicione a URL do website.</label>
-                            <input type="text" asp-for="Website" class="form-control">
+                            <input required type="text" asp-for="Website" class="form-control">
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Salvar Fabricante</button>
@@ -64,3 +64,4 @@
         </div>
     </div>
 </div>
+

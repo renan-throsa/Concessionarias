@@ -10,7 +10,7 @@ namespace Concs.App.Clients
         Task<HttpResponseMessage> Encontrar(int id);
         Task<HttpResponseMessage> Inserir(ModeloInserçãoVeiculo modelo);
         Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoVeiculo modelo);
-        Task<HttpResponseMessage> Excluir(int id);
+        Task<HttpResponseMessage> Remover(int id);
     }
 
     public class VeiculoClient : IVeiculoClient
@@ -63,7 +63,7 @@ namespace Concs.App.Clients
             return JsonSerializer.Deserialize<IEnumerable<ModeloConsultaVeiculo>>(result, option);
         }
 
-        public async Task<HttpResponseMessage> Excluir(int id)
+        public async Task<HttpResponseMessage> Remover(int id)
         {
             var rota = new StringBuilder(_CONTROLLER).Append("/").Append(id).ToString();
             return await _client.DeleteAsync(rota);

@@ -41,6 +41,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Novo cliente registrado !";
                 return RedirectToAction("Listagem", "Cliente");
             }
 
@@ -83,13 +84,14 @@ namespace Concs.App.Controllers
 
 
         [HttpPost]
-        
+
         public async Task<ActionResult> Editar(ModeloAtualizaçãoCliente modeloAtualizaçãoCliente)
         {
             var response = await _clienteClient.Atualizar(modeloAtualizaçãoCliente);
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Alterações salvas com sucesso !";
                 return RedirectToAction("Listagem", "Cliente");
             }
 
@@ -100,11 +102,64 @@ namespace Concs.App.Controllers
 
             var result = await response.Content.ReadAsStringAsync();
             var erros = JsonSerializer.Deserialize<ValidationResult>(result, option);
-           
+
             ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
 
 
             return View(modeloAtualizaçãoCliente);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Detalhes(int id)
+        {
+            var response = await _clienteClient.Encontrar(id);
+            var option = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            if (response.IsSuccessStatusCode)
+            {
+                var sucssesResult = await response.Content.ReadAsStringAsync();
+
+                var model = JsonSerializer.Deserialize<ModeloVisualizaçãoCliente>(sucssesResult, option);
+
+                ViewBag.Erros = new List<string>();
+                ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Cliente.Atualizar");
+                return View(model);
+            }
+
+
+            var erroResult = await response.Content.ReadAsStringAsync();
+            var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
+
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
+            return View();
+        }
+
+        [HttpPost]
+
+        public async Task<ActionResult> Detalhes(ModeloVisualizaçãoCliente modeloVisualizaçãoCliente)
+        {
+            var response = await _clienteClient.Excluir(modeloVisualizaçãoCliente.ClienteId);
+
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["MemsagemDeSucesso"] = "A remoção foi efetuada com salva com sucesso !";
+                return RedirectToAction("Listagem", "Cliente");
+            }
+
+            var option = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var erroResult = await response.Content.ReadAsStringAsync();
+            var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
+            ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Cliente.Atualizar");
+
+            return View(modeloVisualizaçãoCliente);
         }
     }
 }

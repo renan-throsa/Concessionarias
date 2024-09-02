@@ -41,6 +41,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Nova concessionária registrada !";
                 return RedirectToAction("Listagem", "Concessionaria");
             }
 
@@ -91,6 +92,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Alterações salvas com sucesso !";
                 return RedirectToAction("Listagem", "Concessionaria");
             }
 
@@ -134,6 +136,31 @@ namespace Concs.App.Controllers
 
             ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
             return View();
+        }
+
+        [HttpPost]
+
+        public async Task<ActionResult> Detalhes(ModeloVisualizaçãoConcessionária modeloVisualizaçãoConcessionária)
+        {
+            var response = await _concessionariaClient.Excluir(modeloVisualizaçãoConcessionária.ConcessionariaId);
+
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["MemsagemDeSucesso"] = "A remoção foi efetuada com salva com sucesso !";
+                return RedirectToAction("Listagem", "Concessionaria");
+            }
+
+            var option = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var erroResult = await response.Content.ReadAsStringAsync();
+            var erros = JsonSerializer.Deserialize<ValidationResult>(erroResult, option);
+            ViewBag.Erros = erros.Errors.Select(x => x.ErrorMessage).ToList();
+            ViewBag.PodeAtualizar = HttpContext.User.HasClaim("Permissões", "Concessionária.Atualizar");
+
+            return View(modeloVisualizaçãoConcessionária);
         }
     }
 }

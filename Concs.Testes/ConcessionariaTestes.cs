@@ -12,6 +12,7 @@ namespace Concs.Testes
     public class ConcessionariaTestes
     {
         private readonly Mock<IRepositorioConcessionária> _repositorioConcessionariaMock;
+        private readonly Mock<IRepositorioVenda> _repositorioVendaMock;
         private readonly Mock<ICacheamento> _cacheamentoMock;
         private readonly ServiçoConcessionária _serviçoConcessionaria;
         private readonly IMapper _mapper;
@@ -19,9 +20,10 @@ namespace Concs.Testes
         public ConcessionariaTestes()
         {
             _repositorioConcessionariaMock = new Mock<IRepositorioConcessionária>();
+            _repositorioVendaMock = new Mock<IRepositorioVenda>();
             _cacheamentoMock = new Mock<ICacheamento>();
             _mapper = new MapperConfiguration(mc => mc.AddProfile(new MapeamentoConcessionária())).CreateMapper();
-            _serviçoConcessionaria = new ServiçoConcessionária(_mapper, _repositorioConcessionariaMock.Object, _cacheamentoMock.Object);
+            _serviçoConcessionaria = new ServiçoConcessionária(_mapper, _repositorioConcessionariaMock.Object, _repositorioVendaMock.Object, _cacheamentoMock.Object);
         }
 
         [Fact]
@@ -167,6 +169,20 @@ namespace Concs.Testes
             };
 
             var resultado = await _serviçoConcessionaria.Insert(modelo);
+
+            Assert.False(resultado.IsValid);
+        }
+
+        [Fact]
+        public async Task ExclusãoComErroPorCausaDeRelacionamentoComVenda()
+        {
+            var venda = Dados.Vendas().First();
+            var concessionaria = Dados.Concessionarias().Where(x => x.Id == venda.Id).First();
+
+            _repositorioConcessionariaMock.Setup(x => x.GetByIdAsync(concessionaria.Id, true)).ReturnsAsync(concessionaria);
+            _repositorioVendaMock.Setup(x => x.vendaComConcessionária(concessionaria.Id)).ReturnsAsync(true);
+
+            var resultado = await _serviçoConcessionaria.Remove(concessionaria.Id);
 
             Assert.False(resultado.IsValid);
         }

@@ -43,6 +43,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Novo veículo registrado !";
                 return RedirectToAction("Listagem", "Veiculo");
             }
 
@@ -93,6 +94,7 @@ namespace Concs.App.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "Alterações salvas com sucesso !";
                 return RedirectToAction("Listagem", "Veiculo");
             }
 
@@ -144,10 +146,11 @@ namespace Concs.App.Controllers
         
         public async Task<ActionResult> Detalhes(ModeloVisualizaçãoVeiculo modeloVisualizaçãoVeiculo)
         {
-            var response = await _veiculoClient.Excluir(modeloVisualizaçãoVeiculo.VeiculoId);
+            var response = await _veiculoClient.Remover(modeloVisualizaçãoVeiculo.VeiculoId);
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["MemsagemDeSucesso"] = "A remoção foi efetuada com salva com sucesso !";
                 return RedirectToAction("Listagem", "Veiculo");
             }
 

@@ -10,6 +10,7 @@ namespace Concs.App.Clients
         Task<HttpResponseMessage> Encontrar(int id);
         Task<HttpResponseMessage> Inserir(ModeloInserçãoCliente modelo);
         Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoCliente modelo);
+        Task<HttpResponseMessage> Excluir(int id);
     }
 
     public class ClienteClient : IClienteClient
@@ -56,10 +57,15 @@ namespace Concs.App.Clients
 
         public async Task<HttpResponseMessage> Atualizar(ModeloAtualizaçãoCliente modelo)
         {
-
             using StringContent jsonContent = new(JsonSerializer.Serialize(modelo), Encoding.UTF8, "application/json");
 
             return await _client.PutAsync(_CONTROLLER, jsonContent);
+        }
+
+        public async Task<HttpResponseMessage> Excluir(int id)
+        {
+            var rota = new StringBuilder(_CONTROLLER).Append("/").Append(id).ToString();
+            return await _client.DeleteAsync(rota);
         }
     }
 }

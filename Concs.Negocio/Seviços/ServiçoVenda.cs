@@ -4,7 +4,6 @@ using Concs.Dominio.Entidades;
 using Concs.Dominio.Interfaces;
 using Concs.Dominio.Modelos;
 using Concs.Negocio.Validações;
-using System;
 using System.Net;
 
 namespace Concs.Negocio.Seviços
@@ -93,6 +92,7 @@ namespace Concs.Negocio.Seviços
 
             entidade.Ativo = false;
             await _repositorioVenda.SaveChangesAsync();
+            await _cacheamento.RemoverAsync(Constantes.CHAVELISTAGEMVENDAS);
             return Successo(id);
         }
 

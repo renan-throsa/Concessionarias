@@ -35,29 +35,29 @@
                         <input hidden asp-for="VeiculoId" />
 
                         <div class="mb-3">
-                            <label asp-for="Modelo">Insera o nome do modelo do veículo</label>
-                            <input asp-for="Modelo" type="text" class="form-control">
+                            <label asp-for="Modelo">Insira o nome do modelo do veículo</label>
+                            <input required asp-for="Modelo" type="text" class="form-control">
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Preco">Insira o preço do veiculo</label>
-                            <input asp-for="Preco" class="form-control">
+                            <input required asp-for="Preco" class="form-control">
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="AnoFabricacao">Insira o ano de fabricação</label>
-                            <input type="number" asp-for="AnoFabricacao" class="form-control">
+                            <input required type="number" asp-for="AnoFabricacao" class="form-control">
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="FabricanteId">Escolha o fabricante associado</label>
-                            <select asp-for="FabricanteId" class="form-control" asp-items="fabricantes">
+                            <select required asp-for="FabricanteId" id="FabricanteSelect" class="form-control" asp-items="fabricantes">
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="TipoVeiculoId">Selecione o tipo de veículo</label>
-                            <select asp-for="TipoVeiculoId" class="form-control">
+                            <select required asp-for="TipoVeiculoId" class="form-control">
                                 <option value="1">Carro</option>
                                 <option value="2">Moto</option>
                                 <option value="3">Caminhão</option>
@@ -66,7 +66,7 @@
 
                         <div class="mb-3">
                             <label asp-for="Descricao">Adicione uma descrição opcional</label>
-                            <input type="text" asp-for="Descricao" class="form-control">
+                            <input required type="text" asp-for="Descricao" class="form-control">
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Salvar Veiculo</button>
