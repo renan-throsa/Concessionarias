@@ -13,4 +13,5 @@ $(document).ready(function () {
     $('#FabricanteSelect').select2();
     $('#ConcessionariaSelect').select2();
     $('#PaisOrigem').select2();
+    $('#EstadoSelect').select2();
 });

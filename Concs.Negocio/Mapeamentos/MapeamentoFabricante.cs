@@ -14,7 +14,10 @@ namespace Concs.Negocio.Mapeamentos
 
 
             CreateMap<Fabricante, ModeloInserçãoFabricante>().ReverseMap();
-            CreateMap<Fabricante, ModeloAtualizaçãoFabricante>().ReverseMap();
+
+            CreateMap<Fabricante, ModeloAtualizaçãoFabricante>()
+                .ForMember(dest => dest.FabricanteId, opt => opt.MapFrom(src => src.Id))
+                .ReverseMap();
         }
     }
 }

@@ -6,7 +6,9 @@ Desafio técnico Desafio Intelectah
 **Objetivo**: Desenvolver uma aplicação web para a gestão de concessionárias de veículos utilizando
 Asp.net MVC e Entity Framework. O sistema deve permitir o gerenciamento de fabricantes de veículos,
 veículos, concessionárias e a realização de vendas, integrando autenticação de usuários, relatórios e
-otimização de desempenho.
+otimização de desempenho. 
+
+Para obter mais informações sobre os requisitos consulte a pasta **/docs** 
 
 
 ### Funcionalidades Básicas
@@ -34,7 +36,7 @@ otimização de desempenho.
 * **Relatórios**: Google Charts 
 * **Documentação**: Swagger
 
-# 2. Configuração do Ambiente
+# 2 - Configuração do Ambiente
 #### Como rodar o projeto?
 
 A maneira mais simples de subir o projeto é por meio do docker. Para isso rode o comando: `docker-compose up -d` e navegue para: `http://localhost:4003`
@@ -46,7 +48,7 @@ Caso queira rodar localmente:
 * Selecione `Concs.Api` e `Concs.Web` para iniciar
 * Precione `CTRL + F5` e navegue para: `https://localhost:7090`
 
-# 3. Estrutura do Projeto
+# 3 - Estrutura do Projeto
 
 Este projeto apresenta uma arquitetura Monolítica dividido em camadas.
 
@@ -57,13 +59,25 @@ Este projeto apresenta uma arquitetura Monolítica dividido em camadas.
 * Camada Web - interface de interção do usuário. Cliente da camada de Api. 
 * Camada de ID - reponsavel registar os pares <Interface,Implementação> à coleção de serviços disponívies para injeção de depedência. 
 
-# 4. Banco de Dados
+# 4 - Banco de Dados
 
 ### Esquema
 
-![](Diagrama.png)
+![](imgs/diagrama.png)
 
 # 5. Testes
 
 * Estratégia de Testes: testes de integração relacionados à camadas de Negócio como Mock da camada de Dados.
 * Ferramentas de Teste: xUnit e Moq.
+
+# 6 - Capturas
+
+![](imgs/autenticacao.png)
+
+![](imgs/painel.png)
+
+![](imgs/vendas.png)
+
+![](imgs/veiculos.png)
+
+![](imgs/editar%20veiculo.png)
